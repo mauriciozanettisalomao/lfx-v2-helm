@@ -1,0 +1,117 @@
+# Copyright The Linux Foundation and each contributor to LFX.
+# SPDX-License-Identifier: MIT
+---
+# Global values
+global:
+  # Domain configuration
+  domain: k8s.orb.local
+  # Namespace for platform components
+  namespace: lfx
+  # Common image settings
+  image:
+    registry: linuxfoundation
+    pullPolicy: IfNotPresent
+
+# Traefik configuration
+traefik:
+  enabled: true
+  # Additional traefik configuration can be added here
+  # Values will be merged with the subchart's values
+  ingressRoute:
+    dashboard:
+      enabled: true
+      # Additional dashboard configuration
+
+# OpenFGA configuration
+openfga:
+  enabled: true
+  # Configure PostgreSQL dependency
+  postgresql:
+    enabled: true
+    # Default PostgreSQL configuration
+    auth:
+      username: openfga
+      database: openfga
+      existingSecret: openfga-postgresql-server
+
+  # External PostgreSQL configuration
+  externalPostgresql:
+    enabled: false
+    connectionStringSecret: openfga-postgresql-client
+
+  # Use either integrated PostgreSQL or external PostgreSQL
+  # This will be resolved in the subchart's templates
+
+  # Additional OpenFGA configuration
+  replicaCount: 1
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+# Heimdall configuration
+heimdall:
+  enabled: true
+  replicaCount: 1
+
+  # Integration with Authelia
+  autheliaIntegration:
+    enabled: true
+    host: auth.${global.domain}
+
+  # Secret configuration
+  secretsRef: heimdall-secrets
+  certsSecretRef: heimdall-certs
+
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "50m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+
+# NATS configuration
+nats:
+  enabled: true
+  cluster:
+    enabled: true
+    replicas: 3
+
+  # JetStream configuration
+  jetstream:
+    enabled: true
+    fileStorage:
+      enabled: true
+      size: 1Gi
+
+  # NATS Box for management operations
+  natsBox:
+    enabled: true
+
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+# Additional services. These will be included in the future when LFX platform
+# services are added.
+additionalServices:
+  enabled: false
+  # The following services will be added in the future
+  # fgaSync:
+  #   enabled: false
+  # accessCheck:
+  #   enabled: false
+  # indexer:
+  #   enabled: false
+  # querySvc:
+  #   enabled: false
+  # projectsApi:
+  #   enabled: false

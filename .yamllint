@@ -1,0 +1,10 @@
+---
+extends: default
+ignore: |
+  .git
+  megalinter-reports
+  styles
+rules:
+  line-length:
+    max: 120
+    level: warning

@@ -1,0 +1,27 @@
+# Copyright The Linux Foundation and each contributor to LFX.
+# SPDX-License-Identifier: MIT
+---
+GITHUB_COMMENT_REPORTER: false
+SARIF_REPORTER: true
+DISABLE_LINTERS:
+  # yamllint is sufficient for us.
+  - YAML_PRETTIER
+  # Repository-wide link checking returns mostly false positives (like internal
+  # service URLs in templates).
+  - SPELL_LYCHEE
+DISABLE_ERRORS_LINTERS:
+  # Include grammar checks only as warnings.
+  - SPELL_PROSELINT
+  - SPELL_VALE
+  # This may be informative but doesn't need to break the build.
+  - COPYPASTE_JSCPD
+SPELL_CSPELL_ANALYZE_FILE_NAMES: false
+# Make sure Vale is setup to run with the styles it needs.
+SPELL_VALE_PRE_COMMANDS:
+  - command: mkdir -p styles
+    cwd: "workspace"
+  - command: vale sync
+    cwd: "workspace"
+# Ignore YAML files with templating macros; these typically fail linting and/or
+# schema checking.
+FILTER_REGEX_EXCLUDE: '(templates/.*\.yml|templates/.*\.yaml)'

@@ -1,0 +1,39 @@
+{{- /* Copyright The Linux Foundation and each contributor to LFX. */ -}}
+{{- /* SPDX-License-Identifier: MIT */ -}}
+Thank you for installing {{ .Chart.Name }}.
+
+Your release is named {{ .Release.Name }}.
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }} -n {{ .Release.Namespace }}
+  $ helm get all {{ .Release.Name }} -n {{ .Release.Namespace }}
+
+{{- if .Values.global }}
+{{- if .Values.global.domain }}
+You can access the services using the following URLs:
+
+{{- if .Values.traefik.enabled }}
+Traefik Dashboard: http://traefik.{{ .Values.global.domain }}
+{{- end }}
+
+{{- if .Values.heimdall.enabled }}
+Heimdall: http://heimdall.{{ .Values.global.domain }}
+{{- end }}
+
+{{- if .Values.openfga.enabled }}
+OpenFGA API: http://openfga.{{ .Values.global.domain }}
+{{- if .Values.openfga.api.playground.enabled }}
+OpenFGA Playground: http://openfga-playground.{{ .Values.global.domain }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+For more information on how to use the LFX Platform, please refer to the documentation:
+https://github.com/linuxfoundation/lfx-v2-helm/charts/lfx-platform
+
+{{- if .Values.openfga.externalPostgresql.enabled }}
+NOTICE: You are using an external PostgreSQL database for OpenFGA.
+Make sure that the connection string secret '{{ .Values.openfga.externalPostgresql.connectionStringSecret }}' exists in the namespace.
+{{- end }}

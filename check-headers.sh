@@ -27,6 +27,8 @@ filetypes+=("*.txt")
 filetypes+=("*.yaml" "*.yml" "*.toml")
 # Include SQL scripts and definitions.
 filetypes+=("*.sql")
+# Include template files.
+filetypes+=("*.tpl")
 
 files=()
 while IFS='' read -r line; do files+=("$line"); done < <(git ls-files -c "${filetypes[@]}" | grep -E -v "${exclude_pattern}")

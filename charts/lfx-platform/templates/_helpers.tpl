@@ -1,3 +1,8 @@
+{{- /*
+Copyright The Linux Foundation and each contributor to LFX.
+SPDX-License-Identifier: MIT
+*/ -}}
+
 {{/*
 Expand the name of the chart.
 */}}

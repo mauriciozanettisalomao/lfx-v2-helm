@@ -13,10 +13,8 @@ This Helm chart deploys the LFX Platform V2 with its core infrastructure compone
 ```bash
 helm repo add traefik https://traefik.github.io/charts
 helm repo add dadrus https://dadrus.github.io/heimdall/charts
-helm repo add jouve https://jouve.github.io/charts/
 helm repo add nats https://nats-io.github.io/k8s/helm/charts/
 helm repo add openfga https://openfga.github.io/helm-charts
-helm repo add opensearch https://opensearch-project.github.io/helm-charts/
 helm repo update
 ```
 
@@ -66,9 +64,8 @@ For more Traefik configuration options, see the [Traefik Helm Chart documentatio
 | Parameter                                           | Description                                      | Default                     |
 |-----------------------------------------------------|--------------------------------------------------|-----------------------------|
 | `openfga.enabled`                                   | Enable OpenFGA                                   | `true`                      |
-| `openfga.postgresql.enabled`                        | Enable built-in PostgreSQL                       | `true`                      |
-| `openfga.externalPostgresql.enabled`                | Use external PostgreSQL                          | `false`                     |
-| `openfga.externalPostgresql.connectionStringSecret` | Secret for external PostgreSQL connection string | `openfga-postgresql-client` |
+| `openfga.postgres.enabled`                          | Enable built-in PostgreSQL                       | `true`                      |
+| `openfga.datastore.existingSecret`                  | Secret for external PostgreSQL connection string | `nil`                       |
 
 For more OpenFGA configuration options, see the [OpenFGA Helm Chart documentation](https://github.com/openfga/helm-charts).
 
@@ -110,9 +107,8 @@ kubectl create secret generic openfga-postgresql-client \
 
 ```yaml
 openfga:
-  postgresql:
+  postgres:
     enabled: false
-  externalPostgresql:
-    enabled: true
-    connectionStringSecret: openfga-postgresql-client
+  datastore:
+    existingSecret: openfga-postgresql-client
 ```

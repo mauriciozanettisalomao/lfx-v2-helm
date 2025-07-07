@@ -11,6 +11,8 @@ global:
   image:
     registry: linuxfoundation
     pullPolicy: IfNotPresent
+  # Subchart toggles
+  openfga_enabled: true
 
 # Traefik configuration
 traefik:
@@ -24,23 +26,27 @@ traefik:
 
 # OpenFGA configuration
 openfga:
-  enabled: true
-  # Configure PostgreSQL dependency
-  postgresql:
-    enabled: true
-    # Default PostgreSQL configuration
-    auth:
-      username: openfga
-      database: openfga
-      existingSecret: openfga-postgresql-server
-
-  # External PostgreSQL configuration
-  externalPostgresql:
+  # Disable playground by default
+  playground:
     enabled: false
-    connectionStringSecret: openfga-postgresql-client
+    # Configure PostgreSQL dependency
+    postgres:
+      enabled: true
+      # Default PostgreSQL configuration
+      auth:
+        username: openfga
+        database: openfga
+        # checkov:skip=CKV_SECRET_6: value is a reference, not a secret
+        existingSecret: openfga-postgresql-server
 
-  # Use either integrated PostgreSQL or external PostgreSQL
-  # This will be resolved in the subchart's templates
+    # External PostgreSQL configuration
+    datastore:
+      # Set existingSecret with connection string when using external PostgreSQL
+      # The secret should contain a key named "uri" with the connection string
+      # existingSecret: openfga-postgresql-client
+
+    # Use either integrated PostgreSQL or external PostgreSQL
+    # This will be resolved in the subchart's templates
 
   # Additional OpenFGA configuration
   replicaCount: 1
@@ -63,6 +69,7 @@ heimdall:
     host: auth.${global.domain}
 
   # Secret configuration
+  # checkov:skip=CKV_SECRET_6: values are a references, not secrets
   secretsRef: heimdall-secrets
   certsSecretRef: heimdall-certs
 

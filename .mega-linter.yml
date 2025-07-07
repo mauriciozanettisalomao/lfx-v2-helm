@@ -4,11 +4,19 @@
 GITHUB_COMMENT_REPORTER: false
 SARIF_REPORTER: true
 DISABLE_LINTERS:
-  # yamllint is sufficient for us.
-  - YAML_PRETTIER
+  # We are setting KUBERNETES_DIRECTORY to the helm chart so the
+  # KUBERNETES_HELM linter can find the chart, but then this linter expects to
+  # find raw Kubernetes manifests in this directory, which isn't the case.
+  # If we added a PRE_ command with a `helm template` step, and further
+  # restricted the included files for this linter, it *might* work.
+  - KUBERNETES_KUBECONFORM
+  # TBD how to use this from Megalinter with our setup.
+  - KUBERNETES_KUBESCAPE
   # Repository-wide link checking returns mostly false positives (like internal
   # service URLs in templates).
   - SPELL_LYCHEE
+  # yamllint is sufficient for us.
+  - YAML_PRETTIER
 DISABLE_ERRORS_LINTERS:
   # Include grammar checks only as warnings.
   - SPELL_PROSELINT
@@ -25,3 +33,5 @@ SPELL_VALE_PRE_COMMANDS:
 # Ignore YAML files with templating macros; these typically fail linting and/or
 # schema checking.
 FILTER_REGEX_EXCLUDE: '(templates/.*\.yml|templates/.*\.yaml)'
+KUBERNETES_DIRECTORY: charts/lfx-platform
+KUBERNETES_HELM_ARGUMENTS: charts/lfx-platform

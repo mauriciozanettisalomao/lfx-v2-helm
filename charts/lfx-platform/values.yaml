@@ -1,8 +1,8 @@
 # Copyright The Linux Foundation and each contributor to LFX.
 # SPDX-License-Identifier: MIT
 ---
-# Global values
-global:
+# lfx specific values
+lfx:
   # Domain configuration
   domain: k8s.orb.local
   # Namespace for platform components

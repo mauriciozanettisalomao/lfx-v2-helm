@@ -16,7 +16,7 @@ dependencies:
   - name: openfga
     repository: https://openfga.github.io/helm-charts
     version: ~0.2.35
-    condition: openfga_enabled
+    condition: lfx.openfga_enabled
   - name: heimdall
     repository: https://dadrus.github.io/heimdall/charts
     version: ~0.15.6

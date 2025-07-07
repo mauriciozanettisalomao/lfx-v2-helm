@@ -70,5 +70,5 @@ Create the name of the service account to use
 Get domain from global settings or use default
 */}}
 {{- define "lfx-platform.domain" -}}
-{{- default "k8s.orb.local" .Values.global.domain }}
+{{- default "k8s.orb.local" .Values.lfx.domain }}
 {{- end }}

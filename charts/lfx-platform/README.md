@@ -45,7 +45,6 @@ The following table lists the configurable parameters of the LFX Platform chart 
 | Parameter              | Description                     | Default           |
 |------------------------|---------------------------------|-------------------|
 | `lfx.domain`           | Domain for services             | `k8s.orb.local`   |
-| `lfx.namespace`        | Kubernetes namespace            | `lfx`             |
 | `lfx.image.registry`   | Global Docker image registry    | `linuxfoundation` |
 | `lfx.image.pullPolicy` | Global Docker image pull policy | `IfNotPresent`    |
 
@@ -79,7 +78,7 @@ For more OpenFGA configuration options, see the [OpenFGA Helm Chart documentatio
 | `heimdall.secretsRef`                  | Heimdall secrets reference              | `heimdall-secrets` |
 | `heimdall.certsSecretRef`              | Heimdall certificates secrets reference | `heimdall-certs`   |
 
-For more Heimdall configuration options, see the [Heimdall Helm Chart documentation](https://github.com/dadrus/heimdall).
+For more Heimdall configuration options, see the [Heimdall Helm Chart documentation](https://github.com/dadrus/heimdall/tree/main/charts/heimdall).
 
 #### NATS
 

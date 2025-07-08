@@ -5,12 +5,12 @@
 lfx:
   # Domain configuration
   domain: k8s.orb.local
-  # Namespace for platform components
-  namespace: lfx
+
   # Common image settings
   image:
     registry: linuxfoundation
     pullPolicy: IfNotPresent
+
   # Subchart toggles
   openfga_enabled: true
 
@@ -51,24 +51,46 @@ openfga:
 # Heimdall configuration
 heimdall:
   enabled: true
-  replicaCount: 1
 
-  # Integration with Authelia
-  autheliaIntegration:
-    enabled: true
-    host: auth.${lfx.domain}
+  image:
+    tag: 0.16.6
 
-  # Secret configuration
-  secretsRef: heimdall-secrets
-  certsSecretRef: heimdall-certs
+  deployment:
+    replicaCount: 1
+    autoscaling:
+      enabled: false
 
-  resources:
-    requests:
-      memory: "128Mi"
-      cpu: "50m"
-    limits:
-      memory: "256Mi"
-      cpu: "200m"
+  log:
+    format: gelf
+    level: info
+
+  providers:
+    kubernetes: {}
+
+  serve:
+    trusted_proxies:
+      - 192.168.0.0/16
+
+  mechanisms:
+    authenticators:
+      - id: anonymous_authenticator
+        type: anonymous
+        config:
+          subject: "_anonymous"
+    authorizers:
+      - id: allow_all
+        type: allow
+      - id: deny_all
+        type: deny
+    finalizers: []
+
+  default_rule:
+    execute:
+      - authenticator: anonymous_authenticator
+      - authorizer: deny_all
+
+  extraArgs:
+    - "--insecure"
 
 # NATS configuration
 nats:

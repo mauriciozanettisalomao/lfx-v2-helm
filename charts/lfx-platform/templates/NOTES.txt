@@ -36,7 +36,7 @@ OpenFGA Playground: http://openfga-playground.{{ .Values.lfx.domain }}
 For more information on how to use the LFX Platform, please refer to the documentation:
 https://github.com/linuxfoundation/lfx-v2-helm/charts/lfx-platform
 
-{{- if not .Values.openfga.postgres.enabled }}
+{{- if not .Values.openfga.postgresql.enabled }}
 NOTICE: You are using an external PostgreSQL database for OpenFGA.
 Make sure that the connection string secret '{{ .Values.openfga.datastore.existingSecret }}' exists in the namespace.
 {{- end }}

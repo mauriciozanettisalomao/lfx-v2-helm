@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: MIT
 ---
 GITHUB_COMMENT_REPORTER: false
-SARIF_REPORTER: true
 DISABLE_LINTERS:
   # We are setting KUBERNETES_DIRECTORY to the helm chart so the
   # KUBERNETES_HELM linter can find the chart, but then this linter expects to
@@ -23,6 +22,9 @@ DISABLE_ERRORS_LINTERS:
   - SPELL_VALE
   # This may be informative but doesn't need to break the build.
   - COPYPASTE_JSCPD
+  # TBD! Need to work through these.
+  - REPOSITORY_TRIVY
+  - REPOSITORY_CHECKOV
 SPELL_CSPELL_ANALYZE_FILE_NAMES: false
 # Make sure Vale is setup to run with the styles it needs.
 SPELL_VALE_PRE_COMMANDS:

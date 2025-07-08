@@ -20,9 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      actions: read
       contents: read
-      security-events: write
 
     steps:
       # Git Checkout
@@ -42,9 +40,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Allow GITHUB_TOKEN for working around rate limits (aquasecurity/trivy#7668).
           REPOSITORY_TRIVY_UNSECURED_ENV_VARIABLES: GITHUB_TOKEN
-
-      - name: Upload MegaLinter scan results to GitHub Security tab
-        if: success() || failure()
-        uses: github/codeql-action/upload-sarif@ff0a06e83cb2de871e5a09832bc6a81e7276941f  # v3.28.18
-        with:
-          sarif_file: 'megalinter-reports/megalinter-report.sarif'

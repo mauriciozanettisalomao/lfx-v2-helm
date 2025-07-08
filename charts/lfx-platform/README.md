@@ -41,12 +41,12 @@ The following table lists the configurable parameters of the LFX Platform chart 
 
 ### Global parameters
 
-| Parameter                 | Description                     | Default           |
-|---------------------------|---------------------------------|-------------------|
-| `global.domain`           | Domain for services             | `k8s.orb.local`   |
-| `global.namespace`        | Kubernetes namespace            | `lfx`             |
-| `global.image.registry`   | Global Docker image registry    | `linuxfoundation` |
-| `global.image.pullPolicy` | Global Docker image pull policy | `IfNotPresent`    |
+| Parameter              | Description                     | Default           |
+|------------------------|---------------------------------|-------------------|
+| `lfx.domain`           | Domain for services             | `k8s.orb.local`   |
+| `lfx.namespace`        | Kubernetes namespace            | `lfx`             |
+| `lfx.image.registry`   | Global Docker image registry    | `linuxfoundation` |
+| `lfx.image.pullPolicy` | Global Docker image pull policy | `IfNotPresent`    |
 
 ### Subchart configuration
 
@@ -61,11 +61,11 @@ For more Traefik configuration options, see the [Traefik Helm Chart documentatio
 
 #### OpenFGA
 
-| Parameter                                           | Description                                      | Default                     |
-|-----------------------------------------------------|--------------------------------------------------|-----------------------------|
-| `openfga.enabled`                                   | Enable OpenFGA                                   | `true`                      |
-| `openfga.postgres.enabled`                          | Enable built-in PostgreSQL                       | `true`                      |
-| `openfga.datastore.existingSecret`                  | Secret for external PostgreSQL connection string | `nil`                       |
+| Parameter                          | Description                                      | Default |
+|------------------------------------|--------------------------------------------------|---------|
+| `openfga.enabled`                  | Enable OpenFGA                                   | `true`  |
+| `openfga.postgres.enabled`         | Enable built-in PostgreSQL                       | `true`  |
+| `openfga.datastore.existingSecret` | Secret for external PostgreSQL connection string | `nil`   |
 
 For more OpenFGA configuration options, see the [OpenFGA Helm Chart documentation](https://github.com/openfga/helm-charts).
 

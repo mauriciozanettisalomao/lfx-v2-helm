@@ -1,7 +1,7 @@
 # Copyright The Linux Foundation and each contributor to LFX.
 # SPDX-License-Identifier: MIT
 ---
-# lfx specific values
+# LFX global values
 lfx:
   # Domain configuration
   domain: k8s.orb.local
@@ -29,24 +29,21 @@ openfga:
   # Disable playground by default
   playground:
     enabled: false
-    # Configure PostgreSQL dependency
-    postgres:
-      enabled: true
-      # Default PostgreSQL configuration
-      auth:
-        username: openfga
-        database: openfga
-        # checkov:skip=CKV_SECRET_6: value is a reference, not a secret
-        existingSecret: openfga-postgresql-server
 
-    # External PostgreSQL configuration
-    datastore:
-      # Set existingSecret with connection string when using external PostgreSQL
-      # The secret should contain a key named "uri" with the connection string
-      # existingSecret: openfga-postgresql-client
+  # Use PostgreSQL
+  datastore:
+    engine: postgres
+    # Must override uriSecret if setting postgresql.enabled to false.
+    uriSecret: openfga-postgresql-client
+    migrationType: initContainer
 
-    # Use either integrated PostgreSQL or external PostgreSQL
-    # This will be resolved in the subchart's templates
+  # PostgreSQL subchart configuration
+  postgresql:
+    enabled: true
+    auth:
+      username: openfga
+      database: openfga
+      existingSecret: openfga-postgresql-server
 
   # Additional OpenFGA configuration
   replicaCount: 1
@@ -66,10 +63,9 @@ heimdall:
   # Integration with Authelia
   autheliaIntegration:
     enabled: true
-    host: auth.${global.domain}
+    host: auth.${lfx.domain}
 
   # Secret configuration
-  # checkov:skip=CKV_SECRET_6: values are a references, not secrets
   secretsRef: heimdall-secrets
   certsSecretRef: heimdall-certs
 

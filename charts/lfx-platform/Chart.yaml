@@ -29,3 +29,7 @@ dependencies:
     repository: https://opensearch-project.github.io/helm-charts/
     version: ~2.34.0
     condition: opensearch.enabled
+  - name: mailpit
+    repository: https://jouve.github.io/charts/
+    version: ~0.25.0
+    condition: mailpit.enabled

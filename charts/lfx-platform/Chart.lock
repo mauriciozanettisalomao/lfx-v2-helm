@@ -4,7 +4,7 @@ dependencies:
   version: 36.2.0
 - name: openfga
   repository: https://openfga.github.io/helm-charts
-  version: 0.2.36
+  version: 0.2.37
 - name: heimdall
   repository: https://dadrus.github.io/heimdall/charts
   version: 0.15.6
@@ -14,5 +14,8 @@ dependencies:
 - name: opensearch
   repository: https://opensearch-project.github.io/helm-charts/
   version: 2.34.0
-digest: sha256:3b4d34d054f65264ea5eb3ff5ad1cfb03f5171a7b93041ee115a5a6db94adb0b
-generated: "2025-07-08T11:27:11.460518-07:00"
+- name: mailpit
+  repository: https://jouve.github.io/charts/
+  version: 0.25.0
+digest: sha256:a4c5bed612baaa10f1633a04ffa4aba2aaa995eaa4548d47e2aaf1aa5628824b
+generated: "2025-07-08T15:58:21.685922-07:00"

@@ -129,6 +129,10 @@ opensearch:
     - name: DISABLE_SECURITY_PLUGIN
       value: "true"
 
+# Mailpit configuration
+mailpit:
+  enabled: true
+
 # Additional services. These will be included in the future when LFX platform
 # services are added.
 additionalServices:

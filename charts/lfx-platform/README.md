@@ -16,6 +16,7 @@ helm repo add dadrus https://dadrus.github.io/heimdall/charts
 helm repo add nats https://nats-io.github.io/k8s/helm/charts/
 helm repo add openfga https://openfga.github.io/helm-charts
 helm repo add opensearch https://opensearch-project.github.io/helm-charts
+helm repo add jouve https://jouve.github.io/charts/
 helm repo update
 ```
 
@@ -90,6 +91,15 @@ For more Heimdall configuration options, see the [Heimdall Helm Chart documentat
 | `nats.jetstream.enabled` | Enable JetStream        | `true`  |
 
 For more NATS configuration options, see the [NATS Helm Chart documentation](https://github.com/nats-io/k8s/tree/main/helm/charts/nats).
+
+#### Mailpit
+
+| Parameter                | Description             | Default |
+|--------------------------|-------------------------|---------|
+| `mailpit.enabled`        | Enable Mailpit          | `true`  |
+
+For more mailpit configuration options, see the [Mailpit documentation](https://github.com/jouve/charts/tree/main/charts/mailpit).
+
 
 ## Using external PostgreSQL with OpenFGA
 

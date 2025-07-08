@@ -84,28 +84,29 @@ heimdall:
 # NATS configuration
 nats:
   enabled: true
-  cluster:
-    enabled: true
-    replicas: 3
-
-  # JetStream configuration
-  jetstream:
-    enabled: true
-    fileStorage:
+  config:
+    cluster:
       enabled: true
-      size: 1Gi
+      replicas: 3
 
-  # NATS Box for management operations
-  natsBox:
-    enabled: true
+    # NATS Box for management operations
+    natsBox:
+      enabled: true
 
-  resources:
-    requests:
-      memory: "256Mi"
-      cpu: "100m"
-    limits:
-      memory: "512Mi"
-      cpu: "500m"
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "100m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+
+    # JetStream configuration
+    jetstream:
+      enabled: true
+      fileStore:
+        enabled: true
+        size: 1Gi
 
 # Additional services. These will be included in the future when LFX platform
 # services are added.

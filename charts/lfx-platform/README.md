@@ -24,7 +24,7 @@ To install the chart with the release name `lfx-platform`:
 
 ```bash
 kubectl create namespace lfx
-helm install lfx-platform . -n lfx
+helm install lfx-platform . -n lfx -f values.yaml
 ```
 
 ## Uninstalling the chart

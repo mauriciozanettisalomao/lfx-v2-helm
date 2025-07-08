@@ -12,25 +12,14 @@ To learn more about the release, try:
   $ helm status {{ .Release.Name }} -n {{ .Release.Namespace }}
   $ helm get all {{ .Release.Name }} -n {{ .Release.Namespace }}
 
-{{ if .Values.lfx }}
-{{- if .Values.lfx.domain -}}
 You can access the services using the following URLs:
 
-{{ if .Values.traefik.enabled -}}
-Traefik Dashboard: http://traefik.{{ .Values.lfx.domain }}
-{{- end }}
+{{- if .Values.heimdall.enabled }}
+Heimdall: http://{{ .Release.Name}}-heimdall.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.heimdall.service.main.port }}
+{{- end -}}
 
-{{ if .Values.heimdall.enabled -}}
-Heimdall: http://heimdall.{{ .Values.lfx.domain }}
-{{- end }}
-
-{{ if .Values.lfx.openfga_enabled -}}
-OpenFGA API: http://openfga.{{ .Values.lfx.domain }}
-{{ if .Values.openfga.playground.enabled -}}
-OpenFGA Playground: http://openfga-playground.{{ .Values.lfx.domain }}
-{{- end }}
-{{- end }}
-{{- end }}
+{{ if .Values.lfx.openfga_enabled }}
+OpenFGA API: http://{{ .Release.Name}}-openfga.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.openfga.service.port }}
 {{- end }}
 
 For more information on how to use the LFX Platform, please refer to the documentation:

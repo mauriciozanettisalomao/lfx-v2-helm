@@ -15,6 +15,7 @@ helm repo add traefik https://traefik.github.io/charts
 helm repo add dadrus https://dadrus.github.io/heimdall/charts
 helm repo add nats https://nats-io.github.io/k8s/helm/charts/
 helm repo add openfga https://openfga.github.io/helm-charts
+helm repo add opensearch https://opensearch-project.github.io/helm-charts
 helm repo update
 ```
 

@@ -97,6 +97,16 @@ nats:
         enabled: true
         size: 1Gi
 
+# OpenSearch configuration
+opensearch:
+  enabled: true
+  singleNode: true
+  extraEnvs:
+    - name: DISABLE_INSTALL_DEMO_CONFIG
+      value: "true"
+    - name: DISABLE_SECURITY_PLUGIN
+      value: "true"
+
 # Additional services. These will be included in the future when LFX platform
 # services are added.
 additionalServices:

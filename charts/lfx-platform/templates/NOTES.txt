@@ -12,21 +12,21 @@ To learn more about the release, try:
   $ helm status {{ .Release.Name }} -n {{ .Release.Namespace }}
   $ helm get all {{ .Release.Name }} -n {{ .Release.Namespace }}
 
-{{- if .Values.lfx }}
-{{- if .Values.lfx.domain }}
+{{ if .Values.lfx }}
+{{- if .Values.lfx.domain -}}
 You can access the services using the following URLs:
 
-{{- if .Values.traefik.enabled }}
+{{ if .Values.traefik.enabled -}}
 Traefik Dashboard: http://traefik.{{ .Values.lfx.domain }}
 {{- end }}
 
-{{- if .Values.heimdall.enabled }}
+{{ if .Values.heimdall.enabled -}}
 Heimdall: http://heimdall.{{ .Values.lfx.domain }}
 {{- end }}
 
-{{- if .Values.openfga.enabled }}
+{{ if .Values.lfx.openfga_enabled -}}
 OpenFGA API: http://openfga.{{ .Values.lfx.domain }}
-{{- if .Values.openfga.playground.enabled }}
+{{ if .Values.openfga.playground.enabled -}}
 OpenFGA Playground: http://openfga-playground.{{ .Values.lfx.domain }}
 {{- end }}
 {{- end }}

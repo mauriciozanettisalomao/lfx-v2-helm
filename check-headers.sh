@@ -34,7 +34,7 @@ files=()
 while IFS='' read -r line; do files+=("$line"); done < <(git ls-files -c "${filetypes[@]}" | grep -E -v "${exclude_pattern}")
 
 # This is the copyright line to look for - adjust as necessary
-copyright_line="Copyright The Linux Foundation"
+copyright_line="Copyright The Linux Foundation and each contributor to LFX"
 
 # Flag to indicate if we were successful or not
 missing_license_header=0

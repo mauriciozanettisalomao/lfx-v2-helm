@@ -132,6 +132,94 @@ opensearch:
 mailpit:
   enabled: true
 
+# Authelia configuration
+authelia_enabled: true
+authelia:
+  configMap:
+    log:
+      format: json
+    session:
+      cookies:
+        - domain: k8s.orb.local
+          subdomain: auth
+    totp:
+      disable: true
+    webauthn:
+      disable: true
+    authentication_backend:
+      file:
+        enabled: true
+    access_control:
+      default_policy: one_factor
+    storage:
+      local:
+        enabled: true
+    notifier:
+      smtp:
+        enabled: true
+        address: "smtp://lfx-platform-mailpit-smtp.lfx.svc.cluster.local:25"
+        username: ""
+        password:
+          disabled: true
+        disable_require_tls: true
+    identity_providers:
+      oidc:
+        enabled: true
+        jwks:
+          - key_id: "1"
+            algorithm: "RS256"
+            key:
+              path: /secrets/jwks-keys/jwks-key-1.pem
+        clients:
+          - client_id: heimdall
+            client_name: Heimdall backend
+            client_secret:
+              path: /secrets/client-secrets/heimdall
+            public: false
+            scopes:
+              - none
+            grant_types:
+              - client_credentials
+            authorization_policy: one_factor
+            token_endpoint_auth_method: client_secret_basic
+          - client_id: m2m_test
+            client_name: M2M Test Client
+            client_secret:
+              path: /secrets/client-secrets/m2m_test
+            public: false
+            scopes:
+              - none
+            audience:
+              - "http://lfx-api.k8s.orb.local/"
+            grant_types:
+              - client_credentials
+            authorization_policy: one_factor
+            token_endpoint_auth_method: client_secret_basic
+          - client_id: token_helper
+            client_name: Token Helper CLI
+            public: true
+            redirect_uris:
+              - "http://localhost:55001/callback"
+            scopes:
+              - openid
+              - email
+              - profile
+              - offline_access
+            audience:
+              - "http://lfx-api.k8s.orb.local/"
+            grant_types:
+              - authorization_code
+              - refresh_token
+            authorization_policy: one_factor
+  ingress:
+    enabled: true
+  secret:
+    additionalSecrets:
+      jwks-keys: {}
+      client-secrets: {}
+  persistence:
+    enabled: true
+
 # Additional services. These will be included in the future when LFX platform
 # services are added.
 additionalServices:

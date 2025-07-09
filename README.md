@@ -33,7 +33,7 @@ helm repo update
 kubectl create namespace lfx
 
 # Install the chart
-helm install lfx-platform ./charts/lfx-platform -n lfx
+helm install lfx-platform ./charts/lfx-platform -n lfx -f charts/lfx-platform/values.yaml
 ```
 
 ## Components
@@ -44,6 +44,7 @@ The LFX v2 Platform includes the following core components:
 - **OpenFGA**: Fine-Grained Authorization with Relationship-Based Access Control (ReBAC)
 - **Heimdall**: Identity and Access Proxy
 - **NATS**: Messaging and event streaming system
+- **OpenSearch**: Search and analytics engine
 
 ## Configuration
 

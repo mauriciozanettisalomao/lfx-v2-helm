@@ -58,6 +58,13 @@ heimdall:
     replicaCount: 1
     autoscaling:
       enabled: false
+    volumes:
+      - name: heimdall-signer-cert
+        secret:
+          secretName: heimdall-signer-cert
+    volumeMounts:
+      - name: heimdall-signer-cert
+        mountPath: "/heimdall/cert/"
 
   log:
     format: gelf
@@ -81,7 +88,13 @@ heimdall:
         type: allow
       - id: deny_all
         type: deny
-    finalizers: []
+    finalizers:
+      - id: create_jwt
+        type: jwt
+        config:
+          signer:
+            key_store:
+              path: /heimdall/cert/signer.pem
 
   default_rule:
     execute:

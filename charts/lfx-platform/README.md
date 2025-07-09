@@ -94,9 +94,9 @@ For more NATS configuration options, see the [NATS Helm Chart documentation](htt
 
 #### Mailpit
 
-| Parameter                | Description             | Default |
-|--------------------------|-------------------------|---------|
-| `mailpit.enabled`        | Enable Mailpit          | `true`  |
+| Parameter         | Description    | Default |
+|-------------------|----------------|---------|
+| `mailpit.enabled` | Enable Mailpit | `true`  |
 
 For more mailpit configuration options, see the [Mailpit documentation](https://github.com/jouve/charts/tree/main/charts/mailpit).
 

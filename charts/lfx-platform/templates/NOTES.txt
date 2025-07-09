@@ -22,7 +22,7 @@ or
 }}
 {{- end -}}
 
-{{ if .Values.lfx.openfga_enabled }}
+{{ if .Values.openfga.enabled }}
 OpenFGA API: http://{{ .Release.Name}}-openfga.{{ .Release.Namespace }}.svc.cluster.local:{{
 or
   (and .Values.openfga.service .Values.openfga.service.port)

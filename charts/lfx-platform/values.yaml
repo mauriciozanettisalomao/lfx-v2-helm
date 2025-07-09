@@ -11,9 +11,6 @@ lfx:
     registry: linuxfoundation
     pullPolicy: IfNotPresent
 
-  # Subchart toggles
-  openfga_enabled: true
-
 # Traefik configuration
 traefik:
   enabled: true
@@ -26,6 +23,8 @@ traefik:
 
 # OpenFGA configuration
 openfga:
+  enabled: true
+
   # Disable playground by default
   playground:
     enabled: false

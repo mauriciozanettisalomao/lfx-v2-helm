@@ -1,0 +1,39 @@
+{{- /*
+Copyright The Linux Foundation and each contributor to LFX.
+SPDX-License-Identifier: MIT
+*/ -}}
+
+Thank you for installing {{ .Chart.Name }}.
+
+Your release is named {{ .Release.Name }}.
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }} -n {{ .Release.Namespace }}
+  $ helm get all {{ .Release.Name }} -n {{ .Release.Namespace }}
+
+You can access the services using the following URLs:
+
+{{- if .Values.heimdall.enabled }}
+Heimdall: http://{{ .Release.Name}}-heimdall.{{ .Release.Namespace }}.svc.cluster.local:{{
+or
+  (and .Values.heimdall.service .Values.heimdall.service.main.port)
+  4456
+}}
+{{- end -}}
+
+{{ if .Values.openfga.enabled }}
+OpenFGA API: http://{{ .Release.Name}}-openfga.{{ .Release.Namespace }}.svc.cluster.local:{{
+or
+  (and .Values.openfga.service .Values.openfga.service.port)
+  8080
+}}
+{{- end }}
+
+For more information on how to use the LFX Platform, please refer to the documentation:
+https://github.com/linuxfoundation/lfx-v2-helm/charts/lfx-platform
+
+{{- if not .Values.openfga.postgresql.enabled }}
+NOTICE: You are using an external PostgreSQL database for OpenFGA.
+Make sure that the connection string secret '{{ .Values.openfga.datastore.existingSecret }}' exists in the namespace.
+{{- end }}

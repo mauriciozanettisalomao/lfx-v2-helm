@@ -1,0 +1,149 @@
+# Copyright The Linux Foundation and each contributor to LFX.
+# SPDX-License-Identifier: MIT
+---
+# LFX global values
+lfx:
+  # Domain configuration
+  domain: k8s.orb.local
+
+  # Common image settings
+  image:
+    registry: linuxfoundation
+    pullPolicy: IfNotPresent
+
+# Traefik configuration
+traefik:
+  enabled: true
+  # Additional traefik configuration can be added here
+  # Values will be merged with the subchart's values
+  ingressRoute:
+    dashboard:
+      enabled: true
+      # Additional dashboard configuration
+
+# OpenFGA configuration
+openfga:
+  enabled: true
+
+  # Disable playground by default
+  playground:
+    enabled: false
+
+  # Use PostgreSQL
+  datastore:
+    engine: postgres
+    # Must override uriSecret if setting postgresql.enabled to false.
+    uriSecret: openfga-postgresql-client
+    migrationType: initContainer
+
+  # PostgreSQL subchart configuration
+  postgresql:
+    enabled: true
+    auth:
+      username: openfga
+      database: openfga
+      existingSecret: openfga-postgresql-server
+
+  # Additional OpenFGA configuration
+  replicaCount: 1
+
+# Heimdall configuration
+heimdall:
+  enabled: true
+
+  image:
+    tag: 0.16.6
+
+  deployment:
+    replicaCount: 1
+    autoscaling:
+      enabled: false
+
+  log:
+    format: gelf
+    level: info
+
+  providers:
+    kubernetes: {}
+
+  serve:
+    trusted_proxies:
+      - 192.168.0.0/16
+
+  mechanisms:
+    authenticators:
+      - id: anonymous_authenticator
+        type: anonymous
+        config:
+          subject: "_anonymous"
+    authorizers:
+      - id: allow_all
+        type: allow
+      - id: deny_all
+        type: deny
+    finalizers: []
+
+  default_rule:
+    execute:
+      - authenticator: anonymous_authenticator
+      - authorizer: deny_all
+
+  extraArgs:
+    - "--insecure"
+
+# NATS configuration
+nats:
+  enabled: true
+  config:
+    cluster:
+      enabled: true
+      replicas: 3
+
+    # NATS Box for management operations
+    natsBox:
+      enabled: true
+
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "100m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+
+    # JetStream configuration
+    jetstream:
+      enabled: true
+      fileStore:
+        enabled: true
+        size: 1Gi
+
+# OpenSearch configuration
+opensearch:
+  enabled: true
+  singleNode: true
+  extraEnvs:
+    - name: DISABLE_INSTALL_DEMO_CONFIG
+      value: "true"
+    - name: DISABLE_SECURITY_PLUGIN
+      value: "true"
+
+# Mailpit configuration
+mailpit:
+  enabled: true
+
+# Additional services. These will be included in the future when LFX platform
+# services are added.
+additionalServices:
+  enabled: false
+  # The following services will be added in the future
+  # fgaSync:
+  #   enabled: false
+  # accessCheck:
+  #   enabled: false
+  # indexer:
+  #   enabled: false
+  # querySvc:
+  #   enabled: false
+  # projectsApi:
+  #   enabled: false

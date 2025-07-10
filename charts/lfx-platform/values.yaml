@@ -170,7 +170,7 @@ authelia:
           - key_id: "1"
             algorithm: "RS256"
             key:
-              path: /secrets/jwks-keys/jwks-key-1.pem
+              path: /secrets/authelia-jwks-keys/jwks-key-1.pem
         clients:
           - client_id: heimdall
             client_name: Heimdall backend
@@ -216,7 +216,7 @@ authelia:
     enabled: true
   secret:
     additionalSecrets:
-      jwks-keys: {}
+      authelia-jwks-keys: {}
       authelia-clients-hashed: {}
   persistence:
     enabled: true

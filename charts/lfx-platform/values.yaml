@@ -148,7 +148,6 @@ mailpit:
 
 # Authelia configuration
 authelia_enabled: true
-authelia_generate_secrets: true
 authelia:
   configMap:
     log:

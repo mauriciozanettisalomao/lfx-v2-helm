@@ -6,6 +6,7 @@
     "authelia",
     "dadrus",
     "dbname",
+    "finalizer",
     "gelf",
     "jetstream",
     "jouve",

@@ -134,6 +134,7 @@ mailpit:
 
 # Authelia configuration
 authelia_enabled: true
+authelia_generate_secrets: true
 authelia:
   configMap:
     log:
@@ -174,7 +175,7 @@ authelia:
           - client_id: heimdall
             client_name: Heimdall backend
             client_secret:
-              path: /secrets/client-secrets/heimdall
+              path: /secrets/authelia-clients-hashed/heimdall
             public: false
             scopes:
               - none
@@ -185,7 +186,7 @@ authelia:
           - client_id: m2m_test
             client_name: M2M Test Client
             client_secret:
-              path: /secrets/client-secrets/m2m_test
+              path: /secrets/authelia-clients-hashed/m2m_test
             public: false
             scopes:
               - none
@@ -216,9 +217,18 @@ authelia:
   secret:
     additionalSecrets:
       jwks-keys: {}
-      client-secrets: {}
+      authelia-clients-hashed: {}
   persistence:
     enabled: true
+
+authelia_generate_jwks:
+  enabled: true
+
+authelia_client_generation:
+  enabled: true
+  clients:
+    - heimdall
+    - m2m_test
 
 # Additional services. These will be included in the future when LFX platform
 # services are added.

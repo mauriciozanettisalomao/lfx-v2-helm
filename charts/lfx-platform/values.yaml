@@ -149,6 +149,18 @@ mailpit:
 # Authelia configuration
 authelia_enabled: true
 authelia:
+  pod:
+    extraVolumes:
+      - name: authelia-users
+        configMap:
+          name: authelia-users
+          items:
+            - key: users_database.yml
+              path: users_database.yml
+    extraVolumeMounts:
+      - name: authelia-users
+        mountPath: /config2
+        subpath: users_database.yml
   configMap:
     log:
       format: json
@@ -163,6 +175,7 @@ authelia:
     authentication_backend:
       file:
         enabled: true
+        path: /config2/users_database.yml
     access_control:
       default_policy: one_factor
     storage:
@@ -242,6 +255,15 @@ authelia_client_generation:
   clients:
     - heimdall
     - m2m_test
+
+authelia_user_generation:
+  enabled: true
+  users:
+    - project_super_admin
+    - project_admin_1
+    - project_admin_2
+    - committee_member_1
+    - committee_member_2
 
 # Additional services. These will be included in the future when LFX platform
 # services are added.

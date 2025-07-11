@@ -13,10 +13,6 @@ metadata:
   labels:
     {{- include "lfx-platform.labels" . | nindent 4 }}
     app.kubernetes.io/component: authelia
-  annotations:
-    helm.sh/hook: pre-install
-    helm.sh/hook-weight: "0"
-    helm.sh/hook-delete-policy: before-hook-creation
 data:
   "jwks-key-1.pem": "{{ $autheliapem | b64enc }}"
 {{- end }}

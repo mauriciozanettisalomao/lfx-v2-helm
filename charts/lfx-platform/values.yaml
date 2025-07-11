@@ -146,22 +146,7 @@ opensearch:
 mailpit:
   enabled: true
 
-# Authelia configuration
-authelia_enabled: true
-authelia:
-  pod:
-    extraVolumes:
-      - name: authelia-users
-        configMap:
-          name: authelia-users
-          items:
-            - key: users_database.yml
-              path: users_database.yml
-    extraVolumeMounts:
-      - name: authelia-users
-        mountPath: /config2
-        subpath: users_database.yml
-  configMap:
+autheliaConfigMap:
     log:
       format: json
     session:
@@ -191,6 +176,8 @@ authelia:
         disable_require_tls: true
     identity_providers:
       oidc:
+        lifespans: {}
+        cors: {}
         enabled: true
         jwks:
           - key_id: "1"
@@ -216,8 +203,8 @@ authelia:
             public: false
             scopes:
               - none
-            audience:
-              - "http://lfx-api.k8s.orb.local/"
+            audience_lfx_domain:
+              - "http://lfx-api"
             grant_types:
               - client_credentials
             authorization_policy: one_factor
@@ -232,12 +219,15 @@ authelia:
               - email
               - profile
               - offline_access
-            audience:
-              - "http://lfx-api.k8s.orb.local/"
+            audience_lfx_domain:
+              - "http://lfx-api"
             grant_types:
               - authorization_code
               - refresh_token
             authorization_policy: one_factor
+# Authelia configuration
+authelia_enabled: true
+authelia:
   ingress:
     enabled: true
   secret:
@@ -246,6 +236,26 @@ authelia:
       authelia-clients-hashed: {}
   persistence:
     enabled: true
+  pod:
+    extraVolumes:
+      - name: authelia-users
+        configMap:
+          name: authelia-users
+          items:
+            - key: users_database.yml
+              path: users_database.yml
+    extraVolumeMounts:
+      - name: authelia-users
+        mountPath: /config2
+        subpath: users_database.yml
+  configMap:
+    existingConfigMap: 'authelia-config'
+    # needed to pass authelia validation or it won't
+    # create an ingress
+    session:
+      cookies:
+        - domain: k8s.orb.local
+          subdomain: auth
 
 authelia_generate_jwks:
   enabled: true

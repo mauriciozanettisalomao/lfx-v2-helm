@@ -44,18 +44,20 @@ LFX v2 includes the following infrastructure components:
   Control (ReBAC).
 - **Heimdall**: Access decision service, bridges Traefik to OpenFGA.
 - **NATS**: Messaging layer used by LFX v2 resource APIs to communicate with
-  each other and with platform components.
+  each other and with platform components; also provides durable key-value storage.
 - **OpenSearch**: Powers platform global search and audit log capabilities.
 
 Building on those, custom platform components provide shared services essential
 to the LFX v2 platform:
 
-- **indexer**: Processes messages from resource APIs to keep OpenSearch in sync
+- **[indexer](https://github.com/linuxfoundation/lfx-v2-indexer-service)**:
+  Processes messages from resource APIs to keep OpenSearch in sync
   with data changes, and propagates data events to the rest of the platform.
 - **fga-sync**: Processes messages from resource APIs to keep OpenFGA
   relationships in sync with data changes, and acts as a caching proxy for
   serving OpenFGA bulk access-check requests in the platform.
-- **query-svc**: HTTP service for LFX API consumers to perform
+- **[query-svc](https://github.com/linuxfoundation/lfx-v2-query-service)**:
+  HTTP service for LFX API consumers to perform
   access-controlled queries for LFX resources, including typeahead and
   full-text search.
 - **access-check**: HTTP service for LFX API consumers to perform bulk access

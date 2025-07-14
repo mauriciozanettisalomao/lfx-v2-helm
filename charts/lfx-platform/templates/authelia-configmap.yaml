@@ -167,7 +167,7 @@ data:
     notifier:
       disable_startup_check: false
       smtp:
-        address: 'smtp://{{ .Release.Name }}-mailpit-smtp.{{ .Values.lfx.domain }}:25'
+        address: 'smtp://{{ .Release.Name }}-mailpit-smtp:25'
         timeout: '5 seconds'
         username: '{{ .Values.autheliaConfigMap.notifier.smtp.username | default "" }}'
         sender: '{{ .Values.autheliaConfigMap.notifier.smtp.sender | default "Authelia <admin@example.com>" }}'
@@ -348,4 +348,6 @@ data:
       {{- range $client := .Values.autheliaConfigMap.identity_providers.oidc.clients }}
         {{- tpl ($.Files.Get "files/configuration.oidc.client.yaml") (merge (dict "Client" $client "LFXDomain" $.Values.lfx.domain) $) | trim | nindent 10 }}
       {{- end }}
-        {{- end }}
+      {{- end }}
+    access_control:
+      default_policy: {{ .Values.autheliaConfigMap.access_control.default_policy | default "deny" | squote }}

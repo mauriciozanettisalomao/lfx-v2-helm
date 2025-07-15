@@ -23,7 +23,8 @@
     "tcsh",
     "totp",
     "traefik",
-    "webauthn"
+    "webauthn",
+    "websecure"
   ],
   "flagWords": [
     "abort",

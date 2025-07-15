@@ -27,6 +27,7 @@ helm repo add jouve https://jouve.github.io/charts/
 helm repo add nats https://nats-io.github.io/k8s/helm/charts/
 helm repo add openfga https://openfga.github.io/helm-charts
 helm repo add opensearch https://opensearch-project.github.io/helm-charts/
+helm repo add authelia https://charts.authelia.com
 helm repo update
 
 # Create namespace

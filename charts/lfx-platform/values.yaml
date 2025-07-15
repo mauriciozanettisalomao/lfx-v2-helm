@@ -147,6 +147,30 @@ mailpit:
   enabled: true
 
 autheliaConfigMap:
+# Authelia configuration
+authelia_enabled: true
+authelia:
+  ingress:
+    enabled: true
+  secret:
+    additionalSecrets:
+      authelia-jwks-keys: {}
+      authelia-clients-hashed: {}
+  persistence:
+    enabled: true
+  pod:
+    extraVolumes:
+      - name: authelia-users
+        configMap:
+          name: authelia-users
+          items:
+            - key: users_database.yml
+              path: users_database.yml
+    extraVolumeMounts:
+      - name: authelia-users
+        mountPath: /config-users
+        subpath: users_database.yml
+  configMap:
     log:
       format: json
     session:
@@ -160,7 +184,7 @@ autheliaConfigMap:
     authentication_backend:
       file:
         enabled: true
-        path: /config2/users_database.yml
+        path: /config-users/users_database.yml
     access_control:
       default_policy: one_factor
     storage:
@@ -169,7 +193,7 @@ autheliaConfigMap:
     notifier:
       smtp:
         enabled: true
-        address: "smtp://lfx-platform-mailpit-smtp.lfx.svc.cluster.local:25"
+        address: "smtp://lfx-platform-mailpit-smtp:25"
         username: ""
         password:
           disabled: true
@@ -203,8 +227,8 @@ autheliaConfigMap:
             public: false
             scopes:
               - none
-            audience_lfx_domain:
-              - "http://lfx-api"
+            audience:
+              - "http://lfx-api.k8s.orb.local"
             grant_types:
               - client_credentials
             authorization_policy: one_factor
@@ -219,43 +243,12 @@ autheliaConfigMap:
               - email
               - profile
               - offline_access
-            audience_lfx_domain:
-              - "http://lfx-api"
+            audience:
+              - "http://lfx-api.k8s.orb.local"
             grant_types:
               - authorization_code
               - refresh_token
             authorization_policy: one_factor
-# Authelia configuration
-authelia_enabled: true
-authelia:
-  ingress:
-    enabled: true
-  secret:
-    additionalSecrets:
-      authelia-jwks-keys: {}
-      authelia-clients-hashed: {}
-  persistence:
-    enabled: true
-  pod:
-    extraVolumes:
-      - name: authelia-users
-        configMap:
-          name: authelia-users
-          items:
-            - key: users_database.yml
-              path: users_database.yml
-    extraVolumeMounts:
-      - name: authelia-users
-        mountPath: /config2
-        subpath: users_database.yml
-  configMap:
-    existingConfigMap: 'authelia-config'
-    # needed to pass authelia validation or it won't
-    # create an ingress
-    session:
-      cookies:
-        - domain: k8s.orb.local
-          subdomain: auth
 
 authelia_generate_jwks:
   enabled: true

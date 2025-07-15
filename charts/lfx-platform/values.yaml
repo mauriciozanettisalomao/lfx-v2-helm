@@ -146,12 +146,15 @@ opensearch:
 mailpit:
   enabled: true
 
-autheliaConfigMap:
 # Authelia configuration
 authelia_enabled: true
 authelia:
   ingress:
     enabled: true
+    traefikCRD:
+      enabled: true
+      entryPoints:
+        - websecure
   secret:
     additionalSecrets:
       authelia-jwks-keys: {}

@@ -10,6 +10,7 @@
     "dbname",
     "finalizer",
     "gelf",
+    "gjson",
     "jetstream",
     "jouve",
     "kubeconform",

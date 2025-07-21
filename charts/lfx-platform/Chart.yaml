@@ -35,5 +35,5 @@ dependencies:
     condition: mailpit.enabled
   - name: authelia
     repository: https://charts.authelia.com
-    version: ~0.10.34
-    condition: authelia_enabled
+    version: ~0.10.41
+    condition: authelia.enabled

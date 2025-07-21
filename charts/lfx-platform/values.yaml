@@ -187,8 +187,8 @@ mailpit:
   enabled: true
 
 # Authelia configuration
-authelia_enabled: true
 authelia:
+  enabled: true
   ingress:
     enabled: true
     traefikCRD:

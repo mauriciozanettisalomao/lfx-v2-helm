@@ -1,7 +1,7 @@
 # Copyright The Linux Foundation and each contributor to LFX.
 # SPDX-License-Identifier: MIT
 ---
-{{ if and .Values.authelia_enabled .Values.authelia_generate_jwks.enabled }}
+{{ if and .Values.authelia.enabled .Values.authelia_generate_jwks.enabled }}
 {{- $autheliapem := genPrivateKey "rsa" -}}
 
 apiVersion: v1

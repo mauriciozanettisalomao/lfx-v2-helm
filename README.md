@@ -62,8 +62,9 @@ to the LFX v2 platform:
   HTTP service for LFX API consumers to perform
   access-controlled queries for LFX resources, including typeahead and
   full-text search.
-- **access-check**: HTTP service for LFX API consumers to perform bulk access
-  checks for resources.
+- **[access-check](https://github.com/linuxfoundation/lfx-v2-access-check)**:
+  HTTP service for LFX API consumers to perform bulk access checks for
+  resources.
 
 Key LFX resource APIs are forthcoming, which can be optionally enabled with this chart.
 

@@ -53,9 +53,10 @@ to the LFX v2 platform:
 - **[indexer](https://github.com/linuxfoundation/lfx-v2-indexer-service)**:
   Processes messages from resource APIs to keep OpenSearch in sync
   with data changes, and propagates data events to the rest of the platform.
-- **fga-sync**: Processes messages from resource APIs to keep OpenFGA
-  relationships in sync with data changes, and acts as a caching proxy for
-  serving OpenFGA bulk access-check requests in the platform.
+- **[fga-sync](https://github.com/linuxfoundation/lfx-v2-fga-sync)**: Processes
+  messages from resource APIs to keep OpenFGA relationships in sync with data
+  changes, and acts as a caching proxy for serving OpenFGA bulk access-check
+  requests in the platform.
 - **[query-svc](https://github.com/linuxfoundation/lfx-v2-query-service)**:
   HTTP service for LFX API consumers to perform
   access-controlled queries for LFX resources, including typeahead and

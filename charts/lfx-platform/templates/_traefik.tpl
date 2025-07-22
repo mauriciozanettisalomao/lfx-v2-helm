@@ -8,12 +8,11 @@ Determine if HTTPS is enabled and get the HTTPS listener name in a single loop
 */}}
 {{- define "lfx-platform.https-enabled" -}}
 {{- $httpsEnabled := false -}}
-{{- $httpsListener := "websecure" -}}
 {{- if .Values.traefik.gateway.listeners -}}
   {{- range $name, $listener := .Values.traefik.gateway.listeners -}}
     {{- if eq $listener.protocol "HTTPS" -}}
       {{- $httpsEnabled = true -}}
-      {{- $httpsListener = $name -}}
+      {{- break -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
@@ -24,13 +23,12 @@ Determine if HTTPS is enabled and get the HTTPS listener name in a single loop
 Get the HTTPS listener name (sectionName) from gateway listeners
 */}}
 {{- define "lfx-platform.https-listener" -}}
-{{- $httpsEnabled := false -}}
 {{- $httpsListener := "websecure" -}}
 {{- if .Values.traefik.gateway.listeners -}}
   {{- range $name, $listener := .Values.traefik.gateway.listeners -}}
     {{- if eq $listener.protocol "HTTPS" -}}
-      {{- $httpsEnabled = true -}}
       {{- $httpsListener = $name -}}
+      {{- break -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
@@ -46,6 +44,7 @@ Get the HTTP listener name (sectionName) from gateway listeners
   {{- range $name, $listener := .Values.traefik.gateway.listeners -}}
     {{- if eq $listener.protocol "HTTP" -}}
       {{- $httpListener = $name -}}
+      {{- break -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}

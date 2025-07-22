@@ -58,6 +58,19 @@ heimdall:
     replicaCount: 1
     autoscaling:
       enabled: false
+    volumes:
+      - name: heimdall-signer-cert
+        secret:
+          secretName: heimdall-signer-cert
+    volumeMounts:
+      - name: heimdall-signer-cert
+        mountPath: "/heimdall/cert/"
+
+  env:
+    CLIENT_SECRET:
+      secretKeyRef:
+        name: authelia-clients
+        key: heimdall
 
   log:
     format: gelf
@@ -76,17 +89,58 @@ heimdall:
         type: anonymous
         config:
           subject: "_anonymous"
+      - id: authelia
+        type: oauth2_introspection
+        config:
+          metadata_endpoint:
+            url: http://auth.k8s.orb.local/.well-known/oauth-authorization-server
+            resolved_endpoints:
+              introspection_endpoint:
+                auth:
+                  type: basic_auth
+                  config:
+                    user: heimdall
+                    password: ${CLIENT_SECRET}
+          assertions:
+            audience:
+              - "http://lfx-api.k8s.orb.local/"
+          subject:
+            # Authelia doesn't provide a "sub" claim for client_credentials token
+            # introspection. Use a GJSON query to extract either the username or
+            # the client_id. Client IDs can collide with usernames (and GJSON
+            # doesn't let us do array concatenation to add a literal prefix), so
+            # the `sub` claim should NOT be used downstream.
+            id: '[username,client_id].0'
+    contextualizers:
+      - id: authelia_userinfo
+        type: generic
+        config:
+          endpoint:
+            url: http://auth.k8s.orb.local/api/oidc/userinfo
+            method: GET
+          forward_headers:
+            - Authorization
+          # Continuing on error is needed if this contextualizer is used in any
+          # rulesets that support anonymous access.
+          continue_pipeline_on_error: true
     authorizers:
       - id: allow_all
         type: allow
       - id: deny_all
         type: deny
-    finalizers: []
+    finalizers:
+      - id: create_jwt
+        type: jwt
+        config:
+          signer:
+            key_store:
+              path: /heimdall/cert/signer.pem
 
   default_rule:
     execute:
       - authenticator: anonymous_authenticator
       - authorizer: deny_all
+      - finalizer: create_jwt
 
   extraArgs:
     - "--insecure"
@@ -131,6 +185,138 @@ opensearch:
 # Mailpit configuration
 mailpit:
   enabled: true
+
+# Authelia configuration
+authelia:
+  enabled: true
+  ingress:
+    enabled: true
+    traefikCRD:
+      enabled: true
+      entryPoints:
+        - websecure
+  secret:
+    additionalSecrets:
+      authelia-jwks-keys: {}
+      authelia-clients-hashed: {}
+  persistence:
+    enabled: true
+  pod:
+    extraVolumes:
+      - name: authelia-users
+        configMap:
+          name: authelia-users
+          items:
+            - key: users_database.yml
+              path: users_database.yml
+    extraVolumeMounts:
+      - name: authelia-users
+        mountPath: /config-users
+        subpath: users_database.yml
+  configMap:
+    log:
+      format: json
+    session:
+      cookies:
+        - domain: k8s.orb.local
+          subdomain: auth
+    totp:
+      disable: true
+    webauthn:
+      disable: true
+    authentication_backend:
+      file:
+        enabled: true
+        path: /config-users/users_database.yml
+    access_control:
+      default_policy: one_factor
+    storage:
+      local:
+        enabled: true
+    notifier:
+      smtp:
+        enabled: true
+        address: "smtp://lfx-platform-mailpit-smtp:25"
+        username: ""
+        password:
+          disabled: true
+        disable_require_tls: true
+    identity_providers:
+      oidc:
+        lifespans: {}
+        cors: {}
+        enabled: true
+        jwks:
+          - key_id: "1"
+            algorithm: "RS256"
+            key:
+              path: /secrets/authelia-jwks-keys/jwks-key-1.pem
+        clients:
+          - client_id: heimdall
+            client_name: Heimdall backend
+            client_secret:
+              path: /secrets/authelia-clients-hashed/heimdall
+            public: false
+            scopes:
+              - none
+            grant_types:
+              - client_credentials
+            authorization_policy: one_factor
+            token_endpoint_auth_method: client_secret_basic
+          - client_id: m2m_test
+            client_name: M2M Test Client
+            client_secret:
+              path: /secrets/authelia-clients-hashed/m2m_test
+            public: false
+            scopes:
+              - none
+            audience:
+              - "http://lfx-api.k8s.orb.local"
+            grant_types:
+              - client_credentials
+            authorization_policy: one_factor
+            token_endpoint_auth_method: client_secret_basic
+          - client_id: token_helper
+            client_name: Token Helper CLI
+            public: true
+            redirect_uris:
+              - "http://localhost:55001/callback"
+            scopes:
+              - openid
+              - email
+              - profile
+              - offline_access
+            audience:
+              - "http://lfx-api.k8s.orb.local"
+            grant_types:
+              - authorization_code
+              - refresh_token
+            authorization_policy: one_factor
+
+authelia_generate_jwks:
+  enabled: true
+
+authelia_client_generation:
+  enabled: true
+  clients:
+    - heimdall
+    - m2m_test
+
+authelia_user_generation:
+  enabled: true
+  users:
+    - project_super_admin
+    - project_admin_1
+    - project_admin_2
+    - committee_member_1
+    - committee_member_2
+
+nack:
+  enabled: true
+  jetstream:
+    nats:
+      url: nats://lfx-platform-nats:4222
+    additionalArgs: [--control-loop]
 
 # Additional services. These will be included in the future when LFX platform
 # services are added.

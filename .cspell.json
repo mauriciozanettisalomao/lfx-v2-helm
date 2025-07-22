@@ -4,9 +4,13 @@
   "words": [
     "aquasecurity",
     "authelia",
+    "contextualizer",
+    "contextualizers",
     "dadrus",
     "dbname",
+    "finalizer",
     "gelf",
+    "gjson",
     "jetstream",
     "jouve",
     "kubeconform",
@@ -20,7 +24,10 @@
     "subchart",
     "subcharts",
     "tcsh",
-    "traefik"
+    "totp",
+    "traefik",
+    "webauthn",
+    "websecure"
   ],
   "flagWords": [
     "abort",

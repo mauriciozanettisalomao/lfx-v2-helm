@@ -17,6 +17,7 @@ helm repo add nats https://nats-io.github.io/k8s/helm/charts/
 helm repo add openfga https://openfga.github.io/helm-charts
 helm repo add opensearch https://opensearch-project.github.io/helm-charts
 helm repo add jouve https://jouve.github.io/charts/
+helm repo add authelia https://charts.authelia.com
 helm repo update
 ```
 
@@ -100,6 +101,21 @@ For more NATS configuration options, see the [NATS Helm Chart documentation](htt
 
 For more mailpit configuration options, see the [Mailpit documentation](https://github.com/jouve/charts/tree/main/charts/mailpit).
 
+#### Authelia
+
+| Parameter          | Description     | Default |
+|--------------------|-----------------|---------|
+| `authelia.enabled` | Enable Authelia | `true`  |
+
+For more authelia configuration options, see the [Authelia documentation](https://github.com/authelia/chartrepo/tree/master/charts/authelia).
+
+#### NACK
+
+| Parameter          | Description     | Default |
+|--------------------|-----------------|---------|
+| `nack.enabled`     | Enable Nack     | `true`  |
+
+For more NACK configuration options, see the [NACK documentation](https://github.com/nats-io/k8s/tree/main/helm/charts/nack).
 
 ## Using external PostgreSQL with OpenFGA
 

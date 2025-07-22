@@ -33,13 +33,15 @@ jobs:
           APP_VERSION="$(echo ${{ github.ref_name }} | sed 's/v//g')"
           CHART_NAME="$(yq '.name' charts/*/Chart.yaml)"
           CHART_VERSION="$(yq '.version' charts/*/Chart.yaml)"
-          echo "app_version=$APP_VERSION" >> "$GITHUB_OUTPUT"
-          echo "chart_name=$CHART_NAME" >> "$GITHUB_OUTPUT"
-          echo "chart_version=$CHART_VERSION" >> "$GITHUB_OUTPUT"
+          {
+            echo "app_version=$APP_VERSION"
+            echo "chart_name=$CHART_NAME"
+            echo "chart_version=$CHART_VERSION"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Publish Chart to GHCR
         id: publish-ghcr
-        uses: linuxfoundation/lfx-public-workflows/.github/actions/helm-chart-oci-publisher@ems/chart-publisher
+        uses: linuxfoundation/lfx-public-workflows/.github/actions/helm-chart-oci-publisher@879e04231c853e185f9b55717fbec2139f1042f0 # ems/chart-publisher
         with:
           name: ${{ steps.prepare.outputs.chart_name }}
           repository: ${{ github.repository }}/chart

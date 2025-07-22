@@ -111,9 +111,9 @@ For more authelia configuration options, see the [Authelia documentation](https:
 
 #### NACK
 
-| Parameter          | Description     | Default |
-|--------------------|-----------------|---------|
-| `nack.enabled`     | Enable Nack     | `true`  |
+| Parameter      | Description | Default |
+|----------------|-------------|---------|
+| `nack.enabled` | Enable Nack | `true`  |
 
 For more NACK configuration options, see the [NACK documentation](https://github.com/nats-io/k8s/tree/main/helm/charts/nack).
 

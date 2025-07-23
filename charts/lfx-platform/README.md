@@ -1,6 +1,6 @@
 # LFX Platform helm chart
 
-This Helm chart deploys the LFX Platform V2 with its core infrastructure components.
+This Helm chart deploys platform services and key resource APIs for LFX v2 development.
 
 ## Prerequisites
 
@@ -111,9 +111,9 @@ For more authelia configuration options, see the [Authelia documentation](https:
 
 #### NACK
 
-| Parameter          | Description     | Default |
-|--------------------|-----------------|---------|
-| `nack.enabled`     | Enable Nack     | `true`  |
+| Parameter      | Description | Default |
+|----------------|-------------|---------|
+| `nack.enabled` | Enable Nack | `true`  |
 
 For more NACK configuration options, see the [NACK documentation](https://github.com/nats-io/k8s/tree/main/helm/charts/nack).
 

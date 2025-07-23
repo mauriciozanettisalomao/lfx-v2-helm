@@ -120,6 +120,33 @@ flowchart TD
 
 See the [lfx-platform chart README](./charts/lfx-platform/README.md) for configuration options and examples.
 
+## Releases
+
+This repository automatically publishes Helm charts to GitHub Container Registry (GHCR) when tags are created.
+
+### Creating a Release
+
+1. Update the chart version in `charts/lfx-platform/Chart.yaml`
+2. Create and push a git tag with the format `v{version}` (e.g., `v0.1.2`):
+   ```bash
+   git tag v0.1.2
+   git push origin v0.1.2
+   ```
+3. The GitHub Actions workflow will automatically:
+   - Package the Helm chart
+   - Publish it to `ghcr.io/linuxfoundation/lfx-v2-helm/chart`
+   - Sign the chart with cosign for security
+   - Generate SLSA provenance attestation
+
+### Using Released Charts
+
+You can install charts directly from GHCR:
+
+```bash
+# Install from GHCR
+helm install lfx-platform oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform --version 0.1.1
+```
+
 ## Development
 
 To contribute to this repository:

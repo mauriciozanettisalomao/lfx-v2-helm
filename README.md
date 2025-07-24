@@ -1,4 +1,4 @@
-# LFX v2 helm charts
+# LFX v2 Helm charts
 
 This repository contains Helm charts for deploying the LFX v2 platform on Kubernetes.
 
@@ -16,25 +16,8 @@ lfx-v2-helm/
 
 ## Installation
 
-To install the LFX Platform chart:
-
-```bash
-# Add required Helm repositories
-helm repo add traefik https://traefik.github.io/charts
-helm repo add dadrus https://dadrus.github.io/heimdall/charts
-helm repo add jouve https://jouve.github.io/charts/
-helm repo add nats https://nats-io.github.io/k8s/helm/charts/
-helm repo add openfga https://openfga.github.io/helm-charts
-helm repo add opensearch https://opensearch-project.github.io/helm-charts/
-helm repo add authelia https://charts.authelia.com
-helm repo update
-
-# Create namespace
-kubectl create namespace lfx
-
-# Install the chart
-helm install lfx-platform ./charts/lfx-platform -n lfx -f charts/lfx-platform/values.yaml
-```
+See the [lfx-platform chart README](./charts/lfx-platform/README.md) for
+installation instructions.
 
 ## Components
 
@@ -126,34 +109,41 @@ This repository automatically publishes Helm charts to GitHub Container Registry
 
 ### Creating a Release
 
-1. Update the chart version in `charts/lfx-platform/Chart.yaml`
-2. Create and push a git tag with the format `v{version}` (e.g., `v0.1.2`):
-   ```bash
-   git tag v0.1.2
-   git push origin v0.1.2
-   ```
+1. Update the chart version in `charts/lfx-platform/Chart.yaml` as part of any
+   pull requests which update the chart manifests or configuration.
+2. After the pull request is merged, create a GitHub release and choose the
+   option for GitHub to also tag the repository. The tag can be anything, but
+   the current convention is for the format `v{version}` (e.g., `v0.0.2`). This
+   tag does _not_ have to match the chart version: it is an `appVersion` that
+   is unused at the umbrella chart level, and _only_ used to trigger Helm
+   releases.
 3. The GitHub Actions workflow will automatically:
    - Package the Helm chart
    - Publish it to `ghcr.io/linuxfoundation/lfx-v2-helm/chart`
    - Sign the chart with cosign for security
    - Generate SLSA provenance attestation
 
-### Using Released Charts
-
-You can install charts directly from GHCR:
-
-```bash
-# Install from GHCR
-helm install lfx-platform oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform --version 0.1.1
-```
-
 ## Development
 
 To contribute to this repository:
 
 1. Fork the repository
-2. Make your changes
-3. Submit a pull request
+2. Commit your changes to a feature branch in your fork. Ensure your commits
+   are signed with the [Developer Certificate of Origin
+   (DCO)](https://developercertificate.org/).
+   You can use the `git commit -s` command to sign your commits.
+3. Ensure the chart version in `charts/lfx-platform/Chart.yaml` has been
+   updated following semantic version conventions.
+4. If you are adding a new platform component, ensure it is documented in the
+   [component diagram](#component-diagram) and the README.
+5. Run MegaLinter locally at the root of the working directory to check for
+   errors or linting problems:
+   ```bash
+   docker run --rm --platform linux/amd64 \
+     -v "$(pwd):/tmp/lint:rw" \
+     oxsecurity/megalinter-documentation:v8
+   ```
+6. Submit your pull request
 
 ## License
 

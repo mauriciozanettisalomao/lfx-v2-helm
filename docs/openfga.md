@@ -17,9 +17,9 @@ The fga-operator automates the synchronization between your Kubernetes deploymen
 
 ## Quick Start
 
-### 1. Verify the Model is Deployed
+### 1. Verify the Model Deployed
 
-The LFX Platform includes a pre-configured authorization model that is automatically deployed when you install the chart. The model is defined in `charts/lfx-platform/templates/openfga/model.yaml`. Check that it was deployed successfully:
+The LFX Platform includes a pre-configured authorization model that's automatically deployed when you install the chart. The model can be found in `charts/lfx-platform/templates/openfga/model.yaml`. Check that it deployed successfully:
 
 ```bash
 # Check AuthorizationModelRequest status
@@ -158,7 +158,7 @@ spec:
 
 ### Checking Deployment Updates
 
-Verify that your deployment has been updated with the latest model information:
+Verify that your deployment updated with the latest model information:
 
 ```bash
 # Check environment variables
@@ -218,5 +218,5 @@ kubectl describe AuthorizationModelRequest lfx-core -n lfx
 
 - [OpenFGA Documentation](https://openfga.dev/)
 - [fga-operator GitHub Repository](https://github.com/3schwartz/fga-operator)
-- [OpenFGA CLI Documentation](https://openfga.dev/docs/cli)
-- [OpenFGA Helm Chart](https://github.com/openfga/helm-charts) 
+- [OpenFGA CLI Documentation](https://openfga.dev/docs/getting-started/cli)
+- [OpenFGA Helm Chart](https://github.com/openfga/helm-charts)

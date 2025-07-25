@@ -1,33 +1,44 @@
-# LFX Platform helm chart
+# LFX platform umbrella Helm chart
 
-This Helm chart deploys platform services and key resource APIs for LFX v2 development.
+This Helm chart deploys infrastructure components, platform services, and key
+resource APIs for the LFX platform.
 
 ## Prerequisites
 
 - Kubernetes 1.19+
 - Helm 3.2.0+
-- PV provisioner support in the underlying infrastructure (if persistence is enabled)
-
-## Add chart repositories
-
-```bash
-helm repo add traefik https://traefik.github.io/charts
-helm repo add dadrus https://dadrus.github.io/heimdall/charts
-helm repo add nats https://nats-io.github.io/k8s/helm/charts/
-helm repo add openfga https://openfga.github.io/helm-charts
-helm repo add opensearch https://opensearch-project.github.io/helm-charts
-helm repo add jouve https://jouve.github.io/charts/
-helm repo add authelia https://charts.authelia.com
-helm repo update
-```
+- PV provisioner support in the underlying infrastructure (if persistence is
+  enabled)
 
 ## Installing the chart
 
-To install the chart with the release name `lfx-platform`:
+### Installing via the OCI registry
 
 ```bash
+# Create namespace (recommended).
 kubectl create namespace lfx
-helm install lfx-platform . -n lfx -f values.yaml
+
+# Install the chart.
+helm install -n lfx lfx-platform \
+  oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
+  --version 0.1.1
+```
+
+### Installing from source
+
+Clone the repository before running the following commands from the root of the
+working directory.
+
+```bash
+# Create namespace (recommended).
+kubectl create namespace lfx
+
+# Pull down chart dependencies.
+helm dependency update charts/lfx-platform
+
+# Install the chart.
+helm install -n lfx lfx-platform \
+    ./charts/lfx-platform
 ```
 
 ## Uninstalling the chart
@@ -36,11 +47,15 @@ To uninstall/delete the `lfx-platform` deployment:
 
 ```bash
 helm uninstall lfx-platform -n lfx
+# Optional: delete the namespace to delete any persistent resources.
+kubectl delete namespace lfx
 ```
 
 ## Configuration
 
-The following table lists the configurable parameters of the LFX Platform chart and their default values.
+The following table lists the configurable parameters of the LFX Platform chart
+and their default values. You can override these values in your own
+`values.yaml` file or by using the `--set` flag when installing the chart.
 
 ### Global parameters
 

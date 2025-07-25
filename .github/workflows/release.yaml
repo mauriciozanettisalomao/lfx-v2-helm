@@ -34,11 +34,9 @@ jobs:
         id: prepare
         run: |
           set -euo pipefail
-          APP_VERSION="$(echo ${{ github.ref_name }} | sed 's/v//g')"
           CHART_NAME="$(yq '.name' charts/*/Chart.yaml)"
           CHART_VERSION="$(yq '.version' charts/*/Chart.yaml)"
           {
-            echo "app_version=$APP_VERSION"
             echo "chart_name=$CHART_NAME"
             echo "chart_version=$CHART_VERSION"
           } >> "$GITHUB_OUTPUT"
@@ -50,7 +48,6 @@ jobs:
           name: ${{ steps.prepare.outputs.chart_name }}
           repository: ${{ github.repository }}/chart
           chart_version: ${{ steps.prepare.outputs.chart_version }}
-          app_version: ${{ steps.prepare.outputs.app_version }}
           registry: ghcr.io
           registry_username: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}

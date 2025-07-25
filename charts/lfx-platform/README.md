@@ -71,6 +71,8 @@ For more Traefik configuration options, see the [Traefik Helm Chart documentatio
 
 For more OpenFGA configuration options, see the [OpenFGA Helm Chart documentation](https://github.com/openfga/helm-charts).
 
+For information on managing OpenFGA see the [OpenFGA Documentation](../../docs/openfga.md).
+
 #### Heimdall
 
 | Parameter                              | Description                             | Default            |
@@ -138,3 +140,5 @@ openfga:
   datastore:
     existingSecret: openfga-postgresql-client
 ```
+
+## Documentation

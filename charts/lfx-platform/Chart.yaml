@@ -3,10 +3,9 @@
 ---
 apiVersion: v2
 name: lfx-platform
-description: LFX Platform V2 Helm chart
+description: LFX Platform v2 Helm chart
 type: application
 version: 0.1.1
-appVersion: "0.1.0"
 icon: https://github.com/linuxfoundation/lfx-v2-helm/raw/main/img/lfx-logo-color.svg
 dependencies:
   - name: traefik
@@ -37,3 +36,7 @@ dependencies:
     repository: https://charts.authelia.com
     version: ~0.10.41
     condition: authelia.enabled
+  - name: nack
+    repository: https://nats-io.github.io/k8s/helm/charts/
+    version: ~0.29.0
+    condition: nack.enabled

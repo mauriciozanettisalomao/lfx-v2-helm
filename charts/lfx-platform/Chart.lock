@@ -20,5 +20,8 @@ dependencies:
 - name: authelia
   repository: https://charts.authelia.com
   version: 0.10.41
-digest: sha256:d8cd8caf9088b26ae0ce301ddc98b1e0583b51afa5781737a2221d5e7b4e62bb
-generated: "2025-07-21T13:39:49.841356-07:00"
+- name: nack
+  repository: https://nats-io.github.io/k8s/helm/charts/
+  version: 0.29.0
+digest: sha256:4c4959d3be948ca6f92601403c6ad8a14513fb57878b19152a4a402fc4ecdaab
+generated: "2025-07-22T10:45:48.174955-07:00"

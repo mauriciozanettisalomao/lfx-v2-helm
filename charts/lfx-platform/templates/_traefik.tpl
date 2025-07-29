@@ -37,14 +37,19 @@ Get the HTTPS listener name (sectionName) from gateway listeners
 
 {{/*
 Get the HTTP listener name (sectionName) from gateway listeners
+Prioritize "web" listener if it exists, otherwise use the first HTTP listener found
 */}}
 {{- define "lfx-platform.http-listener" -}}
 {{- $httpListener := "web" -}}
 {{- if .Values.traefik.gateway.listeners -}}
-  {{- range $name, $listener := .Values.traefik.gateway.listeners -}}
-    {{- if eq $listener.protocol "HTTP" -}}
-      {{- $httpListener = $name -}}
-      {{- break -}}
+  {{- if index .Values.traefik.gateway.listeners "web" -}}
+    {{- $httpListener = "web" -}}
+  {{- else -}}
+    {{- range $name, $listener := .Values.traefik.gateway.listeners -}}
+      {{- if eq $listener.protocol "HTTP" -}}
+        {{- $httpListener = $name -}}
+        {{- break -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}

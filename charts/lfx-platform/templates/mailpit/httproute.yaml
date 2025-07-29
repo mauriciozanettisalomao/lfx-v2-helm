@@ -5,7 +5,7 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: mailpit
+  name: {{ include "common.names.fullname" .Subcharts.mailpit }}
   namespace: {{ .Release.Namespace }}
 spec:
   parentRefs:
@@ -16,7 +16,7 @@ spec:
     - 'mailpit.{{ .Values.lfx.domain }}'
   rules:
     - backendRefs:
-        - name: lfx-platform-mailpit-http
+        - name: {{ include "common.names.fullname" .Subcharts.mailpit }}-http
           namespace: {{ .Release.Namespace }}
-          port: 80
+          port: {{ .Values.mailpit.service.http.port }}
 {{- end }}

@@ -205,12 +205,6 @@ mailpit:
 # Authelia configuration
 authelia:
   enabled: true
-  ingress:
-    enabled: true
-    traefikCRD:
-      enabled: true
-      entryPoints:
-        - websecure
   secret:
     additionalSecrets:
       authelia-jwks-keys: {}

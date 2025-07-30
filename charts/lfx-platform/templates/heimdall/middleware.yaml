@@ -1,7 +1,7 @@
 # Copyright The Linux Foundation and each contributor to LFX.
 # SPDX-License-Identifier: MIT
 ---
-{{ if .Values.heimdall.enabled -}}
+{{ if and .Values.heimdall.enabled .Values.traefik.enabled -}}
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:

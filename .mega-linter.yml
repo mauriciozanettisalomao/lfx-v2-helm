@@ -37,5 +37,5 @@ SPELL_VALE_PRE_COMMANDS:
 FILTER_REGEX_EXCLUDE: '(templates/.*\.yml|templates/.*\.yaml)'
 KUBERNETES_DIRECTORY: charts/lfx-platform
 KUBERNETES_HELM_ARGUMENTS: charts/lfx-platform
-KUBERNETES_HELM_PRE_COMMAND: |
+KUBERNETES_HELM_PRE_COMMANDS: |
   helm dependency update charts/lfx-platform

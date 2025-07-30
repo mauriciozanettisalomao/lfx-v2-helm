@@ -21,6 +21,9 @@ traefik:
     # Disable Kubernetes Ingress provider
     kubernetesIngress:
       enabled: false
+    # Disable Kubernetes IngressRoute provider
+    kubernetesCRD:
+      enabled: false
   gateway:
     # Create a default gateway
     enabled: true

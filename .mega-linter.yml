@@ -38,4 +38,4 @@ FILTER_REGEX_EXCLUDE: '(templates/.*\.yml|templates/.*\.yaml)'
 KUBERNETES_DIRECTORY: charts/lfx-platform
 KUBERNETES_HELM_ARGUMENTS: charts/lfx-platform
 KUBERNETES_HELM_PRE_COMMANDS:
-  - helm dependency update charts/lfx-platform
+  - command: helm dependency update charts/lfx-platform

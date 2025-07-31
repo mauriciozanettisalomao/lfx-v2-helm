@@ -9,7 +9,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   forwardAuth:
-    address: "http://lfx-platform-heimdall:4456"
+    address: "http://{{ include "heimdall.fullname" .Subcharts.heimdall }}.{{ .Release.Namespace }}:4456"
     authResponseHeaders:
       - Authorization
 {{- end }}

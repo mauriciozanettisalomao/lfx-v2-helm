@@ -252,6 +252,8 @@ mailpit:
 # Authelia configuration
 authelia:
   enabled: true
+  ingress:
+    enabled: true
   secret:
     additionalSecrets:
       authelia-jwks-keys: {}

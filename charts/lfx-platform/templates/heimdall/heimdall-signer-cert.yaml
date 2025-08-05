@@ -5,8 +5,9 @@
 {{/*
 Generate a cert for Heimdall on install of Chart
   TODO: Create RBAC rule to limit secret access to heimdall Pods
+  TODO: Update to a 4096 bit key instead of 2048, sort out PS512 vs PS256
 */}}
-{{- $heimdallCert := genPrivateKey "rsa" -}}
+{{- $heimdallCert := genCA "foo" 365 }}
 
 apiVersion: v1
 kind: Secret
@@ -22,5 +23,5 @@ metadata:
     helm.sh/hook-weight: "0"
     helm.sh/hook-delete-policy: before-hook-creation
 data:
-  "signer.pem": "{{ $heimdallCert | b64enc }}"
+  "signer.pem": "{{ $heimdallCert.Key | b64enc }}"
 {{- end }}

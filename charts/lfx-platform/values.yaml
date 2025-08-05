@@ -161,7 +161,7 @@ heimdall:
         type: allow
       - id: deny_all
         type: deny
-      - id: openfga
+      - id: openfga_check
         type: remote
         config:
           endpoint: "http://lfx-platform-openfga:8080/stores/${OPENFGA_STORE_ID}/check"

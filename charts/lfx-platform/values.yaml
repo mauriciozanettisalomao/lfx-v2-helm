@@ -84,10 +84,13 @@ heimdall:
   image:
     tag: 0.16.6
 
+
   deployment:
     replicaCount: 1
     autoscaling:
       enabled: false
+    labels:
+      openfga-store: "lfx-core"
     volumes:
       - name: heimdall-signer-cert
         secret:
@@ -158,6 +161,36 @@ heimdall:
         type: allow
       - id: deny_all
         type: deny
+      - id: openfga_check
+        type: remote
+        config:
+          endpoint: "http://lfx-platform-openfga:8080/stores/${OPENFGA_STORE_ID}/check"
+          values:
+            model_id: ${OPENFGA_AUTH_MODEL_ID}
+          payload: |
+            {
+              "authorization_model_id": "{{ .Values.model_id }}",
+              "tuple_key": {
+                "user": {{
+                  list
+                    "user:"
+                    (
+                      eq .Subject.ID "_anonymous"
+                      | ternary
+                        "_anonymous"
+                        (or
+                          .Subject.Attributes.username
+                          (list "clients@" .Subject.Attributes.client_id | join ""))
+                    )
+                  | join "" | quote
+                }},
+                "relation": "{{ .Values.relation }}",
+                "object": "{{ .Values.object }}"
+              }
+            }
+          expressions:
+            - expression: |
+                Payload.allowed == true
     finalizers:
       - id: create_jwt
         type: jwt

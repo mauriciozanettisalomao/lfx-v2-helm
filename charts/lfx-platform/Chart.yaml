@@ -5,7 +5,7 @@ apiVersion: v2
 name: lfx-platform
 description: LFX Platform v2 Helm chart
 type: application
-version: 0.1.8
+version: 0.1.9
 icon: https://github.com/linuxfoundation/lfx-v2-helm/raw/main/img/lfx-logo-color.svg
 dependencies:
   - name: traefik
@@ -44,7 +44,11 @@ dependencies:
     repository: https://3schwartz.github.io/fga-operator/
     version: ~1.0.0
     condition: fga-operator.enabled
+  - name: cert-manager
+    repository: https://charts.jetstack.io
+    version: ~1.18.2
+    condition: cert-manager.enabled
   - name: trust-manager
     repository: https://charts.jetstack.io
     version: ~0.18.0
-    condition: trust-manager-enabled
+    condition: trustManagerEnabled

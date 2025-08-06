@@ -26,8 +26,11 @@ dependencies:
 - name: fga-operator
   repository: https://3schwartz.github.io/fga-operator/
   version: 1.0.0
+- name: cert-manager
+  repository: https://charts.jetstack.io
+  version: v1.18.2
 - name: trust-manager
   repository: https://charts.jetstack.io
   version: v0.18.0
-digest: sha256:61536bbfab1eafca462f82f4612470de2d1fab9f44bfd8e8ff3d5cfc4d770bc3
-generated: "2025-08-06T09:08:39.763963-07:00"
+digest: sha256:39213eb59f4710c62bea63fa3545c34e1b84e0f48353757d813ed727537f41e8
+generated: "2025-08-06T10:15:28.22001-07:00"

@@ -7,10 +7,10 @@ dependencies:
   version: 0.2.39
 - name: heimdall
   repository: https://dadrus.github.io/heimdall/charts
-  version: 0.15.7
+  version: 0.15.8
 - name: nats
   repository: https://nats-io.github.io/k8s/helm/charts/
-  version: 1.3.9
+  version: 1.3.10
 - name: opensearch
   repository: https://opensearch-project.github.io/helm-charts/
   version: 2.34.0
@@ -22,12 +22,12 @@ dependencies:
   version: 0.10.41
 - name: nack
   repository: https://nats-io.github.io/k8s/helm/charts/
-  version: 0.29.0
+  version: 0.29.1
 - name: fga-operator
   repository: https://3schwartz.github.io/fga-operator/
   version: 1.0.0
 - name: trust-manager
   repository: https://charts.jetstack.io
   version: v0.18.0
-digest: sha256:cd8fcf9d0507f177de15dddb9c985f97c5283e8d5b591067f74be2e6f2ac2c80
-generated: "2025-08-05T16:54:10.283768-07:00"
+digest: sha256:61536bbfab1eafca462f82f4612470de2d1fab9f44bfd8e8ff3d5cfc4d770bc3
+generated: "2025-08-06T09:08:39.763963-07:00"

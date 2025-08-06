@@ -1,7 +1,7 @@
 # Copyright The Linux Foundation and each contributor to LFX.
 # SPDX-License-Identifier: MIT
 ---
-{{- if .Values.lfx.generateHeimdallBundle.enabled -}}
+{{- if and .Values.lfx.generateHeimdallBundle.enabled (and .Values.heimdall.enabled .Values.trustManagerEnabled) -}}
 apiVersion: trust.cert-manager.io/v1alpha1
 kind: Bundle
 metadata:

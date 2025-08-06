@@ -403,7 +403,7 @@ cert-manager:
   enabled: false
   crds:
     enabled: true
-trust-manager-enabled: false
+trustManagerEnabled: false
 trust-manager:
   crds:
     enabled: true

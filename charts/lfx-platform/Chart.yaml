@@ -51,4 +51,4 @@ dependencies:
   - name: trust-manager
     repository: https://charts.jetstack.io
     version: ~0.18.0
-    condition: trust-manager-enabled
+    condition: trustManagerEnabled

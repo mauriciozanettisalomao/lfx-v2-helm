@@ -9,7 +9,7 @@ version: 0.1.10
 icon: https://github.com/linuxfoundation/lfx-v2-helm/raw/main/img/lfx-logo-color.svg
 dependencies:
   - name: traefik
-    repository: https://traefik.github.io/charts
+    repository: oci://ghcr.io/traefik/helm
     version: ~36.2.0
     condition: traefik.enabled
   - name: openfga
@@ -17,7 +17,7 @@ dependencies:
     version: ~0.2.37
     condition: openfga.enabled
   - name: heimdall
-    repository: https://dadrus.github.io/heimdall/charts
+    repository: oci://ghcr.io/dadrus/heimdall/chart
     version: ~0.15.6
     condition: heimdall.enabled
   - name: nats

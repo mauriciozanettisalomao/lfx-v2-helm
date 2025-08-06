@@ -1,12 +1,12 @@
 dependencies:
 - name: traefik
-  repository: https://traefik.github.io/charts
+  repository: oci://ghcr.io/traefik/helm
   version: 36.2.0
 - name: openfga
   repository: https://openfga.github.io/helm-charts
   version: 0.2.39
 - name: heimdall
-  repository: https://dadrus.github.io/heimdall/charts
+  repository: oci://ghcr.io/dadrus/heimdall/chart
   version: 0.15.8
 - name: nats
   repository: https://nats-io.github.io/k8s/helm/charts/
@@ -32,5 +32,5 @@ dependencies:
 - name: trust-manager
   repository: https://charts.jetstack.io
   version: v0.18.0
-digest: sha256:591a323ff20b90c4b50fd92c63788e91d7e08ff2606f155af26e38527680a84d
-generated: "2025-08-06T11:35:55.1914-07:00"
+digest: sha256:62f9779ba2521042d18193fcaa7010ed905045c61579997d6551b2e9c23437fc
+generated: "2025-08-06T13:14:49.133573-07:00"

@@ -1,0 +1,16 @@
+# Copyright The Linux Foundation and each contributor to LFX.
+# SPDX-License-Identifier: MIT
+---
+{{- if .Values.lfx.generateHeimdallBundle.enabled -}}
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: {{ .Values.lfx.generateHeimdallBundle.name }}
+spec:
+  sources:
+  - useDefaultCAs: true
+  target:
+    configMap:
+      key: "{{ .Values.lfx.generateHeimdallBundle.configKey }}"
+
+{{- end }}

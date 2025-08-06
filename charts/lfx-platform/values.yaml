@@ -11,6 +11,11 @@ lfx:
     registry: linuxfoundation
     pullPolicy: IfNotPresent
 
+  generateHeimdallBundle:
+    enabled: false
+    name: heimdall-trust-bundle
+    configKey: ca-certificates.crt
+
 fga-operator:
   enabled: true
   # Non-chart value
@@ -394,6 +399,10 @@ nack:
       url: nats://lfx-platform-nats:4222
     additionalArgs: [--control-loop]
 
+cert-manager:
+  enabled: false
+  crds:
+    enabled: true
 trust-manager-enabled: false
 trust-manager:
   crds:

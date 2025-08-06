@@ -4,7 +4,7 @@ dependencies:
   version: 36.2.0
 - name: openfga
   repository: https://openfga.github.io/helm-charts
-  version: 0.2.38
+  version: 0.2.39
 - name: heimdall
   repository: https://dadrus.github.io/heimdall/charts
   version: 0.15.7
@@ -26,5 +26,8 @@ dependencies:
 - name: fga-operator
   repository: https://3schwartz.github.io/fga-operator/
   version: 1.0.0
-digest: sha256:a826405ffe32fac17de8a7b9a93e580cdd2be07d0f950bcaa41e0b3b176a5ebc
-generated: "2025-07-24T13:06:18.443902223-07:00"
+- name: trust-manager
+  repository: https://charts.jetstack.io
+  version: v0.18.0
+digest: sha256:cd8fcf9d0507f177de15dddb9c985f97c5283e8d5b591067f74be2e6f2ac2c80
+generated: "2025-08-05T16:54:10.283768-07:00"

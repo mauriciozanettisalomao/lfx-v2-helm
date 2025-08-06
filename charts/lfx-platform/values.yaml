@@ -394,6 +394,11 @@ nack:
       url: nats://lfx-platform-nats:4222
     additionalArgs: [--control-loop]
 
+trust-manager-enabled: false
+trust-manager:
+  crds:
+    enabled: true
+  namespace: cert-manager
 # Additional services. These will be included in the future when LFX platform
 # services are added.
 additionalServices:

@@ -6,6 +6,7 @@
     "authelia",
     "contextualizer",
     "contextualizers",
+    "crds",
     "dadrus",
     "dbname",
     "finalizer",

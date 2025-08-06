@@ -29,9 +29,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Installs packaged subcharts under charts/${chart}/charts/*.tgz. Also
-      # fails if the Chart.lock digest is wrong. Does not support multiple
-      # charts: `charts/*` is expected to resolve to a single path.
+      # Installs packaged subcharts under charts/*/charts/*.tgz. Also
+      # fails if the Chart.lock digest is wrong.
       - name: Helm dependency fetch
         shell: bash
         run: |

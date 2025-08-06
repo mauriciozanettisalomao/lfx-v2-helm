@@ -44,3 +44,7 @@ dependencies:
     repository: https://3schwartz.github.io/fga-operator/
     version: ~1.0.0
     condition: fga-operator.enabled
+  - name: trust-manager
+    repository: https://charts.jetstack.io
+    version: ~0.18.0
+    condition: trust-manager-enabled

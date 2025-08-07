@@ -16,6 +16,14 @@ lfx:
     name: heimdall-trust-bundle
     configKey: ca-certificates.crt
 
+  whoami:
+    enabled: true
+
+  # Tells rulesets to use the oidc_contextualizer, needed for
+  # local dev with authelia
+  use_oidc_contextualizer: true
+
+
 fga-operator:
   enabled: true
   # Non-chart value
@@ -127,7 +135,7 @@ heimdall:
         type: anonymous
         config:
           subject: "_anonymous"
-      - id: authelia
+      - id: oidc
         type: oauth2_introspection
         config:
           metadata_endpoint:
@@ -150,7 +158,7 @@ heimdall:
             # the `sub` claim should NOT be used downstream.
             id: '[username,client_id].0'
     contextualizers:
-      - id: authelia_userinfo
+      - id: oidc_contextualizer
         type: generic
         config:
           endpoint:
@@ -214,8 +222,8 @@ heimdall:
                             (list "clients@" .Subject.Attributes.client_id | join ""))
                         | quote
                       }}
-                      {{ if .Outputs.authelia_userinfo.email -}},
-                      "email": {{ quote .Outputs.authelia_userinfo.email }}
+                      {{ if .Outputs.oidc_contextualizer.email -}},
+                      "email": {{ quote .Outputs.oidc_contextualizer.email }}
                       {{ end -}}
                       {{ if .Values.aud -}},
                       "aud": {{ quote .Values.aud }}
@@ -224,7 +232,8 @@ heimdall:
 
   default_rule:
     execute:
-      - authenticator: anonymous_authenticator
+      - authenticator: oidc
+      - contextualizer: oidc_contextualizer
       - authorizer: deny_all
       - finalizer: create_jwt
 

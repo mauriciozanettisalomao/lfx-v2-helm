@@ -1,7 +1,8 @@
 # Copyright The Linux Foundation and each contributor to LFX.
 # SPDX-License-Identifier: MIT
 ---
-{{ if and .Values.mailpit.enabled .Values.traefik.enabled (include "lfx-platform.https-enabled" .) -}}
+{{ if and .Values.mailpit.enabled (include "lfx-platform.https-enabled" .) (or
+  .Values.traefik.enabled .Values.lfx.parentGateway.enabled) -}}
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
@@ -9,9 +10,15 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   parentRefs:
+{{- if .Values.traefik.enabled }}
     - name: {{ .Values.traefik.gateway.name }}
       sectionName: {{ include "lfx-platform.http-listener" . }}
       namespace: {{ .Release.Namespace }}
+{{- else }}
+    - name: {{ .Values.lfx.parentGateway.name }}
+      sectionName: {{ .Values.lfx.parentGateway.sectionName }}
+      namespace: {{ .Values.lfx.parentGateway.namespace }}
+{{- end }}
   hostnames:
     - 'mailpit.{{ .Values.lfx.domain }}'
   rules:

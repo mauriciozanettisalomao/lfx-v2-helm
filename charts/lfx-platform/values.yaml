@@ -23,6 +23,12 @@ lfx:
   # local dev with authelia
   use_oidc_contextualizer: true
 
+  # Fallback gateway can be enabled if traefik.enabled is false.
+  parentGateway:
+    enabled: false
+    name: traefik
+    sectionName: websecure
+    namespace: default
 
 fga-operator:
   enabled: true

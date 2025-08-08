@@ -41,7 +41,7 @@ spec:
             define member: [user]
             define project: [project]
             define writer: writer from project
-            define auditor: auditor from project
+            define auditor: auditor from project or meeting_coordinator from project
             define viewer: [user:*] or auditor from project
 
         type meeting

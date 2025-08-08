@@ -23,6 +23,10 @@ lfx:
   # local dev with authelia
   use_oidc_contextualizer: true
 
+  # Parent gateway configuration that is used if traefik.enabled is false.
+  parentGateway:
+    name: traefik
+    namespace: default
 
 fga-operator:
   enabled: true

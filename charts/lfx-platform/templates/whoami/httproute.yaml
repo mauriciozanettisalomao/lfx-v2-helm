@@ -12,9 +12,11 @@ spec:
   parentRefs:
 {{- if .Values.traefik.enabled }}
     - name: {{ .Values.traefik.gateway.name }}
+      sectionName: {{ include "lfx-platform.default-listener" . }}
       namespace: {{ .Release.Namespace }}
 {{- else }}
     - name: {{ .Values.lfx.parentGateway.name }}
+      sectionName: {{ .Values.lfx.parentGateway.sectionName }}
       namespace: {{ .Values.lfx.parentGateway.namespace }}
 {{- end }}
   hostnames:

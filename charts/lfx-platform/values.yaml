@@ -27,6 +27,7 @@ lfx:
   parentGateway:
     enabled: false
     name: traefik
+    sectionName: websecure
     namespace: default
 
 fga-operator:

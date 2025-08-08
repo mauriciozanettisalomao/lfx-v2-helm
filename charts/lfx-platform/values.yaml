@@ -25,7 +25,7 @@ lfx:
 
   # Fallback gateway can be enabled if traefik.enabled is false.
   parentGateway:
-    enable: false
+    enabled: false
     name: traefik
     namespace: default
 

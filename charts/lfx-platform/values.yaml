@@ -23,8 +23,9 @@ lfx:
   # local dev with authelia
   use_oidc_contextualizer: true
 
-  # Parent gateway configuration that is used if traefik.enabled is false.
+  # Fallback gateway can be enabled if traefik.enabled is false.
   parentGateway:
+    enable: false
     name: traefik
     namespace: default
 

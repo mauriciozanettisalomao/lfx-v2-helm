@@ -8,8 +8,8 @@ Determine if HTTPS is enabled and get the HTTPS listener name in a single loop
 */}}
 {{- define "lfx-platform.https-enabled" -}}
 {{- $httpsEnabled := false -}}
-{{- if .Values.traefik.gateway.listeners -}}
-  {{- range $name, $listener := .Values.traefik.gateway.listeners -}}
+{{- if .Values.gateway.listeners -}}
+  {{- range $name, $listener := .Values.gateway.listeners -}}
     {{- if eq $listener.protocol "HTTPS" -}}
       {{- $httpsEnabled = true -}}
       {{- break -}}
@@ -24,8 +24,8 @@ Get the HTTPS listener name (sectionName) from gateway listeners
 */}}
 {{- define "lfx-platform.https-listener" -}}
 {{- $httpsListener := "websecure" -}}
-{{- if .Values.traefik.gateway.listeners -}}
-  {{- range $name, $listener := .Values.traefik.gateway.listeners -}}
+{{- if .Values.gateway.listeners -}}
+  {{- range $name, $listener := .Values.gateway.listeners -}}
     {{- if eq $listener.protocol "HTTPS" -}}
       {{- $httpsListener = $name -}}
       {{- break -}}
@@ -41,11 +41,11 @@ Prioritize "web" listener if it exists, otherwise use the first HTTP listener fo
 */}}
 {{- define "lfx-platform.http-listener" -}}
 {{- $httpListener := "web" -}}
-{{- if .Values.traefik.gateway.listeners -}}
-  {{- if index .Values.traefik.gateway.listeners "web" -}}
+{{- if .Values.gateway.listeners -}}
+  {{- if index .Values.gateway.listeners "web" -}}
     {{- $httpListener = "web" -}}
   {{- else -}}
-    {{- range $name, $listener := .Values.traefik.gateway.listeners -}}
+    {{- range $name, $listener := .Values.gateway.listeners -}}
       {{- if eq $listener.protocol "HTTP" -}}
         {{- $httpListener = $name -}}
         {{- break -}}

@@ -55,20 +55,32 @@ traefik:
     kubernetesCRD:
       enabled: true
   gateway:
-    # Create a default gateway
-    enabled: true
-    name: "lfx-platform-gateway"
-    listeners:
-      web:
-        port: 8000
-        protocol: HTTP
-      traefik:
-        port: 8080
-        protocol: HTTP
+    # Disable Traefik's default gateway since we manage it explicitly
+    enabled: false
   logs:
     # Enable access logs
     access:
       enabled: true
+
+# Gateway configuration
+gateway:
+  enabled: true
+
+  # Gateway listeners
+  listeners:
+    traefik:
+      port: 8080
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: Same
+    web:
+      port: 8000
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: Same
+
 
 # OpenFGA configuration
 openfga:

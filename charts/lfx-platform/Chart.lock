@@ -32,5 +32,20 @@ dependencies:
 - name: trust-manager
   repository: https://charts.jetstack.io
   version: v0.18.0
-digest: sha256:749e5824417f2149f41a3a67874c6134bd105d2fc384fb85dd2e9cb45f52d8e8
-generated: "2025-08-13T15:54:36.945865-07:00"
+- name: lfx-v2-query-service
+  repository: oci://ghcr.io/linuxfoundation/lfx-v2-query-service/chart
+  version: 0.2.2
+- name: lfx-v2-project-service
+  repository: oci://ghcr.io/linuxfoundation/lfx-v2-project-service/chart
+  version: 0.4.0
+- name: lfx-v2-fga-sync
+  repository: oci://ghcr.io/linuxfoundation/lfx-v2-fga-sync/chart
+  version: 0.2.1
+- name: lfx-v2-access-check
+  repository: oci://ghcr.io/linuxfoundation/lfx-v2-access-check/chart
+  version: 0.2.1
+- name: lfx-v2-indexer-service
+  repository: oci://ghcr.io/linuxfoundation/lfx-v2-indexer-service/chart
+  version: 0.2.0
+digest: sha256:6307b6d61090a4a666ce7fcd7f4207491d1335b1ce9b0ebb35f44759728180a3
+generated: "2025-08-14T11:05:40.339603613-07:00"

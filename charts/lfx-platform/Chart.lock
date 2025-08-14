@@ -43,9 +43,9 @@ dependencies:
   version: 0.2.1
 - name: lfx-v2-access-check
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-access-check/chart
-  version: ~0.2.1
+  version: 0.2.1
 - name: lfx-v2-indexer-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-indexer-service/chart
   version: 0.2.0
-digest: sha256:cad0e310627af2343334ff3e9e83a6542527d0cbeff9fa15f391a78a787bcb65
-generated: "2025-08-14T08:24:12.42453939-07:00"
+digest: sha256:6307b6d61090a4a666ce7fcd7f4207491d1335b1ce9b0ebb35f44759728180a3
+generated: "2025-08-14T11:05:40.339603613-07:00"

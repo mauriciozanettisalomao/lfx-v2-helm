@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 ---
 {{ if and .Values.mailpit.enabled (include "lfx-platform.https-enabled" .) (or
-  .Values.traefik.enabled .Values.lfx.parentGateway.enabled) -}}
+  .Values.gateway.enabled .Values.lfx.parentGateway.enabled) -}}
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
@@ -10,8 +10,8 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   parentRefs:
-{{- if .Values.traefik.enabled }}
-    - name: {{ .Values.traefik.gateway.name }}
+{{- if .Values.gateway.enabled }}
+    - name: {{ .Values.gateway.name | default "lfx-platform-gateway" }}
       sectionName: {{ include "lfx-platform.http-listener" . }}
       namespace: {{ .Release.Namespace }}
 {{- else }}

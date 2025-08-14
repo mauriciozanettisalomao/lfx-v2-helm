@@ -55,20 +55,32 @@ traefik:
     kubernetesCRD:
       enabled: true
   gateway:
-    # Create a default gateway
-    enabled: true
-    name: "lfx-platform-gateway"
-    listeners:
-      web:
-        port: 8000
-        protocol: HTTP
-      traefik:
-        port: 8080
-        protocol: HTTP
+    # Disable Traefik's default gateway since we manage it explicitly
+    enabled: false
   logs:
     # Enable access logs
     access:
       enabled: true
+
+# Gateway configuration
+gateway:
+  enabled: true
+
+  # Gateway listeners
+  listeners:
+    traefik:
+      port: 8080
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: Same
+    web:
+      port: 8000
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: Same
+
 
 # OpenFGA configuration
 openfga:
@@ -423,18 +435,32 @@ trust-manager:
   crds:
     enabled: true
   namespace: cert-manager
-# Additional services. These will be included in the future when LFX platform
-# services are added.
-additionalServices:
-  enabled: false
-  # The following services will be added in the future
-  # fgaSync:
-  #   enabled: false
-  # accessCheck:
-  #   enabled: false
-  # indexer:
-  #   enabled: false
-  # querySvc:
-  #   enabled: false
-  # projectsApi:
-  #   enabled: false
+
+lfx-v2-fga-sync:
+  enabled: true
+  lfx:
+    domain: k8s.orb.local
+
+lfx-v2-access-check:
+  enabled: true
+  lfx:
+    domain: k8s.orb.local
+
+lfx-v2-indexer-service:
+  enabled: true
+  lfx:
+    domain: k8s.orb.local
+
+lfx-v2-query-service:
+  enabled: true
+  lfx:
+    domain: k8s.orb.local
+  authelia:
+    enabled: true
+  heimdall:
+    enabled: true
+
+lfx-v2-project-service:
+  enabled: true
+  lfx:
+    domain: k8s.orb.local

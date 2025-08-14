@@ -47,5 +47,5 @@ dependencies:
 - name: lfx-v2-indexer-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-indexer-service/chart
   version: 0.2.0
-digest: sha256:df021ba69425bb313325da7b812ead0ec54ace3fa2b0adee02ed8ef352fa56f0
-generated: "2025-08-13T15:48:40.428224482-07:00"
+digest: sha256:cad0e310627af2343334ff3e9e83a6542527d0cbeff9fa15f391a78a787bcb65
+generated: "2025-08-14T08:24:12.42453939-07:00"

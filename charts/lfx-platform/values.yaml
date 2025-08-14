@@ -441,8 +441,6 @@ lfx-v2-indexer-service:
 
 lfx-v2-query-service:
   enabled: true
-  image:
-    tag: development
   lfx:
     domain: k8s.orb.local
   authelia:

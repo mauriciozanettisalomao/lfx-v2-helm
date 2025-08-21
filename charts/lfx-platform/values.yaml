@@ -400,6 +400,26 @@ authelia:
               - authorization_code
               - refresh_token
             authorization_policy: one_factor
+          - client_id: lfx
+            client_name: LFX Client Credentials
+            client_secret:
+              path: /secrets/authelia-clients-hashed/lfx
+            public: false
+            redirect_uris:
+              - "http://localhost:4200/callback"
+            scopes:
+              - openid
+              - email
+              - profile
+              - offline_access
+              - access:api
+            audience:
+              - "http://lfx-api.k8s.orb.local"
+            grant_types:
+              - authorization_code
+              - refresh_token
+            authorization_policy: one_factor
+            token_endpoint_auth_method: client_secret_basic
 
 authelia_generate_jwks:
   enabled: true
@@ -409,6 +429,7 @@ authelia_client_generation:
   clients:
     - heimdall
     - m2m_test
+    - lfx
 
 authelia_user_generation:
   enabled: true

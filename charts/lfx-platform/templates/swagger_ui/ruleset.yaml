@@ -6,7 +6,7 @@ apiVersion: heimdall.dadrus.github.com/v1alpha4
 kind: RuleSet
 metadata:
   name: lfx-swagger-ui
-  namespace: lfx
+  namespace: {{ .Release.Namespace }}
 spec:
   rules:
     - id: "rule:lfx:swagger_ui:public"

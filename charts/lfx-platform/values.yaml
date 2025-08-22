@@ -31,9 +31,6 @@ lfx:
       domain: "https://auth.k8s.orb.local"
       authorizationUrl: "https://auth.k8s.orb.local/api/oidc/authorization"
       clientId: "docs"
-      audience: "http://lfx-api.k8s.orb.local"
-      scope: "openid profile email api:access"
-      redirectUri: "http://lfx-api.k8s.orb.local/docs/oauth2_redirect.html"
     server: "http://lfx-api.k8s.orb.local"
     specs:
       - "_projects/openapi3.yaml"

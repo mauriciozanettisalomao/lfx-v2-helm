@@ -47,7 +47,7 @@ spec:
         type groupsio_service
           relations
             define project: [project]
-            define owner: [user] or owner from project
+            define owner: owner from project
             define writer: writer from project or owner
             define auditor: auditor from project or writer
             define viewer: [user:*] or auditor from project

@@ -13,7 +13,7 @@ spec:
   instances:
     - version:
         major: 2
-        minor: 0
+        minor: 1
         patch: 0
       authorizationModel: |
         model
@@ -28,21 +28,27 @@ spec:
         type project
           relations
             define parent: [project]
+            define committee: [committee]
             define owner: [team#member] or owner from parent
             define writer: [user] or owner or writer from parent
             define auditor: [user, team#member] or writer or auditor from parent
             # The meeting_coordinator relation identifies a user who can manage any meeting
             # for a given project.
             define meeting_coordinator: [user]
-            define viewer: [user:*] or auditor or auditor from parent
+            # The committee_viewer relation identifies a user who has committee access and 
+            # can view the basic information of the project.
+            define committee_viewer: writer from committee or auditor from committee
+            define viewer: [user:*] or auditor or auditor from parent or committee_viewer
 
         type committee
           relations
             define member: [user]
+            define parent: [committee]
             define project: [project]
-            define writer: writer from project
-            define auditor: auditor from project or meeting_coordinator from project
-            define viewer: [user:*] or auditor from project
+            define owner: [team#member]
+            define writer: [user] or owner
+            define auditor: [user, team#member] or writer or auditor from project or meeting_coordinator from project
+            define viewer: [user:*] or auditor or auditor from parent
 
         type groupsio_service
           relations

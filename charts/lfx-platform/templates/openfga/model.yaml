@@ -12,7 +12,7 @@ metadata:
 spec:
   instances:
     - version:
-        major: 2
+        major: 3
         minor: 0
         patch: 0
       authorizationModel: |
@@ -56,6 +56,8 @@ spec:
           relations
             define project: [project]
             define committee: [committee]
+            # The auditor relation identifies a user who can audit this meeting.
+            define auditor: auditor from project
             # The organizer relation identifies a user who can manage this one meeting.
             # That means they can update the meeting details, invite/uninvite participants, etc.
             define organizer: [user] or meeting_coordinator from project or writer from project
@@ -76,5 +78,29 @@ spec:
             # The viewer relation identifies a user who can view this meeting.
             # If the meeting is public, then any user can view it; but if it is private, then
             # only certain privileged users can view it.
-            define viewer: [user:*] or participant or organizer or auditor from project
+            define viewer: [user:*] or participant or organizer or auditor
+
+          type past_meeting
+          relations
+            define project: [project]
+            define committee: [committee]
+            # The meeting relation identifies the meeting that this past meeting was created from.
+            # Note: it is possible that the meeting no longer exists, so having permissions on the
+            # meeting become obsolete if the meeting is deleted.
+            define meeting: [meeting]
+            # The auditor relation identifies a user who can audit this meeting.
+            define auditor: auditor from project or auditor from meeting
+            # The organizer relation identifies a user who can manage this one past meeting.
+            # That means they can update the past meeting details, update the participants, etc.
+            define organizer: [user] or meeting_coordinator from project or writer from project or organizer from meeting
+            # The host relation identifies a user who was a host of this past meeting.
+            define host: [user] or organizer
+            # The invitee relation identifies a participant who was invited to this past meeting.
+            define invitee: [user]
+            # The attendee relation identifies a participant who attended this past meeting.
+            define attendee: [user]
+            # The viewer relation identifies a user who can view this past meeting.
+            # If the past meeting is public, then any user can view it; but if it is private, then
+            # only certain privileged users can view it.
+            define viewer: [user:*] or attendee or invitee or organizer or auditor
 {{- end }}

@@ -57,7 +57,7 @@ spec:
             define groupsio_service: [groupsio_service]  # Parent relationship
             define project: project from groupsio_service # Inherit project permissions
             define committee: [committee] # Inherit committee permissions
-            define owner: owner from groupsio_service or owner from committee
+            define owner: owner from groupsio_service
             define writer: writer from groupsio_service or writer from committee
             define auditor: auditor from groupsio_service or auditor from committee
             define viewer: viewer from groupsio_service or member from committee

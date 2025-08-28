@@ -42,7 +42,7 @@ spec:
             define project: [project]
             define owner: [user, team#member]
             define writer: [user] or owner or writer from project
-            define auditor: [user, team#member] or writer or auditor from project or meeting_coordinator from project
+            define auditor: [user, team#member] or auditor from project or meeting_coordinator from project
             define viewer: [user:*] or auditor or auditor from project
 
         type groupsio_service

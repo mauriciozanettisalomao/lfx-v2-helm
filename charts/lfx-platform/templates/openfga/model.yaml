@@ -12,7 +12,7 @@ metadata:
 spec:
   instances:
     - version:
-        major: 3
+        major: 4
         minor: 0
         patch: 0
       authorizationModel: |
@@ -51,6 +51,16 @@ spec:
             define writer: writer from project or owner
             define auditor: auditor from project or writer
             define viewer: [user:*] or auditor from project
+
+        type groupsio_mailing_list
+          relations
+            define groupsio_service: [groupsio_service]  # Parent relationship
+            define project: project from groupsio_service # Inherit project permissions
+            define committee: [committee] # Inherit committee permissions
+            define owner: owner from groupsio_service or owner from committee
+            define writer: writer from groupsio_service or writer from committee
+            define auditor: auditor from groupsio_service or auditor from committee
+            define viewer: viewer from groupsio_service or member from committee
 
         type meeting
           relations

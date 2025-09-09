@@ -19,8 +19,8 @@ spec:
     - patch: Modifications of define
 */}}
     - version:
-        major: 4
-        minor: 1
+        major: 5
+        minor: 0
         patch: 0
       authorizationModel: |
         model
@@ -69,6 +69,14 @@ spec:
             define writer: writer from groupsio_service or writer from committee
             define auditor: auditor from groupsio_service or auditor from committee
             define viewer: viewer from groupsio_service or member from committee
+
+        type groupsio_member
+          relations
+            define groupsio_mailing_list: [groupsio_mailing_list]  # Parent relationship
+            define owner: owner from groupsio_mailing_list
+            define writer: [user] or writer from groupsio_mailing_list
+            define auditor: [user] or auditor from groupsio_mailing_list
+            define viewer: viewer from groupsio_mailing_list
 
         type meeting
           relations

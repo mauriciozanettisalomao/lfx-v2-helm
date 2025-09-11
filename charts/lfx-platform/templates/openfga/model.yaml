@@ -20,7 +20,7 @@ spec:
 */}}
     - version:
         major: 4
-        minor: 1
+        minor: 2
         patch: 0
       authorizationModel: |
         model
@@ -69,6 +69,7 @@ spec:
             define writer: writer from groupsio_service or writer from committee
             define auditor: auditor from groupsio_service or auditor from committee
             define viewer: viewer from groupsio_service or member from committee
+            define member: [user]
 
         type meeting
           relations

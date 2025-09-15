@@ -21,7 +21,7 @@ spec:
     - version:
         major: 4
         minor: 2
-        patch: 1
+        patch: 2
       authorizationModel: |
         model
           schema 1.1
@@ -47,8 +47,8 @@ spec:
           relations
             define member: [user]
             define project: [project]
-            define owner: [user, team#member]
-            define writer: [user] or owner or writer from project
+            define writer: [user] or writer from project
+            define owner: [user, team#member] or writer
             define auditor: [user, team#member] or auditor from project or meeting_coordinator from project
             define viewer: [user:*] or auditor or auditor from project
 

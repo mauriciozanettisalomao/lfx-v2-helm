@@ -20,7 +20,7 @@ spec:
 */}}
     - version:
         major: 4
-        minor: 2
+        minor: 3
         patch: 1
       authorizationModel: |
         model
@@ -47,8 +47,7 @@ spec:
           relations
             define member: [user]
             define project: [project]
-            define owner: [user, team#member]
-            define writer: [user] or owner or writer from project
+            define writer: [user] or writer from project
             define auditor: [user, team#member] or auditor from project or meeting_coordinator from project
             define viewer: [user:*] or auditor or auditor from project
 
@@ -65,7 +64,7 @@ spec:
             define groupsio_service: [groupsio_service]  # Parent relationship
             define project: project from groupsio_service # Inherit project permissions
             define committee: [committee] # Inherit committee permissions
-            define owner: owner from groupsio_service or owner from committee
+            define owner: owner from groupsio_service
             define writer: writer from groupsio_service or writer from committee
             define auditor: auditor from groupsio_service or auditor from committee
             define viewer: viewer from groupsio_service or member from committee

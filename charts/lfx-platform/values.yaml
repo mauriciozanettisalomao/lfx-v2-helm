@@ -524,6 +524,15 @@ lfx-v2-query-service:
     enabled: true
   heimdall:
     enabled: true
+  app:
+    environment:
+      # Organization search is configured to use a mock implementation.
+      # To use Clearbit instead, change ORG_SEARCH_SOURCE to 'clearbit' and
+      # set your actual Clearbit API credential in CLEARBIT_CREDENTIAL.
+      ORG_SEARCH_SOURCE:
+        value: mock
+      CLEARBIT_CREDENTIAL:
+        value: ""
 
 lfx-v2-project-service:
   enabled: true

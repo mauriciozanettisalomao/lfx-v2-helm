@@ -4,7 +4,7 @@ dependencies:
   version: 36.2.0
 - name: openfga
   repository: https://openfga.github.io/helm-charts
-  version: 0.2.42
+  version: 0.2.43
 - name: heimdall
   repository: oci://ghcr.io/dadrus/heimdall/chart
   version: 0.15.8
@@ -34,7 +34,7 @@ dependencies:
   version: v0.18.0
 - name: lfx-v2-query-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-query-service/chart
-  version: 0.2.4
+  version: 0.4.4
 - name: lfx-v2-project-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-project-service/chart
   version: 0.4.3
@@ -49,6 +49,6 @@ dependencies:
   version: 0.4.3
 - name: lfx-v2-auth-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
-  version: 0.1.0
-digest: sha256:07412aa8d2711b6ddb87689ff48b8a1b2778faa86165a08bff9bf3431209323a
-generated: "2025-09-22T13:37:14.683072-03:00"
+  version: 0.1.1
+digest: sha256:5694f4680e1a9e638879d26fbfa8a3ca219e07894971253ded7f302a402db88f
+generated: "2025-09-25T08:36:20.482743-03:00"

@@ -16,6 +16,37 @@ lfx:
     name: heimdall-trust-bundle
     configKey: ca-certificates.crt
 
+  whoami:
+    enabled: true
+
+  swagger_ui:
+    enabled: true
+    image: swaggerapi/swagger-ui
+    tag: latest
+    merger:
+      image: node
+      tag: 24-alpine
+    auth:
+      enabled: true
+      domain: "https://auth.k8s.orb.local"
+      authorizationUrl: "https://auth.k8s.orb.local/api/oidc/authorization"
+      clientId: "docs"
+    server: "http://lfx-api.k8s.orb.local"
+    specs:
+      - "_projects/openapi3.yaml"
+      - "_query/openapi3.yaml"
+
+  # Tells rulesets to use the oidc_contextualizer, needed for
+  # local dev with authelia
+  use_oidc_contextualizer: true
+
+  # Fallback gateway can be enabled if traefik.enabled is false.
+  parentGateway:
+    enabled: false
+    name: traefik
+    sectionName: websecure
+    namespace: default
+
 fga-operator:
   enabled: true
   # Non-chart value
@@ -41,20 +72,32 @@ traefik:
     kubernetesCRD:
       enabled: true
   gateway:
-    # Create a default gateway
-    enabled: true
-    name: "lfx-platform-gateway"
-    listeners:
-      web:
-        port: 8000
-        protocol: HTTP
-      traefik:
-        port: 8080
-        protocol: HTTP
+    # Disable Traefik's default gateway since we manage it explicitly
+    enabled: false
   logs:
     # Enable access logs
     access:
       enabled: true
+
+# Gateway configuration
+gateway:
+  enabled: true
+
+  # Gateway listeners
+  listeners:
+    traefik:
+      port: 8080
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: Same
+    web:
+      port: 8000
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: Same
+
 
 # OpenFGA configuration
 openfga:
@@ -127,7 +170,7 @@ heimdall:
         type: anonymous
         config:
           subject: "_anonymous"
-      - id: authelia
+      - id: oidc
         type: oauth2_introspection
         config:
           metadata_endpoint:
@@ -150,7 +193,7 @@ heimdall:
             # the `sub` claim should NOT be used downstream.
             id: '[username,client_id].0'
     contextualizers:
-      - id: authelia_userinfo
+      - id: oidc_contextualizer
         type: generic
         config:
           endpoint:
@@ -166,6 +209,13 @@ heimdall:
         type: allow
       - id: deny_all
         type: deny
+      - id: json_content_type
+        type: cel
+        config:
+          expressions:
+            - expression: |
+                Request.Header("Content-Type") == "application/json"
+              message: "Content-Type must be application/json"
       - id: openfga_check
         type: remote
         config:
@@ -214,8 +264,8 @@ heimdall:
                             (list "clients@" .Subject.Attributes.client_id | join ""))
                         | quote
                       }}
-                      {{ if .Outputs.authelia_userinfo.email -}},
-                      "email": {{ quote .Outputs.authelia_userinfo.email }}
+                      {{ if .Outputs.oidc_contextualizer.email -}},
+                      "email": {{ quote .Outputs.oidc_contextualizer.email }}
                       {{ end -}}
                       {{ if .Values.aud -}},
                       "aud": {{ quote .Values.aud }}
@@ -224,7 +274,8 @@ heimdall:
 
   default_rule:
     execute:
-      - authenticator: anonymous_authenticator
+      - authenticator: oidc
+      - contextualizer: oidc_contextualizer
       - authorizer: deny_all
       - finalizer: create_jwt
 
@@ -373,6 +424,46 @@ authelia:
               - authorization_code
               - refresh_token
             authorization_policy: one_factor
+          - client_id: lfx
+            client_name: LFX Client Credentials
+            client_secret:
+              path: /secrets/authelia-clients-hashed/lfx
+            public: false
+            redirect_uris:
+              - "http://localhost:4200/callback"
+            scopes:
+              - openid
+              - email
+              - profile
+              - offline_access
+              - access:api
+            audience:
+              - "http://lfx-api.k8s.orb.local"
+            grant_types:
+              - authorization_code
+              - refresh_token
+            authorization_policy: one_factor
+            token_endpoint_auth_method: client_secret_basic
+          - client_id: docs
+            client_name: LFX Swagger UI Docs
+            public: true
+            redirect_uris:
+              - "http://lfx-api.k8s.orb.local/docs/oauth2-redirect.html"
+              - "https://lfx-api.k8s.orb.local/docs/oauth2-redirect.html"
+            scopes:
+              - openid
+              - email
+              - profile
+              - api:access
+            audience:
+              - "http://lfx-api.k8s.orb.local"
+            grant_types:
+              - implicit
+            authorization_policy: one_factor
+            response_types:
+              - code
+              - id_token
+              - token
 
 authelia_generate_jwks:
   enabled: true
@@ -382,6 +473,7 @@ authelia_client_generation:
   clients:
     - heimdall
     - m2m_test
+    - lfx
 
 authelia_user_generation:
   enabled: true
@@ -408,18 +500,54 @@ trust-manager:
   crds:
     enabled: true
   namespace: cert-manager
-# Additional services. These will be included in the future when LFX platform
-# services are added.
-additionalServices:
-  enabled: false
-  # The following services will be added in the future
-  # fgaSync:
-  #   enabled: false
-  # accessCheck:
-  #   enabled: false
-  # indexer:
-  #   enabled: false
-  # querySvc:
-  #   enabled: false
-  # projectsApi:
-  #   enabled: false
+
+lfx-v2-fga-sync:
+  enabled: true
+  lfx:
+    domain: k8s.orb.local
+
+lfx-v2-access-check:
+  enabled: true
+  lfx:
+    domain: k8s.orb.local
+
+lfx-v2-indexer-service:
+  enabled: true
+  lfx:
+    domain: k8s.orb.local
+
+lfx-v2-query-service:
+  enabled: true
+  lfx:
+    domain: k8s.orb.local
+  authelia:
+    enabled: true
+  heimdall:
+    enabled: true
+  app:
+    environment:
+      # Organization search is configured to use a mock implementation.
+      # To use Clearbit instead, change ORG_SEARCH_SOURCE to 'clearbit' and
+      # set your actual Clearbit API credential in CLEARBIT_CREDENTIAL.
+      ORG_SEARCH_SOURCE:
+        value: mock
+      CLEARBIT_CREDENTIAL:
+        value: ""
+
+lfx-v2-project-service:
+  enabled: true
+  lfx:
+    domain: k8s.orb.local
+
+lfx-v2-auth-service:
+  enabled: true
+  lfx:
+    domain: k8s.orb.local
+  app:
+    environment:
+      # Repository type for user management
+      # It can be authelia, auth0 or mock
+      # In case of auth0, please refer to the following documentation
+      ## https://github.com/linuxfoundation/lfx-v2-auth-service?tab=readme-ov-file#auth0-configuration
+      USER_REPOSITORY_TYPE:
+        value: mock

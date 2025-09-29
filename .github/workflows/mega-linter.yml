@@ -29,6 +29,20 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Installs packaged subcharts under charts/*/charts/*.tgz. Also
+      # fails if the Chart.lock digest is wrong.
+      - name: Helm dependency fetch
+        shell: bash
+        run: |
+          set -euo pipefail
+          for chart in charts/*; do
+            if [ -f "${chart}/Chart.lock" ]; then
+              yq -r '.dependencies[] | select(.repository | contains("oci://") == false) | "\(.name) \(.repository)"' \
+                "${chart}/Chart.yaml" | xargs -L1 helm repo add --force-update
+              helm dependency build "${chart}"
+            fi
+          done
+
       # MegaLinter
       - name: MegaLinter
         id: ml

@@ -5,11 +5,11 @@ apiVersion: v2
 name: lfx-platform
 description: LFX Platform v2 Helm chart
 type: application
-version: 0.1.10
+version: 0.2.18
 icon: https://github.com/linuxfoundation/lfx-v2-helm/raw/main/img/lfx-logo-color.svg
 dependencies:
   - name: traefik
-    repository: https://traefik.github.io/charts
+    repository: oci://ghcr.io/traefik/helm
     version: ~36.2.0
     condition: traefik.enabled
   - name: openfga
@@ -17,7 +17,7 @@ dependencies:
     version: ~0.2.37
     condition: openfga.enabled
   - name: heimdall
-    repository: https://dadrus.github.io/heimdall/charts
+    repository: oci://ghcr.io/dadrus/heimdall/chart
     version: ~0.15.6
     condition: heimdall.enabled
   - name: nats
@@ -52,3 +52,27 @@ dependencies:
     repository: https://charts.jetstack.io
     version: ~0.18.0
     condition: trustManagerEnabled
+  - name: lfx-v2-query-service
+    repository: oci://ghcr.io/linuxfoundation/lfx-v2-query-service/chart
+    version: ~0.4.6
+    condition: lfx-v2-query-service.enabled
+  - name: lfx-v2-project-service
+    repository: oci://ghcr.io/linuxfoundation/lfx-v2-project-service/chart
+    version: ~0.4.3
+    condition: lfx-v2-project-service.enabled
+  - name: lfx-v2-fga-sync
+    repository: oci://ghcr.io/linuxfoundation/lfx-v2-fga-sync/chart
+    version: ~0.2.3
+    condition: lfx-v2-fga-sync.enabled
+  - name: lfx-v2-access-check
+    repository: oci://ghcr.io/linuxfoundation/lfx-v2-access-check/chart
+    version: ~0.2.3
+    condition: lfx-v2-access-check.enabled
+  - name: lfx-v2-indexer-service
+    repository: oci://ghcr.io/linuxfoundation/lfx-v2-indexer-service/chart
+    version: ~0.4.4
+    condition: lfx-v2-indexer-service.enabled
+  - name: lfx-v2-auth-service
+    repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
+    version: ~0.2.1
+    condition: lfx-v2-auth-service.enabled

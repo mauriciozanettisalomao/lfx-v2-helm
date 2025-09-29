@@ -4,6 +4,7 @@
   "words": [
     "aquasecurity",
     "authelia",
+    "clearbit",
     "contextualizer",
     "contextualizers",
     "crds",
@@ -27,6 +28,7 @@
     "sslmode",
     "subchart",
     "subcharts",
+    "swaggerapi",
     "tcsh",
     "totp",
     "traefik",

@@ -21,7 +21,7 @@ spec:
     - version:
         major: 4
         minor: 3
-        patch: 1
+        patch: 2
       authorizationModel: |
         model
           schema 1.1
@@ -107,7 +107,7 @@ spec:
             # meeting become obsolete if the meeting is deleted.
             define meeting: [meeting]
             # The auditor relation identifies a user who can audit this meeting.
-            define auditor: auditor from project or auditor from meeting
+            define auditor: organizer or auditor from project or auditor from meeting
             # The organizer relation identifies a user who can manage this one past meeting.
             # That means they can update the past meeting details, update the participants, etc.
             define organizer: [user] or meeting_coordinator from project or writer from project or organizer from meeting

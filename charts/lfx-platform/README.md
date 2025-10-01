@@ -223,13 +223,13 @@ heimdall:
 Then upgrade the helm deployment.
 
 ```bash
-helm upgrade lfx-platform chart/lfx-platform
+helm upgrade lfx-platform charts/lfx-platform
 ```
 
 If using a values file, pass it to the command:
 
 ```bash
-helm upgrade -f tracing-values.yaml lfx-platform chart/lfx-platform
+helm upgrade -f tracing-values.yaml lfx-platform charts/lfx-platform
 ```
 
 ### Accessing Jaeger UI

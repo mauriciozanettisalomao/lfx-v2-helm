@@ -69,7 +69,7 @@ traefik:
         endpoint: "jaeger-collector.observability:4317"
         insecure: true
   env:
-    - name: OTEL_PROPOGATORS
+    - name: OTEL_PROPAGATORS
       value: tracecontext,baggage,jaeger
   providers:
     # Enable Kubernetes Gateway provider
@@ -169,7 +169,7 @@ heimdall:
   env:
     # Tracing Configuration
     HEIMDALLCFG_TRACING_ENABLED: "false"
-    OTEL_PROPARGATOR: jaeger
+    OTEL_PROPAGATOR: jaeger
     OTEL_TRACE_EXPORTER: otlp
     OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: grpc
     OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: "http://jaeger-collector.observability:4317"

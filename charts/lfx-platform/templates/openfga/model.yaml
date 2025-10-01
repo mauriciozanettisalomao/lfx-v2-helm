@@ -121,4 +121,4 @@ spec:
             # If the past meeting is public, then any user can view it; but if it is private, then
             # only certain privileged users can view it.
             define viewer: [user:*] or attendee or invitee or organizer or auditor
-{{- end }
+{{- end }}

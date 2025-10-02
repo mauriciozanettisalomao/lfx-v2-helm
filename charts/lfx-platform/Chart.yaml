@@ -74,5 +74,5 @@ dependencies:
     condition: lfx-v2-indexer-service.enabled
   - name: lfx-v2-auth-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
-    version: ~0.2.1
+    version: ~0.2.2
     condition: lfx-v2-auth-service.enabled

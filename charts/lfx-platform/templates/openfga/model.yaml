@@ -19,7 +19,7 @@ spec:
     - patch: Modifications of define
 */}}
     - version:
-        major: 4
+        major: 5
         minor: 3
         patch: 1
       authorizationModel: |
@@ -121,4 +121,46 @@ spec:
             # If the past meeting is public, then any user can view it; but if it is private, then
             # only certain privileged users can view it.
             define viewer: [user:*] or attendee or invitee or organizer or auditor
+
+          # The past_meeting_recording type identifies a recording of a past meeting.
+          # Access to a recording is limited to one of the following groups:
+          # - Only meeting hosts
+          # - Only meeting participants
+          # - Public (anyone)
+          type past_meeting_recording
+          relations
+            define past_meeting: [past_meeting]
+            define writer: organizer from past_meeting
+            define auditor: auditor from past_meeting
+            define host: host from past_meeting
+            define participant: invitee from past_meeting or attendee from past_meeting
+            define viewer: [user:*] or participant or host or auditor or writer
+
+          # The past_meeting_transcript type identifies a transcript of a past meeting.
+          # Access to a transcript is limited to one of the following groups:
+          # - Only meeting hosts
+          # - Only meeting participants
+          # - Public (anyone)
+          type past_meeting_transcript
+          relations
+            define past_meeting: [past_meeting]
+            define writer: organizer from past_meeting
+            define auditor: auditor from past_meeting
+            define host: host from past_meeting
+            define participant: invitee from past_meeting or attendee from past_meeting
+            define viewer: [user:*] or participant or host or auditor or writer
+
+          # The past_meeting_summary type identifies a summary of a past meeting.
+          # Access to a summary is limited to one of the following groups:
+          # - Only meeting hosts
+          # - Only meeting participants
+          # - Public (anyone)
+          type past_meeting_summary
+          relations
+            define past_meeting: [past_meeting]
+            define writer: organizer from past_meeting
+            define auditor: auditor from past_meeting
+            define host: host from past_meeting
+            define participant: invitee from past_meeting or attendee from past_meeting
+            define viewer: [user:*] or participant or host or auditor or writer
 {{- end }}

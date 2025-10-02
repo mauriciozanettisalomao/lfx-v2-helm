@@ -138,10 +138,10 @@ spec:
             # because it depends on the past meeting artifact_visibility setting. Auditors and writers
             # do however by default have access to view the recording.
             #
-            # If the past meeting is public, then every user should be a viewer
-            # If it is private to only meeting participants, then only the meeting participants
+            # If the artifact_visibility is public, then every user should be a viewer
+            # If it is set to only meeting participants, then only the meeting participants
             # should be able to view the recording.
-            # If it is private to only meeting hosts, then only the meeting hosts should be able
+            # If it is set to only meeting hosts, then only the meeting hosts should be able
             # to view the recording.
             define viewer: [user:*] or writer or auditor
 
@@ -161,10 +161,10 @@ spec:
             # because it depends on the past meeting artifact_visibility setting. Auditors and writers
             # do however by default have access to view the transcript.
             #
-            # If the past meeting is public, then every user should be a viewer
-            # If it is private to only meeting participants, then only the meeting participants
+            # If the artifact_visibility is public, then every user should be a viewer
+            # If it is set to only meeting participants, then only the meeting participants
             # should be able to view the transcript.
-            # If it is private to only meeting hosts, then only the meeting hosts should be able
+            # If it is set to only meeting hosts, then only the meeting hosts should be able
             # to view the transcript.
             define viewer: [user:*] or writer or auditor
 
@@ -184,10 +184,10 @@ spec:
             # because it depends on the past meeting artifact_visibility setting. Auditors and writers
             # do however by default have access to view the summary.
             #
-            # If the past meeting is public, then every user should be a viewer
-            # If it is private to only meeting participants, then only the meeting participants
+            # If the artifact_visibility is public, then every user should be a viewer
+            # If it is set to only meeting participants, then only the meeting participants
             # should be able to view the summary.
-            # If it is private to only meeting hosts, then only the meeting hosts should be able
+            # If it is set to only meeting hosts, then only the meeting hosts should be able
             # to view the summary.
             define viewer: [user:*] or writer or auditor
 {{- end }}

@@ -169,7 +169,7 @@ heimdall:
   env:
     # Tracing Configuration
     HEIMDALLCFG_TRACING_ENABLED: "false"
-    OTEL_PROPAGATOR: jaeger
+    OTEL_PROPAGATORS: jaeger
     OTEL_TRACE_EXPORTER: otlp
     OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: grpc
     OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: "http://jaeger-collector.observability:4317"

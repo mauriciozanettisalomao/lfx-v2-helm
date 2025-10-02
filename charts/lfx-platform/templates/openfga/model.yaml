@@ -134,7 +134,15 @@ spec:
             define auditor: auditor from past_meeting
             define host: host from past_meeting
             define participant: invitee from past_meeting or attendee from past_meeting
-            define viewer: [user:*] or participant or host or auditor or writer
+            # The viewer relation needs to be kept up-to-date separately from the other relations
+            # because it depends on the past meeting visibility.
+            #
+            # If the past meeting is public, then every user should be a viewer
+            # If it is private to only meeting participants, then only the meeting participants
+            # should be able to view the recording.
+            # If it is private to only meeting hosts, then only the meeting hosts should be able
+            # to view the recording.
+            define viewer: [user:*]
 
           # The past_meeting_transcript type identifies a transcript of a past meeting.
           # Access to a transcript is limited to one of the following groups:
@@ -148,7 +156,15 @@ spec:
             define auditor: auditor from past_meeting
             define host: host from past_meeting
             define participant: invitee from past_meeting or attendee from past_meeting
-            define viewer: [user:*] or participant or host or auditor or writer
+            # The viewer relation needs to be kept up-to-date separately from the other relations
+            # because it depends on the past meeting visibility.
+            #
+            # If the past meeting is public, then every user should be a viewer
+            # If it is private to only meeting participants, then only the meeting participants
+            # should be able to view the transcript.
+            # If it is private to only meeting hosts, then only the meeting hosts should be able
+            # to view the transcript.
+            define viewer: [user:*]
 
           # The past_meeting_summary type identifies a summary of a past meeting.
           # Access to a summary is limited to one of the following groups:
@@ -162,5 +178,13 @@ spec:
             define auditor: auditor from past_meeting
             define host: host from past_meeting
             define participant: invitee from past_meeting or attendee from past_meeting
-            define viewer: [user:*] or participant or host or auditor or writer
+            # The viewer relation needs to be kept up-to-date separately from the other relations
+            # because it depends on the past meeting visibility.
+            #
+            # If the past meeting is public, then every user should be a viewer
+            # If it is private to only meeting participants, then only the meeting participants
+            # should be able to view the summary.
+            # If it is private to only meeting hosts, then only the meeting hosts should be able
+            # to view the summary.
+            define viewer: [user:*]
 {{- end }}

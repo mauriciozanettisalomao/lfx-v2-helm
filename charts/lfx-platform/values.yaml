@@ -551,3 +551,14 @@ lfx-v2-auth-service:
       ## https://github.com/linuxfoundation/lfx-v2-auth-service?tab=readme-ov-file#auth0-configuration
       USER_REPOSITORY_TYPE:
         value: mock
+      # Authelia configuration
+      ## Required when using "authelia" repository type
+      ## For more information, see the [Local Development Support documentation](https://github.com/linuxfoundation/lfx-v2-auth-service/blob/main/README.md#local-development-support)
+      AUTHELIA_CONFIGMAP_NAME:
+        value: authelia-users
+      AUTHELIA_CONFIGMAP_NAMESPACE:
+        value: lfx
+      AUTHELIA_DAEMONSET_NAME:
+        value: lfx-platform-authelia
+      AUTHELIA_SECRET_NAME:
+        value: authelia-users

@@ -10,6 +10,7 @@ metadata:
 spec:
   rules:
     - id: "rule:lfx:swagger_ui:public"
+      allow_encoded_slashes: "off"
       match:
         methods:
           - GET

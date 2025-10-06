@@ -11,11 +11,15 @@ metadata:
 spec:
   parentRefs:
 {{- if .Values.gateway.enabled }}
-    - name: {{ .Values.gateway.name | default "lfx-platform-gateway" }}
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: {{ .Values.gateway.name | default "lfx-platform-gateway" }}
       sectionName: {{ include "lfx-platform.default-listener" . }}
       namespace: {{ .Release.Namespace }}
 {{- else }}
-    - name: {{ .Values.lfx.parentGateway.name }}
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: {{ .Values.lfx.parentGateway.name }}
       sectionName: {{ .Values.lfx.parentGateway.sectionName }}
       namespace: {{ .Values.lfx.parentGateway.namespace }}
 {{- end }}
@@ -23,7 +27,14 @@ spec:
     - 'mailpit.{{ .Values.lfx.domain }}'
   rules:
     - backendRefs:
-        - name: {{ include "common.names.fullname" .Subcharts.mailpit }}-http
+        - group: ""
+          kind: Service
+          name: {{ include "common.names.fullname" .Subcharts.mailpit }}-http
           namespace: {{ .Release.Namespace }}
           port: {{ .Values.mailpit.service.http.port }}
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
 {{- end }}

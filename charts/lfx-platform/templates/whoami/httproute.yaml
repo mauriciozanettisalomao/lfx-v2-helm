@@ -11,11 +11,15 @@ metadata:
 spec:
   parentRefs:
 {{- if .Values.gateway.enabled }}
-    - name: {{ .Values.gateway.name | default "lfx-platform-gateway" }}
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: {{ .Values.gateway.name | default "lfx-platform-gateway" }}
       sectionName: {{ include "lfx-platform.default-listener" . }}
       namespace: {{ .Release.Namespace }}
 {{- else }}
-    - name: {{ .Values.lfx.parentGateway.name }}
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: {{ .Values.lfx.parentGateway.name }}
       sectionName: {{ .Values.lfx.parentGateway.sectionName }}
       namespace: {{ .Values.lfx.parentGateway.namespace }}
 {{- end }}
@@ -36,6 +40,9 @@ spec:
             name: heimdall
       {{- end }}
       backendRefs:
-        - name: whoami
+        - group: ""
+          kind: Service
+          name: whoami
           port: 80
+          weight: 1
 {{- end }}

@@ -54,7 +54,7 @@ dependencies:
     condition: trustManagerEnabled
   - name: lfx-v2-query-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-query-service/chart
-    version: ~0.4.4
+    version: ~0.4.6
     condition: lfx-v2-query-service.enabled
   - name: lfx-v2-project-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-project-service/chart
@@ -70,7 +70,7 @@ dependencies:
     condition: lfx-v2-access-check.enabled
   - name: lfx-v2-indexer-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-indexer-service/chart
-    version: ~0.4.1
+    version: ~0.4.4
     condition: lfx-v2-indexer-service.enabled
   - name: lfx-v2-committee-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-committee-service/chart
@@ -82,5 +82,5 @@ dependencies:
     condition: lfx-v2-meeting-service.enabled
   - name: lfx-v2-auth-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
-    version: ~0.1.0
+    version: ~0.2.2
     condition: lfx-v2-auth-service.enabled

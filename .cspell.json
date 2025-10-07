@@ -9,6 +9,7 @@
     "contextualizers",
     "crds",
     "dadrus",
+    "daemonset",
     "dbname",
     "finalizer",
     "gelf",

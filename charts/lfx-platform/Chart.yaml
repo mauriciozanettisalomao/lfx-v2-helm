@@ -14,11 +14,11 @@ dependencies:
     condition: traefik.enabled
   - name: openfga
     repository: https://openfga.github.io/helm-charts
-    version: ~0.2.37
+    version: ~0.2.38
     condition: openfga.enabled
   - name: heimdall
     repository: oci://ghcr.io/dadrus/heimdall/chart
-    version: ~0.15.6
+    version: ~0.15.7
     condition: heimdall.enabled
   - name: nats
     repository: https://nats-io.github.io/k8s/helm/charts/

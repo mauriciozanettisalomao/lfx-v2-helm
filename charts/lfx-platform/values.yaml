@@ -539,6 +539,16 @@ lfx-v2-project-service:
   lfx:
     domain: k8s.orb.local
 
+lfx-v2-committee-service:
+  enabled: true
+  lfx:
+    domain: k8s.orb.local
+
+lfx-v2-meeting-service:
+  enabled: true
+  lfx:
+    domain: k8s.orb.local
+
 lfx-v2-auth-service:
   enabled: true
   lfx:

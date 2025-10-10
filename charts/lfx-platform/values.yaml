@@ -104,9 +104,8 @@ openfga:
   enabled: true
 
   # Enable reloader to restart pods when ConfigMap or Secrets change
-  deployment:
-    annotations:
-      reloader.stakater.com/auto: "true"
+  podAnnotations:
+    reloader.stakater.com/auto: "true"
 
   # Disable playground by default
   playground:

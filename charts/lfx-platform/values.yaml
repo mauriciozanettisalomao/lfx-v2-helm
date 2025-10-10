@@ -103,6 +103,10 @@ gateway:
 openfga:
   enabled: true
 
+  # Enable reloader to restart pods when ConfigMap or Secrets change
+  podAnnotations:
+    reloader.stakater.com/auto: "true"
+
   # Disable playground by default
   playground:
     enabled: false
@@ -146,6 +150,9 @@ heimdall:
     volumeMounts:
       - name: heimdall-signer-cert
         mountPath: "/heimdall/cert/"
+    # Enable reloader to restart pods when ConfigMap or Secrets change
+    annotations:
+      reloader.stakater.com/auto: "true"
 
   env:
     CLIENT_SECRET:

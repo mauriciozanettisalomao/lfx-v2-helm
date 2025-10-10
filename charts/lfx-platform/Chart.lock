@@ -55,6 +55,6 @@ dependencies:
   version: 0.1.1
 - name: lfx-v2-auth-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
-  version: 0.2.5
-digest: sha256:c2f9cd38a1bfa9f1b7eed4d7984617b78a066aa7c76b72b9c293162b446e0632
-generated: "2025-10-10T09:01:46.100319+01:00"
+  version: 0.2.7
+digest: sha256:f257d04b41319d0d2965ad899e79593afeb766a94dac16333f340db972fb9782
+generated: "2025-10-10T13:37:19.358619-03:00"

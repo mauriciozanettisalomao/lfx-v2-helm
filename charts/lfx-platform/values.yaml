@@ -444,6 +444,8 @@ authelia:
               - profile
               - offline_access
               - access:api
+              - update:current_user_metadata
+              - read:current_user
             audience:
               - "http://lfx-api.k8s.orb.local"
             grant_types:

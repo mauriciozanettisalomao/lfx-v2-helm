@@ -104,8 +104,9 @@ openfga:
   enabled: true
 
   # Enable reloader to restart pods when ConfigMap or Secrets change
-  podAnnotations:
-    reloader.stakater.com/auto: "true"
+  metadata:
+    annotations:
+      reloader.stakater.com/auto: "true"
 
   # Disable playground by default
   playground:
@@ -150,7 +151,9 @@ heimdall:
     volumeMounts:
       - name: heimdall-signer-cert
         mountPath: "/heimdall/cert/"
-    # Enable reloader to restart pods when ConfigMap or Secrets change
+
+  # Enable reloader to restart pods when ConfigMap or Secrets change
+  metadata:
     annotations:
       reloader.stakater.com/auto: "true"
 
@@ -555,6 +558,11 @@ lfx-v2-meeting-service:
   enabled: true
   lfx:
     domain: k8s.orb.local
+
+  # Enable reloader to restart pods when ConfigMap or Secrets change
+  metadata:
+    annotations:
+      reloader.stakater.com/auto: "true"
 
 lfx-v2-auth-service:
   enabled: true

@@ -10,7 +10,7 @@ dependencies:
   version: 0.15.8
 - name: nats
   repository: https://nats-io.github.io/k8s/helm/charts/
-  version: 1.3.14
+  version: 1.3.15
 - name: opensearch
   repository: https://opensearch-project.github.io/helm-charts/
   version: 2.34.0
@@ -52,9 +52,9 @@ dependencies:
   version: 0.1.1
 - name: lfx-v2-meeting-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-meeting-service/chart
-  version: 0.1.1
+  version: 0.4.17
 - name: lfx-v2-auth-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
   version: 0.2.7
-digest: sha256:99caf6f0fe57f93fe7bf5590d5314ae9300789f848fe91bb73364ede6d9be99f
-generated: "2025-10-15T06:49:10.43571-07:00"
+digest: sha256:1e688d097a18c51922ef8ba33c972f63d71901f43b02cf705578cfc1b222fe6a
+generated: "2025-10-15T11:15:50.257162-07:00"

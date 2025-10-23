@@ -37,7 +37,8 @@
     "tracecontext",
     "traefik",
     "webauthn",
-    "websecure"
+    "websecure",
+    "stakater"
   ],
   "flagWords": [
     "abort",

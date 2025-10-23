@@ -10,6 +10,7 @@ metadata:
 spec:
   rules:
     - id: "rule:lfx:whoami:public"
+      allow_encoded_slashes: "off"
       match:
         methods:
           - GET

@@ -11,11 +11,15 @@ metadata:
 spec:
   parentRefs:
 {{- if .Values.gateway.enabled }}
-    - name: {{ .Values.gateway.name | default "lfx-platform-gateway" }}
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: {{ .Values.gateway.name | default "lfx-platform-gateway" }}
       sectionName: {{ include "lfx-platform.http-listener" . }}
       namespace: {{ .Release.Namespace }}
 {{- else }}
-    - name: {{ .Values.lfx.parentGateway.name }}
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: {{ .Values.lfx.parentGateway.name }}
       sectionName: {{ .Values.lfx.parentGateway.sectionName }}
       namespace: {{ .Values.lfx.parentGateway.namespace }}
 {{- end }}
@@ -27,4 +31,8 @@ spec:
           requestRedirect:
             scheme: https
             statusCode: 301
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
 {{- end }}

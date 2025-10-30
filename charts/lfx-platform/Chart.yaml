@@ -82,5 +82,5 @@ dependencies:
     condition: lfx-v2-meeting-service.enabled
   - name: lfx-v2-auth-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
-    version: ~0.2.7
+    version: ~0.3.1
     condition: lfx-v2-auth-service.enabled

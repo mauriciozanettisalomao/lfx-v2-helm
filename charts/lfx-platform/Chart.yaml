@@ -5,7 +5,7 @@ apiVersion: v2
 name: lfx-platform
 description: LFX Platform v2 Helm chart
 type: application
-version: 0.3.4
+version: 0.3.5
 icon: https://github.com/linuxfoundation/lfx-v2-helm/raw/main/img/lfx-logo-color.svg
 dependencies:
   - name: traefik
@@ -82,5 +82,5 @@ dependencies:
     condition: lfx-v2-meeting-service.enabled
   - name: lfx-v2-auth-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
-    version: ~0.2.7
+    version: ~0.3.1
     condition: lfx-v2-auth-service.enabled

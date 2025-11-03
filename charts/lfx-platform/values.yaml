@@ -112,10 +112,6 @@ gateway:
 openfga:
   enabled: true
 
-  # Enable reloader to restart pods when ConfigMap or Secrets change
-  annotations:
-    reloader.stakater.com/auto: "true"
-
   # Disable playground by default
   playground:
     enabled: false
@@ -169,10 +165,6 @@ heimdall:
     volumeMounts:
       - name: heimdall-signer-cert
         mountPath: "/heimdall/cert/"
-
-  # Enable reloader to restart pods when ConfigMap or Secrets change
-  annotations:
-    reloader.stakater.com/auto: "true"
 
   env:
     # Tracing Configuration
@@ -590,10 +582,6 @@ lfx-v2-meeting-service:
   lfx:
     domain: k8s.orb.local
 
-  # Enable reloader to restart pods when ConfigMap or Secrets change
-  annotations:
-    reloader.stakater.com/auto: "true"
-
 lfx-v2-auth-service:
   enabled: true
   lfx:
@@ -605,7 +593,7 @@ lfx-v2-auth-service:
       # In case of auth0, please refer to the following documentation
       ## https://github.com/linuxfoundation/lfx-v2-auth-service?tab=readme-ov-file#auth0-configuration
       USER_REPOSITORY_TYPE:
-        value: mock
+        value: authelia
       # Authelia configuration
       ## Required when using "authelia" repository type
       ## For more information, see the [Local Development Support documentation](https://github.com/linuxfoundation/lfx-v2-auth-service/blob/main/README.md#local-development-support)

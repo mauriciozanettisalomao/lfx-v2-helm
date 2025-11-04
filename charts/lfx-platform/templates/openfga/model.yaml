@@ -220,7 +220,7 @@ spec:
             define meeting: [v1_meeting]
             define auditor: organizer or auditor from project or auditor from meeting
             # No explicit [user] relation for organizer in v1.
-            define organizer: meeting_coordinator from project or writer from project or organizer
+            define organizer: meeting_coordinator from project or writer from project or organizer from meeting
             define host: [user] or organizer
             define invitee: [user]
             define attendee: [user]

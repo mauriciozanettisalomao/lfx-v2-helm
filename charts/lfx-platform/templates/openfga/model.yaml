@@ -98,8 +98,8 @@ spec:
             # only certain privileged users can view it.
             define viewer: [user:*] or participant or organizer or auditor
 
-          # The meeting_attachment type identifies an attachment of a meeting.
-          type meeting_attachment
+        # The meeting_attachment type identifies an attachment of a meeting.
+        type meeting_attachment
           relations
             define meeting: [meeting]
             define writer: organizer from meeting
@@ -107,7 +107,7 @@ spec:
             define participant: participant from meeting
             define viewer: [user:*] or participant or writer or auditor
 
-          type past_meeting
+        type past_meeting
           relations
             define project: [project]
             define committee: [committee]
@@ -131,8 +131,8 @@ spec:
             # only certain privileged users can view it.
             define viewer: [user:*] or attendee or invitee or organizer or auditor
 
-          # The past_meeting_attachment type identifies an attachment of a past meeting.
-          type past_meeting_attachment
+        # The past_meeting_attachment type identifies an attachment of a past meeting.
+        type past_meeting_attachment
           relations
             define past_meeting: [past_meeting]
             define writer: organizer from past_meeting
@@ -140,12 +140,12 @@ spec:
             define participant: host from past_meeting or invitee from past_meeting or attendee from past_meeting
             define viewer: [user:*] or participant or writer or auditor
 
-          # The past_meeting_recording type identifies a recording of a past meeting.
-          # Access to a recording is limited to one of the following groups:
-          # - Only meeting hosts
-          # - Only meeting participants
-          # - Public (anyone)
-          type past_meeting_recording
+        # The past_meeting_recording type identifies a recording of a past meeting.
+        # Access to a recording is limited to one of the following groups:
+        # - Only meeting hosts
+        # - Only meeting participants
+        # - Public (anyone)
+        type past_meeting_recording
           relations
             define past_meeting: [past_meeting]
             define writer: organizer from past_meeting
@@ -163,12 +163,12 @@ spec:
             # to view the recording.
             define viewer: [user:*] or writer or auditor
 
-          # The past_meeting_transcript type identifies a transcript of a past meeting.
-          # Access to a transcript is limited to one of the following groups:
-          # - Only meeting hosts
-          # - Only meeting participants
-          # - Public (anyone)
-          type past_meeting_transcript
+        # The past_meeting_transcript type identifies a transcript of a past meeting.
+        # Access to a transcript is limited to one of the following groups:
+        # - Only meeting hosts
+        # - Only meeting participants
+        # - Public (anyone)
+        type past_meeting_transcript
           relations
             define past_meeting: [past_meeting]
             define writer: organizer from past_meeting
@@ -186,12 +186,12 @@ spec:
             # to view the transcript.
             define viewer: [user:*] or writer or auditor
 
-          # The past_meeting_summary type identifies a summary of a past meeting.
-          # Access to a summary is limited to one of the following groups:
-          # - Only meeting hosts
-          # - Only meeting participants
-          # - Public (anyone)
-          type past_meeting_summary
+        # The past_meeting_summary type identifies a summary of a past meeting.
+        # Access to a summary is limited to one of the following groups:
+        # - Only meeting hosts
+        # - Only meeting participants
+        # - Public (anyone)
+        type past_meeting_summary
           relations
             define past_meeting: [past_meeting]
             define writer: organizer from past_meeting

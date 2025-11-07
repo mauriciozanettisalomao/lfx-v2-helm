@@ -103,7 +103,7 @@ spec:
           relations
             define meeting: [meeting]
             define writer: organizer from meeting
-            define auditor: auditor from meeting
+            define auditor: writer or auditor from meeting
             define participant: participant from meeting
             define viewer: [user:*] or participant or writer or auditor
 
@@ -136,7 +136,7 @@ spec:
           relations
             define past_meeting: [past_meeting]
             define writer: organizer from past_meeting
-            define auditor: auditor from past_meeting
+            define auditor: writer or auditor from past_meeting
             define participant: host from past_meeting or invitee from past_meeting or attendee from past_meeting
             define viewer: [user:*] or participant or writer or auditor
 

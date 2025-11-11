@@ -40,21 +40,21 @@ dependencies:
   version: 0.4.6
 - name: lfx-v2-fga-sync
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-fga-sync/chart
-  version: 0.2.3
+  version: 0.2.4
 - name: lfx-v2-access-check
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-access-check/chart
   version: 0.2.4
 - name: lfx-v2-indexer-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-indexer-service/chart
-  version: 0.4.4
+  version: 0.4.6
 - name: lfx-v2-committee-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-committee-service/chart
   version: 0.2.8
 - name: lfx-v2-meeting-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-meeting-service/chart
-  version: 0.4.22
+  version: 0.5.3
 - name: lfx-v2-auth-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
   version: 0.3.1
-digest: sha256:a18395a63c2612192e921e2d8e22819ead3e5abc83773e7519a1e8216b07c39f
-generated: "2025-11-06T12:58:56.706163-03:00"
+digest: sha256:00f26f090425a7653c371e5343e5b5f6fd36bab5b589ca468a032caf86f52dc8
+generated: "2025-11-10T17:28:34.819094-08:00"

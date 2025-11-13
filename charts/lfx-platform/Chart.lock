@@ -37,7 +37,7 @@ dependencies:
   version: 0.4.7
 - name: lfx-v2-project-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-project-service/chart
-  version: 0.4.6
+  version: 0.5.0
 - name: lfx-v2-fga-sync
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-fga-sync/chart
   version: 0.2.4
@@ -56,5 +56,5 @@ dependencies:
 - name: lfx-v2-auth-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
   version: 0.3.1
-digest: sha256:00f26f090425a7653c371e5343e5b5f6fd36bab5b589ca468a032caf86f52dc8
-generated: "2025-11-10T17:28:34.819094-08:00"
+digest: sha256:29bc1d55bb007848dc040b40920d6535e72e42d75aa1b89c16f9168e74bb337c
+generated: "2025-11-12T16:36:29.771474-08:00"

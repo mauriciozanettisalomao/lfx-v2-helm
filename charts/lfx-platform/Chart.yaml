@@ -58,7 +58,7 @@ dependencies:
     condition: lfx-v2-query-service.enabled
   - name: lfx-v2-project-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-project-service/chart
-    version: ~0.4.6
+    version: ~0.5.0
     condition: lfx-v2-project-service.enabled
   - name: lfx-v2-fga-sync
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-fga-sync/chart

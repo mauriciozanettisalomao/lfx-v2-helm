@@ -408,6 +408,13 @@ authelia:
             algorithm: "RS256"
             key:
               path: /secrets/authelia-jwks-keys/jwks-key-1.pem
+        claims_policies:
+          default:
+            id_token:
+              - email
+              - email_verified
+              - name
+              - preferred_username
         clients:
           - client_id: heimdall
             client_name: Heimdall backend
@@ -467,6 +474,7 @@ authelia:
             grant_types:
               - authorization_code
               - refresh_token
+            claims_policy: default
             authorization_policy: one_factor
             token_endpoint_auth_method: client_secret_basic
           - client_id: docs

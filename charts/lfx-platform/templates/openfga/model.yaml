@@ -21,7 +21,7 @@ spec:
     - version:
         major: 7
         minor: 0
-        patch: 0
+        patch: 1
       authorizationModel: |
         model
           schema 1.1
@@ -49,7 +49,7 @@ spec:
             define project: [project]
             define writer: [user] or writer from project
             define auditor: [user, team#member] or auditor from project or meeting_coordinator from project
-            define viewer: [user:*] or auditor or auditor from project
+            define viewer: [user:*] or member or auditor or auditor from project
 
         type groupsio_service
           relations

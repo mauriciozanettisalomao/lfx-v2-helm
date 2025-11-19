@@ -61,6 +61,16 @@ fga-operator:
 # Traefik configuration
 traefik:
   enabled: true
+  tracing:
+    otlp:
+      enabled: false
+      grpc:
+        enabled: true
+        endpoint: "jaeger-collector.observability:4317"
+        insecure: true
+  env:
+    - name: OTEL_PROPAGATORS
+      value: tracecontext,baggage,jaeger
   providers:
     # Enable Kubernetes Gateway provider
     kubernetesGateway:
@@ -98,14 +108,9 @@ gateway:
         namespaces:
           from: Same
 
-
 # OpenFGA configuration
 openfga:
   enabled: true
-
-  # Enable reloader to restart pods when ConfigMap or Secrets change
-  podAnnotations:
-    reloader.stakater.com/auto: "true"
 
   # Disable playground by default
   playground:
@@ -125,6 +130,16 @@ openfga:
       username: openfga
       database: openfga
       existingSecret: openfga-postgresql-server
+
+  # Tracing configuration
+  telemetry:
+    trace:
+      enabled: false
+      otlp:
+        endpoint: "jaeger-collector.observability:4317"
+        tls:
+          enabled: false
+      sampleRatio: 1.0
 
   # Additional OpenFGA configuration
   replicaCount: 1
@@ -150,11 +165,14 @@ heimdall:
     volumeMounts:
       - name: heimdall-signer-cert
         mountPath: "/heimdall/cert/"
-    # Enable reloader to restart pods when ConfigMap or Secrets change
-    annotations:
-      reloader.stakater.com/auto: "true"
 
   env:
+    # Tracing Configuration
+    HEIMDALLCFG_TRACING_ENABLED: "false"
+    OTEL_PROPAGATORS: jaeger
+    OTEL_TRACE_EXPORTER: otlp
+    OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: grpc
+    OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: "http://jaeger-collector.observability:4317"
     CLIENT_SECRET:
       secretKeyRef:
         name: authelia-clients
@@ -392,6 +410,13 @@ authelia:
             algorithm: "RS256"
             key:
               path: /secrets/authelia-jwks-keys/jwks-key-1.pem
+        claims_policies:
+          default:
+            id_token:
+              - email
+              - email_verified
+              - name
+              - preferred_username
         clients:
           - client_id: heimdall
             client_name: Heimdall backend
@@ -451,6 +476,7 @@ authelia:
             grant_types:
               - authorization_code
               - refresh_token
+            claims_policy: default
             authorization_policy: one_factor
             token_endpoint_auth_method: client_secret_basic
           - client_id: docs
@@ -569,7 +595,7 @@ lfx-v2-auth-service:
       # In case of auth0, please refer to the following documentation
       ## https://github.com/linuxfoundation/lfx-v2-auth-service?tab=readme-ov-file#auth0-configuration
       USER_REPOSITORY_TYPE:
-        value: mock
+        value: authelia
       # Authelia configuration
       ## Required when using "authelia" repository type
       ## For more information, see the [Local Development Support documentation](https://github.com/linuxfoundation/lfx-v2-auth-service/blob/main/README.md#local-development-support)

@@ -142,8 +142,15 @@ openfga:
       sampleRatio: 1.0
 
   # Additional OpenFGA configuration
-  replicaCount: 1
+  replicaCount: 3
 
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+    requests:
+      cpu: 500m
+      memory: 512Mi
 # Heimdall configuration
 heimdall:
   enabled: true
@@ -153,7 +160,14 @@ heimdall:
 
 
   deployment:
-    replicaCount: 1
+    replicaCount: 3
+    resources:
+      limits:
+        cpu: 100m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 256Mi
     autoscaling:
       enabled: false
     labels:
@@ -345,6 +359,13 @@ opensearch:
       value: "true"
     - name: DISABLE_SECURITY_PLUGIN
       value: "true"
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 8Gi
+    limits:
+      cpu: 2000m
+      memory: 16Gi
 
 # Mailpit configuration
 mailpit:

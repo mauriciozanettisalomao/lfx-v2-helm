@@ -5,7 +5,7 @@ apiVersion: v2
 name: lfx-platform
 description: LFX Platform v2 Helm chart
 type: application
-version: 0.3.14
+version: 0.3.15
 icon: https://github.com/linuxfoundation/lfx-v2-helm/raw/main/img/lfx-logo-color.svg
 dependencies:
   - name: traefik
@@ -54,11 +54,11 @@ dependencies:
     condition: trustManagerEnabled
   - name: lfx-v2-query-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-query-service/chart
-    version: ~0.4.7
+    version: ~0.4.9
     condition: lfx-v2-query-service.enabled
   - name: lfx-v2-project-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-project-service/chart
-    version: ~0.5.1
+    version: ~0.5.3
     condition: lfx-v2-project-service.enabled
   - name: lfx-v2-fga-sync
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-fga-sync/chart
@@ -70,15 +70,15 @@ dependencies:
     condition: lfx-v2-access-check.enabled
   - name: lfx-v2-indexer-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-indexer-service/chart
-    version: ~0.4.7
+    version: ~0.4.10
     condition: lfx-v2-indexer-service.enabled
   - name: lfx-v2-committee-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-committee-service/chart
-    version: ~0.2.13
+    version: ~0.2.14
     condition: lfx-v2-committee-service.enabled
   - name: lfx-v2-meeting-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-meeting-service/chart
-    version: ~0.5.4
+    version: ~0.5.8
     condition: lfx-v2-meeting-service.enabled
   - name: lfx-v2-auth-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart

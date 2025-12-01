@@ -13,6 +13,7 @@
 *~
 .env
 *.env
+values.local.yaml
 
 # Rendered templates
 **/templates/*.rendered

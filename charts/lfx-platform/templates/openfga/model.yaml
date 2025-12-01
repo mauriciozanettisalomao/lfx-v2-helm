@@ -20,8 +20,8 @@ spec:
 */}}
     - version:
         major: 7
-        minor: 0
-        patch: 1
+        minor: 1
+        patch: 0
       authorizationModel: |
         model
           schema 1.1
@@ -152,16 +152,14 @@ spec:
             define auditor: auditor from past_meeting
             define host: host from past_meeting
             define participant: invitee from past_meeting or attendee from past_meeting
-            # The viewer relation needs to be kept up-to-date separately from the other relations
-            # because it depends on the past meeting artifact_visibility setting. Auditors and writers
-            # do however by default have access to view the recording.
-            #
+            # The following "participant access by related meeting" relations are conditional
+            # because they depend on the past meeting artifact_visibility setting. Auditors
+            # and writers do however by default have access to view the recording.
+            define past_meeting_for_participant_view: [past_meeting]
+            define past_meeting_for_attendee_view: [past_meeting]
+            define past_meeting_for_host_view: [past_meeting]
             # If the artifact_visibility is public, then every user should be a viewer
-            # If it is set to only meeting participants, then only the meeting participants
-            # should be able to view the recording.
-            # If it is set to only meeting hosts, then only the meeting hosts should be able
-            # to view the recording.
-            define viewer: [user, user:*] or writer or auditor
+            define viewer: [user, user:*] or writer or auditor or invitee from past_meeting_for_participant_view or attendee from past_meeting_for_attendee_view or host from past_meeting_for_host_view
 
         # The past_meeting_transcript type identifies a transcript of a past meeting.
         # Access to a transcript is limited to one of the following groups:
@@ -175,16 +173,14 @@ spec:
             define auditor: auditor from past_meeting
             define host: host from past_meeting
             define participant: invitee from past_meeting or attendee from past_meeting
-            # The viewer relation needs to be kept up-to-date separately from the other relations
-            # because it depends on the past meeting artifact_visibility setting. Auditors and writers
-            # do however by default have access to view the transcript.
-            #
+            # The following "participant access by related meeting" relations are conditional
+            # because they depend on the past meeting artifact_visibility setting. Auditors
+            # and writers do however by default have access to view the transcript.
+            define past_meeting_for_participant_view: [past_meeting]
+            define past_meeting_for_attendee_view: [past_meeting]
+            define past_meeting_for_host_view: [past_meeting]
             # If the artifact_visibility is public, then every user should be a viewer
-            # If it is set to only meeting participants, then only the meeting participants
-            # should be able to view the transcript.
-            # If it is set to only meeting hosts, then only the meeting hosts should be able
-            # to view the transcript.
-            define viewer: [user, user:*] or writer or auditor
+            define viewer: [user, user:*] or writer or auditor or invitee from past_meeting_for_participant_view or attendee from past_meeting_for_attendee_view or host from past_meeting_for_host_view
 
         # The past_meeting_summary type identifies a summary of a past meeting.
         # Access to a summary is limited to one of the following groups:
@@ -198,16 +194,14 @@ spec:
             define auditor: auditor from past_meeting
             define host: host from past_meeting
             define participant: invitee from past_meeting or attendee from past_meeting
-            # The viewer relation needs to be kept up-to-date separately from the other relations
-            # because it depends on the past meeting artifact_visibility setting. Auditors and writers
-            # do however by default have access to view the summary.
-            #
+            # The following "participant access by related meeting" relations are conditional
+            # because they depend on the past meeting artifact_visibility setting. Auditors
+            # and writers do however by default have access to view the summary.
+            define past_meeting_for_participant_view: [past_meeting]
+            define past_meeting_for_attendee_view: [past_meeting]
+            define past_meeting_for_host_view: [past_meeting]
             # If the artifact_visibility is public, then every user should be a viewer
-            # If it is set to only meeting participants, then only the meeting participants
-            # should be able to view the summary.
-            # If it is set to only meeting hosts, then only the meeting hosts should be able
-            # to view the summary.
-            define viewer: [user, user:*] or writer or auditor
+            define viewer: [user, user:*] or writer or auditor or invitee from past_meeting_for_participant_view or attendee from past_meeting_for_attendee_view or host from past_meeting_for_host_view
 
         # The following v1 meeting types support read-only, indexer-only data
         # being synced from LFX v1. At this time, they are *distinct types*
@@ -253,7 +247,14 @@ spec:
             define auditor: auditor from past_meeting
             define host: host from past_meeting
             define participant: invitee from past_meeting or attendee from past_meeting
-            define viewer: [user, user:*] or writer or auditor
+            # The following "participant access by related meeting" relations are conditional
+            # because they depend on the past meeting artifact_visibility setting. Auditors
+            # and writers do however by default have access to view the recording.
+            define past_meeting_for_participant_view: [v1_past_meeting]
+            define past_meeting_for_attendee_view: [v1_past_meeting]
+            define past_meeting_for_host_view: [v1_past_meeting]
+            # If the artifact_visibility is public, then every user should be a viewer
+            define viewer: [user:*] or writer or auditor or invitee from past_meeting_for_participant_view or attendee from past_meeting_for_attendee_view or host from past_meeting_for_host_view
 
         # *All relations are as described in `past_meeting_transcript`, unless
         # otherwise noted.*
@@ -264,7 +265,14 @@ spec:
             define auditor: auditor from past_meeting
             define host: host from past_meeting
             define participant: invitee from past_meeting or attendee from past_meeting
-            define viewer: [user, user:*] or writer or auditor
+            # The following "participant access by related meeting" relations are conditional
+            # because they depend on the past meeting artifact_visibility setting. Auditors
+            # and writers do however by default have access to view the transcript.
+            define past_meeting_for_participant_view: [v1_past_meeting]
+            define past_meeting_for_attendee_view: [v1_past_meeting]
+            define past_meeting_for_host_view: [v1_past_meeting]
+            # If the artifact_visibility is public, then every user should be a viewer
+            define viewer: [user:*] or writer or auditor or invitee from past_meeting_for_participant_view or attendee from past_meeting_for_attendee_view or host from past_meeting_for_host_view
 
         type v1_past_meeting_summary
           relations
@@ -273,5 +281,12 @@ spec:
             define auditor: auditor from past_meeting
             define host: host from past_meeting
             define participant: invitee from past_meeting or attendee from past_meeting
-            define viewer: [user, user:*] or writer or auditor
+            # The following "participant access by related meeting" relations are conditional
+            # because they depend on the past meeting artifact_visibility setting. Auditors
+            # and writers do however by default have access to view the summary.
+            define past_meeting_for_participant_view: [v1_past_meeting]
+            define past_meeting_for_attendee_view: [v1_past_meeting]
+            define past_meeting_for_host_view: [v1_past_meeting]
+            # If the artifact_visibility is public, then every user should be a viewer
+            define viewer: [user:*] or writer or auditor or invitee from past_meeting_for_participant_view or attendee from past_meeting_for_attendee_view or host from past_meeting_for_host_view
 {{- end }}

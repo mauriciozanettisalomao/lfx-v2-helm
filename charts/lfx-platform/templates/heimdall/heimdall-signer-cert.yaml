@@ -1,7 +1,7 @@
 # Copyright The Linux Foundation and each contributor to LFX.
 # SPDX-License-Identifier: MIT
 ---
-{{ if .Values.heimdall.enabled -}}
+{{ if and .Values.heimdall.enabled .Values.lfx.generateHeimdallSignerCert.enabled -}}
 {{/*
 Generate a cert for Heimdall on install of Chart
   TODO: Create RBAC rule to limit secret access to heimdall Pods
@@ -13,7 +13,7 @@ apiVersion: v1
 kind: Secret
 type: Opaque
 metadata:
-  name: heimdall-signer-cert
+  name: {{ .Values.lfx.generateHeimdallSignerCert.name }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "lfx-platform.labels" . | nindent 4 }}

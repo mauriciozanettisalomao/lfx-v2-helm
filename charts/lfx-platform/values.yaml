@@ -16,7 +16,7 @@ lfx:
     name: heimdall-trust-bundle
     configKey: ca-certificates.crt
 
-  # Have helm generate the heimdall-signer-cert secret
+  # Have Helm generate the heimdall-signer-cert secret
   # Recommended to disable for production values and manage separately.
   generateHeimdallSignerCert:
     enabled: true

@@ -3,10 +3,10 @@
 ---
 {{ if and .Values.heimdall.enabled .Values.lfx.generateHeimdallSignerCert.enabled -}}
 {{/*
-Generate a P-256 curve key & x509 cert for Heimdall on install of Chart
+Generate a private key & x509 cert for Heimdall on install of Chart
   TODO: Create RBAC rule to limit secret access to heimdall Pods
 */}}
-{{- $heimdallCA := genCAWithKey "heimdall" 365 (genPrivateKey "ecdsa")}}
+{{- $heimdallCA := genCAWithKey "heimdall" 365 (genPrivateKey .Values.lfx.generateHeimdallSignerCert.algorithm) -}}
 
 apiVersion: v1
 kind: Secret

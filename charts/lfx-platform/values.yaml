@@ -21,6 +21,8 @@ lfx:
   generateHeimdallSignerCert:
     enabled: true
     name: heimdall-signer-cert
+    # algorithm will be passed as the parameter to Sprig's genPrivateKey.
+    algorithm: rsa
 
   whoami:
     enabled: true

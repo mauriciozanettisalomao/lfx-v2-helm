@@ -4,10 +4,10 @@ dependencies:
   version: 36.2.0
 - name: openfga
   repository: https://openfga.github.io/helm-charts
-  version: 0.2.49
+  version: 0.2.50
 - name: heimdall
   repository: oci://ghcr.io/dadrus/heimdall/chart
-  version: 0.15.8
+  version: 0.16.6
 - name: nats
   repository: https://nats-io.github.io/k8s/helm/charts/
   version: 1.3.16
@@ -40,21 +40,21 @@ dependencies:
   version: 0.5.3
 - name: lfx-v2-fga-sync
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-fga-sync/chart
-  version: 0.2.6
+  version: 0.2.9
 - name: lfx-v2-access-check
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-access-check/chart
   version: 0.2.5
 - name: lfx-v2-indexer-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-indexer-service/chart
-  version: 0.4.10
+  version: 0.4.11
 - name: lfx-v2-committee-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-committee-service/chart
   version: 0.2.16
 - name: lfx-v2-meeting-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-meeting-service/chart
-  version: 0.5.8
+  version: 0.5.9
 - name: lfx-v2-auth-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
   version: 0.3.3
-digest: sha256:884235bcf79f3fd756eb00a1b599d713a6d4693c6ca145be49e1a4f26bb6994d
-generated: "2025-12-02T13:37:50.467044-03:00"
+digest: sha256:10d1d90a3139e5cfe78b4e3d21f578816ce139aab73b52a71cd717f74d3c9a1e
+generated: "2025-12-12T13:02:47.475091-08:00"

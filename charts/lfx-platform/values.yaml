@@ -22,7 +22,11 @@ lfx:
     enabled: true
     name: heimdall-signer-cert
     # algorithm will be passed as the parameter to Sprig's genPrivateKey.
-    algorithm: rsa
+    # If blank or missing, uses genCA (2048-bit RSA key, PS256 JWT alg).
+    # If set, uses genCAWithKey with the specified algorithm.
+    # Setting "rsa" explicitly will use a 4096-bit key (PS512 JWT alg).
+    # algorithm: ecdsa
+    # algorithm: rsa
 
   whoami:
     enabled: true

@@ -6,7 +6,11 @@
 Generate a private key & x509 cert for Heimdall on install of Chart
   TODO: Create RBAC rule to limit secret access to heimdall Pods
 */}}
+{{- if .Values.lfx.generateHeimdallSignerCert.algorithm -}}
 {{- $heimdallCA := genCAWithKey "heimdall" 365 (genPrivateKey .Values.lfx.generateHeimdallSignerCert.algorithm) -}}
+{{- else -}}
+{{- $heimdallCA := genCA "heimdall" 365 -}}
+{{- end -}}
 
 apiVersion: v1
 kind: Secret

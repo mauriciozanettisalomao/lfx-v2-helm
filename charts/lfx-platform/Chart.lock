@@ -28,7 +28,7 @@ dependencies:
   version: 1.0.0
 - name: cert-manager
   repository: https://charts.jetstack.io
-  version: v1.18.3
+  version: v1.18.4
 - name: trust-manager
   repository: https://charts.jetstack.io
   version: v0.18.0
@@ -46,15 +46,18 @@ dependencies:
   version: 0.2.5
 - name: lfx-v2-indexer-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-indexer-service/chart
-  version: 0.4.11
+  version: 0.4.12
 - name: lfx-v2-committee-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-committee-service/chart
-  version: 0.2.16
+  version: 0.2.19
 - name: lfx-v2-meeting-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-meeting-service/chart
-  version: 0.5.9
+  version: 0.5.13
+- name: lfx-v2-mailing-list-service
+  repository: oci://ghcr.io/linuxfoundation/lfx-v2-mailing-list-service/chart
+  version: 0.1.1
 - name: lfx-v2-auth-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
   version: 0.3.3
-digest: sha256:10d1d90a3139e5cfe78b4e3d21f578816ce139aab73b52a71cd717f74d3c9a1e
-generated: "2025-12-12T13:02:47.475091-08:00"
+digest: sha256:464a66753692c892e490f7ed00e78e046d764aad5cfd3f3549f9f3db18267f04
+generated: "2025-12-29T10:56:32.860849-08:00"

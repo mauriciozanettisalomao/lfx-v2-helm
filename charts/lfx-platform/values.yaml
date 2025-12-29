@@ -16,6 +16,18 @@ lfx:
     name: heimdall-trust-bundle
     configKey: ca-certificates.crt
 
+  # Have Helm generate the heimdall-signer-cert secret
+  # Recommended to disable for production values and manage separately.
+  generateHeimdallSignerCert:
+    enabled: true
+    name: heimdall-signer-cert
+    # algorithm will be passed as the parameter to Sprig's genPrivateKey.
+    # If blank or missing, uses genCA (2048-bit RSA key, PS256 JWT alg).
+    # If set, uses genCAWithKey with the specified algorithm.
+    # Setting "rsa" explicitly will use a 4096-bit key (PS512 JWT alg).
+    # algorithm: ecdsa
+    # algorithm: rsa
+
   whoami:
     enabled: true
 
@@ -61,6 +73,16 @@ fga-operator:
 # Traefik configuration
 traefik:
   enabled: true
+  tracing:
+    otlp:
+      enabled: false
+      grpc:
+        enabled: true
+        endpoint: "jaeger-collector.observability:4317"
+        insecure: true
+  env:
+    - name: OTEL_PROPAGATORS
+      value: tracecontext,baggage,jaeger
   providers:
     # Enable Kubernetes Gateway provider
     kubernetesGateway:
@@ -98,14 +120,9 @@ gateway:
         namespaces:
           from: Same
 
-
 # OpenFGA configuration
 openfga:
   enabled: true
-
-  # Enable reloader to restart pods when ConfigMap or Secrets change
-  annotations:
-    reloader.stakater.com/auto: "true"
 
   # Disable playground by default
   playground:
@@ -126,19 +143,43 @@ openfga:
       database: openfga
       existingSecret: openfga-postgresql-server
 
-  # Additional OpenFGA configuration
-  replicaCount: 1
+  # Tracing configuration
+  telemetry:
+    trace:
+      enabled: false
+      otlp:
+        endpoint: "jaeger-collector.observability:4317"
+        tls:
+          enabled: false
+      sampleRatio: 1.0
 
+  # Additional OpenFGA configuration
+  replicaCount: 3
+
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+    requests:
+      cpu: 500m
+      memory: 512Mi
 # Heimdall configuration
 heimdall:
   enabled: true
 
   image:
-    tag: 0.16.6
+    tag: 0.17.6
 
 
   deployment:
-    replicaCount: 1
+    replicaCount: 3
+    resources:
+      limits:
+        cpu: 100m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 256Mi
     autoscaling:
       enabled: false
     labels:
@@ -151,11 +192,14 @@ heimdall:
       - name: heimdall-signer-cert
         mountPath: "/heimdall/cert/"
 
-  # Enable reloader to restart pods when ConfigMap or Secrets change
-  annotations:
-    reloader.stakater.com/auto: "true"
-
   env:
+    # Tracing Configuration
+    HEIMDALLCFG_TRACING_ENABLED: "false"
+    HEIMDALLCFG_SECRETS__RELOAD__ENABLED: "true"
+    OTEL_PROPAGATORS: jaeger
+    OTEL_TRACE_EXPORTER: otlp
+    OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: grpc
+    OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: "http://jaeger-collector.observability:4317"
     CLIENT_SECRET:
       secretKeyRef:
         name: authelia-clients
@@ -170,7 +214,9 @@ heimdall:
 
   serve:
     trusted_proxies:
-      - 192.168.0.0/16
+      - "10.0.0.0/8"
+      - "172.16.0.0/12"
+      - "192.168.0.0/16"
 
   mechanisms:
     authenticators:
@@ -302,20 +348,26 @@ nats:
     natsBox:
       enabled: true
 
-    resources:
-      requests:
-        memory: "256Mi"
-        cpu: "100m"
-      limits:
-        memory: "512Mi"
-        cpu: "500m"
-
     # JetStream configuration
     jetstream:
       enabled: true
       fileStore:
         enabled: true
         size: 1Gi
+  container:
+    env:
+      # Different from k8s units, suffix must be B, KiB, MiB, GiB, or TiB
+      # Should be ~80% of memory limit
+      GOMEMLIMIT: 6GiB
+    merge:
+      # Recommended minimum: at least 2 CPU cores and 8Gi memory for production JetStream clusters
+      resources:
+        requests:
+          cpu: "1000m"
+          memory: 4Gi
+        limits:
+          cpu: "2000m"
+          memory: 8Gi
 
 # OpenSearch configuration
 opensearch:
@@ -326,6 +378,13 @@ opensearch:
       value: "true"
     - name: DISABLE_SECURITY_PLUGIN
       value: "true"
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 8Gi
+    limits:
+      cpu: 2000m
+      memory: 16Gi
 
 # Mailpit configuration
 mailpit:
@@ -391,6 +450,13 @@ authelia:
             algorithm: "RS256"
             key:
               path: /secrets/authelia-jwks-keys/jwks-key-1.pem
+        claims_policies:
+          default:
+            id_token:
+              - email
+              - email_verified
+              - name
+              - preferred_username
         clients:
           - client_id: heimdall
             client_name: Heimdall backend
@@ -450,6 +516,7 @@ authelia:
             grant_types:
               - authorization_code
               - refresh_token
+            claims_policy: default
             authorization_policy: one_factor
             token_endpoint_auth_method: client_secret_basic
           - client_id: docs
@@ -577,7 +644,7 @@ lfx-v2-auth-service:
       # In case of auth0, please refer to the following documentation
       ## https://github.com/linuxfoundation/lfx-v2-auth-service?tab=readme-ov-file#auth0-configuration
       USER_REPOSITORY_TYPE:
-        value: mock
+        value: authelia
       # Authelia configuration
       ## Required when using "authelia" repository type
       ## For more information, see the [Local Development Support documentation](https://github.com/linuxfoundation/lfx-v2-auth-service/blob/main/README.md#local-development-support)

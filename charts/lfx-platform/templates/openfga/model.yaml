@@ -21,7 +21,7 @@ spec:
     - version:
         major: 7
         minor: 1
-        patch: 1
+        patch: 2
       authorizationModel: |
         model
           schema 1.1
@@ -54,9 +54,9 @@ spec:
         type groupsio_service
           relations
             define project: [project]
-            define owner: owner from project
-            define writer: writer from project or owner
-            define auditor: auditor from project or writer
+            define owner: [user] or owner from project
+            define writer: [user] or writer from project or owner
+            define auditor: [user] or auditor from project or writer
             define viewer: [user:*] or auditor from project
 
         type groupsio_mailing_list
@@ -65,8 +65,8 @@ spec:
             define project: project from groupsio_service # Inherit project permissions
             define committee: [committee] # Inherit committee permissions
             define owner: owner from groupsio_service
-            define writer: writer from groupsio_service or writer from committee
-            define auditor: auditor from groupsio_service or auditor from committee
+            define writer: [user] or writer from groupsio_service or writer from committee
+            define auditor: [user] or auditor from groupsio_service or auditor from committee
             define viewer: [user:*] or viewer from groupsio_service or member from committee
             define member: [user]
 

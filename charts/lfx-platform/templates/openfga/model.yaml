@@ -47,6 +47,9 @@ spec:
           relations
             define member: [user]
             define project: [project]
+            # The self_for_member_basic_profile_access relation provides a self-referential
+            # relationship that allows committee members to view basic profile information of
+            # other members within the same committee.
             define self_for_member_basic_profile_access: [committee]
             define writer: [user] or writer from project
             define auditor: [user, team#member] or writer or auditor from project or meeting_coordinator from project

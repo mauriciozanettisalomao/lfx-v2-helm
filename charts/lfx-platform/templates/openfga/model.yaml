@@ -19,7 +19,7 @@ spec:
     - patch: Modifications of define
 */}}
     - version:
-        major: 9
+        major: 10
         minor: 0
         patch: 0
       authorizationModel: |
@@ -335,4 +335,10 @@ spec:
             # we don't need to create a "writer" relation that is defined as just "owner":
             # we just use the "owner" relation in our access checks!
             define auditor: owner or auditor from survey
+
+        # This type is used for access to membership apis, not to define someone as a project member
+        # eventually it needs to be expanded as we index objects
+        type member
+          relations
+            define auditor: [user, team#member]
 {{- end }}

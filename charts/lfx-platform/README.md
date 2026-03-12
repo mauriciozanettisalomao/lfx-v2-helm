@@ -23,6 +23,15 @@ helm install -n lfx lfx-platform \
   oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform
 ```
 
+For reproducible installs or when debugging a specific release, pin the version
+with `--version`:
+
+```bash
+helm install -n lfx lfx-platform \
+  oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
+  --version <version>
+```
+
 #### Local development (resource-constrained machines)
 
 The default `values.yaml` uses production-grade resource limits (e.g. NATS
@@ -31,6 +40,11 @@ bundled `values-local.yaml` override to reduce resource requirements:
 
 ```bash
 kubectl create namespace lfx
+
+# NOTE: This downloads values-local.yaml from the main branch and assumes the
+# OCI chart version you install was built from the same main commit. For strict
+# reproducibility, prefer using a local copy of values-local.yaml from the
+# same tag or commit as your chart release (see example below).
 
 helm install -n lfx lfx-platform \
   oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
@@ -45,6 +59,44 @@ helm install -n lfx lfx-platform \
   oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
   --values /path/to/values-local.yaml
 ```
+
+#### Customizing local development values
+
+`values-local.yaml` provides sensible defaults for local development, but any
+parameter from `values.yaml` can be overridden by passing an additional
+`--values` file after `values-local.yaml`. Later `--values` files take
+precedence over earlier ones, so you only need to specify the values you want
+to change.
+
+For example, to further reduce NATS memory limits or enable a service that is
+disabled by default:
+
+```yaml
+# my-overrides.yaml
+nats:
+  container:
+    env:
+      GOMEMLIMIT: 1GiB
+    merge:
+      resources:
+        requests:
+          memory: 512Mi
+        limits:
+          memory: 1Gi
+
+lfx-v2-query-service:
+  enabled: true
+```
+
+```bash
+helm install -n lfx lfx-platform \
+  oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
+  --values https://raw.githubusercontent.com/linuxfoundation/lfx-v2-helm/main/charts/lfx-platform/values-local.yaml \
+  --values my-overrides.yaml
+```
+
+Refer to the [Configuration](#configuration) section and the inline comments
+in `values.yaml` for all available parameters.
 
 ### Installing from source
 
@@ -168,7 +220,7 @@ kubectl create secret generic openfga-postgresql-client \
   -n lfx
 ```
 
-2. Configure OpenFGA in your values file:
+1. Configure OpenFGA in your values file:
 
 ```yaml
 openfga:

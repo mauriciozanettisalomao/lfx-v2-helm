@@ -8,18 +8,22 @@
 #
 #   helm install -n lfx lfx-platform \
 #     oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
-#     --version <version> \
-#     --values values-local.yaml
+#     --values https://raw.githubusercontent.com/linuxfoundation/lfx-v2-helm/main/charts/lfx-platform/values-local.yaml
 #
 # Or from source:
 #
 #   helm install -n lfx lfx-platform ./charts/lfx-platform \
 #     --values charts/lfx-platform/values-local.yaml
 
-# NATS configuration — reduced resources for local development
+# NATS — reduced resources and single replica for local development
 # Production defaults require ~24Gi memory (3 replicas × 8Gi limit).
-# These settings are suitable for local machines with limited RAM.
 nats:
+  config:
+    cluster:
+      replicas: 3
+    jetstream:
+      fileStore:
+        size: 6Gi
   container:
     env:
       # Should be ~80% of the memory limit below
@@ -32,10 +36,6 @@ nats:
         limits:
           cpu: "1000m"
           memory: 2Gi
-  config:
-    jetstream:
-      fileStore:
-        size: 6Gi
 
 # OpenSearch — reduced resources for local development
 opensearch:
@@ -47,19 +47,21 @@ opensearch:
       cpu: 1000m
       memory: 1Gi
 
-# OpenFGA — reduced resources for local development
+# OpenFGA — single replica and reduced resources for local development
 openfga:
+  replicaCount: 1
   resources:
     limits:
       cpu: 1000m
-      memory: 256Mi
+      memory: 512Mi
     requests:
       cpu: 500m
-      memory: 128Mi
+      memory: 256Mi
 
-# Heimdall — reduced resources for local development
+# Heimdall — single replica and reduced resources for local development
 heimdall:
   deployment:
+    replicaCount: 1
     resources:
       limits:
         cpu: 100m
@@ -67,3 +69,33 @@ heimdall:
       requests:
         cpu: 100m
         memory: 128Mi
+
+# LFX services — single replica for local development
+lfx-v2-access-check:
+  replicaCount: 1
+lfx-v2-auth-service:
+  replicaCount: 1
+lfx-v2-committee-service:
+  replicaCount: 1
+lfx-v2-fga-sync:
+  replicaCount: 1
+lfx-v2-indexer-service:
+  replicaCount: 1
+lfx-v2-mailing-list-service:
+  replicaCount: 1
+  externalSecretsOperator:
+    enabled: false
+lfx-v2-meeting-service:
+  replicaCount: 1
+lfx-v2-project-service:
+  replicaCount: 1
+lfx-v2-query-service:
+  replicaCount: 1
+lfx-v2-survey-service:
+  replicaCount: 1
+  externalSecretsOperator:
+    enabled: false
+lfx-v2-voting-service:
+  replicaCount: 1
+  externalSecretsOperator:
+    enabled: false

@@ -15,18 +15,15 @@
 #   helm install -n lfx lfx-platform ./charts/lfx-platform \
 #     --values charts/lfx-platform/values-local.yaml
 
-# NATS — reduced resources and single replica for local development
+# NATS — reduced resources for local development
 # Production defaults require ~24Gi memory (3 replicas × 8Gi limit).
 nats:
   config:
     cluster:
       replicas: 3
-    jetstream:
-      fileStore:
-        size: 6Gi
+
   container:
     env:
-      # Should be ~80% of the memory limit below
       GOMEMLIMIT: 2GiB
     merge:
       resources:

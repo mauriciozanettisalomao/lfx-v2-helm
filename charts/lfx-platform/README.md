@@ -220,7 +220,7 @@ kubectl create secret generic openfga-postgresql-client \
   -n lfx
 ```
 
-1. Configure OpenFGA in your values file:
+2. Configure OpenFGA in your values file:
 
 ```yaml
 openfga:

@@ -18,10 +18,32 @@ resource APIs for the LFX platform.
 # Create namespace (recommended).
 kubectl create namespace lfx
 
-# Install the chart.
+# Install the latest version of the chart.
+helm install -n lfx lfx-platform \
+  oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform
+```
+
+#### Local development (resource-constrained machines)
+
+The default `values.yaml` uses production-grade resource limits (e.g. NATS
+requires ~24Gi memory across its 3 replicas). For local development, use the
+bundled `values-local.yaml` override to reduce resource requirements:
+
+```bash
+kubectl create namespace lfx
+
 helm install -n lfx lfx-platform \
   oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
-  --version 0.1.1
+  --values https://raw.githubusercontent.com/linuxfoundation/lfx-v2-helm/main/charts/lfx-platform/values-local.yaml
+```
+
+Alternatively, if you have a local copy of `values-local.yaml` (e.g. after
+cloning the repo), pass it directly:
+
+```bash
+helm install -n lfx lfx-platform \
+  oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
+  --values /path/to/values-local.yaml
 ```
 
 ### Installing from source

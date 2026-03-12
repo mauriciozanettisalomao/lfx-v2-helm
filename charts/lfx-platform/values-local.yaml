@@ -1,0 +1,69 @@
+# Copyright The Linux Foundation and each contributor to LFX.
+# SPDX-License-Identifier: MIT
+---
+# Local development overrides for lfx-platform.
+#
+# Use this file when installing the chart on a local machine to reduce
+# resource requirements. Pass it alongside the chart install:
+#
+#   helm install -n lfx lfx-platform \
+#     oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
+#     --version <version> \
+#     --values values-local.yaml
+#
+# Or from source:
+#
+#   helm install -n lfx lfx-platform ./charts/lfx-platform \
+#     --values charts/lfx-platform/values-local.yaml
+
+# NATS configuration — reduced resources for local development
+# Production defaults require ~24Gi memory (3 replicas × 8Gi limit).
+# These settings are suitable for local machines with limited RAM.
+nats:
+  container:
+    env:
+      # Should be ~80% of the memory limit below
+      GOMEMLIMIT: 2GiB
+    merge:
+      resources:
+        requests:
+          cpu: "500m"
+          memory: 1Gi
+        limits:
+          cpu: "1000m"
+          memory: 2Gi
+  config:
+    jetstream:
+      fileStore:
+        size: 6Gi
+
+# OpenSearch — reduced resources for local development
+opensearch:
+  resources:
+    requests:
+      cpu: 500m
+      memory: 0.5Gi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+
+# OpenFGA — reduced resources for local development
+openfga:
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 256Mi
+    requests:
+      cpu: 500m
+      memory: 128Mi
+
+# Heimdall — reduced resources for local development
+heimdall:
+  deployment:
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi

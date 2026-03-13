@@ -3,20 +3,21 @@
 ---
 # Local development overrides for lfx-platform.
 #
-# Use this file when installing the chart on a local machine to reduce
-# resource requirements. Pass it alongside the chart install:
+# To use this file, copy it to values.local.yaml and fill in the values
+# you want to override.
+#
+# To use the file to install the GHCR chart, run the following command:
 #
 #   helm install -n lfx lfx-platform \
 #     oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
-#     --values https://raw.githubusercontent.com/linuxfoundation/lfx-v2-helm/main/charts/lfx-platform/values-local.yaml
+#     --values charts/lfx-platform/values.local.yaml
 #
 # Or from source:
 #
 #   helm install -n lfx lfx-platform ./charts/lfx-platform \
-#     --values charts/lfx-platform/values-local.yaml
+#     --values charts/lfx-platform/values.local.yaml
 
-# NATS — reduced resources for local development
-# Production defaults require ~24Gi memory (3 replicas × 8Gi limit).
+# NATS
 nats:
   config:
     cluster:
@@ -34,7 +35,7 @@ nats:
           cpu: "1000m"
           memory: 2Gi
 
-# OpenSearch — reduced resources for local development
+# OpenSearch
 opensearch:
   resources:
     requests:
@@ -44,7 +45,7 @@ opensearch:
       cpu: 1000m
       memory: 1Gi
 
-# OpenFGA — single replica and reduced resources for local development
+# OpenFGA
 openfga:
   replicaCount: 1
   resources:
@@ -55,7 +56,7 @@ openfga:
       cpu: 500m
       memory: 256Mi
 
-# Heimdall — single replica and reduced resources for local development
+# Heimdall
 heimdall:
   deployment:
     replicaCount: 1
@@ -67,7 +68,7 @@ heimdall:
         cpu: 100m
         memory: 128Mi
 
-# LFX services — single replica for local development
+# LFX services
 lfx-v2-access-check:
   replicaCount: 1
 lfx-v2-auth-service:

@@ -10,14 +10,75 @@ resource APIs for the LFX platform.
 - PV provisioner support in the underlying infrastructure (if persistence is
   enabled)
 
+## Secrets setup
+
+Some subcharts require Kubernetes secrets to exist in the namespace before
+installing the chart. These secrets are only needed if the corresponding
+subchart is enabled.
+
+To check whether a subchart is enabled, look for its `enabled` field in
+`charts/lfx-platform/values.yaml`:
+
+```bash
+grep -A1 "lfx-v2-voting-service:" charts/lfx-platform/values.yaml
+# enabled: false  ← skip secret creation if false
+```
+
+Secret values are stored in the **LFX V2** vault in 1Password under the note
+**LFX Platform Chart Values Secrets - Local Development**.
+
+### lfx-v2-voting-service
+
+Requires an Auth0 client ID and RSA private key.
+
+```bash
+kubectl create secret generic lfx-v2-voting-service -n lfx \
+  --from-literal=ITX_CLIENT_ID="<from-1password>" \
+  --from-file=ITX_CLIENT_PRIVATE_KEY=/path/to/private.key
+```
+
+### lfx-v2-survey-service
+
+Requires an Auth0 client ID and RSA private key.
+
+```bash
+kubectl create secret generic lfx-v2-survey-service -n lfx \
+  --from-literal=ITX_CLIENT_ID="<from-1password>" \
+  --from-file=ITX_CLIENT_PRIVATE_KEY=/path/to/private.key
+```
+
+### lfx-v2-meeting-service
+
+Requires an Auth0 client ID and RSA private key.
+
+```bash
+kubectl create secret generic meeting-secrets -n lfx \
+  --from-literal=auth0_client_id="<from-1password>" \
+  --from-file=auth0_client_private_key=/path/to/private.key
+```
+
+### lfx-v2-mailing-list-service
+
+Requires Groups.io credentials and a webhook secret.
+
+```bash
+kubectl create secret generic lfx-v2-mailing-list-service -n lfx \
+  --from-literal=GROUPSIO_EMAIL="<from-1password>" \
+  --from-literal=GROUPSIO_PASSWORD="<from-1password>" \
+  --from-literal=GROUPSIO_WEBHOOK_SECRET="<from-1password>"
+```
+
 ## Installing the chart
+
+First, create the namespace (recommended):
+
+```bash
+kubectl create namespace lfx
+```
 
 ### Installing via the OCI registry
 
 ```bash
-# Create namespace (recommended).
-kubectl create namespace lfx
-
 # Install the latest version of the chart.
 helm install -n lfx lfx-platform \
   oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform
@@ -32,81 +93,12 @@ helm install -n lfx lfx-platform \
   --version <version>
 ```
 
-#### Local development (resource-constrained machines)
-
-The default `values.yaml` uses production-grade resource limits (e.g. NATS
-requires ~24Gi memory across its 3 replicas). For local development, use the
-bundled `values-local.yaml` override to reduce resource requirements:
-
-```bash
-kubectl create namespace lfx
-
-# NOTE: This downloads values-local.yaml from the main branch and assumes the
-# OCI chart version you install was built from the same main commit. For strict
-# reproducibility, prefer using a local copy of values-local.yaml from the
-# same tag or commit as your chart release (see example below).
-
-helm install -n lfx lfx-platform \
-  oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
-  --values https://raw.githubusercontent.com/linuxfoundation/lfx-v2-helm/main/charts/lfx-platform/values-local.yaml
-```
-
-Alternatively, if you have a local copy of `values-local.yaml` (e.g. after
-cloning the repo), pass it directly:
-
-```bash
-helm install -n lfx lfx-platform \
-  oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
-  --values /path/to/values-local.yaml
-```
-
-#### Customizing local development values
-
-`values-local.yaml` provides sensible defaults for local development, but any
-parameter from `values.yaml` can be overridden by passing an additional
-`--values` file after `values-local.yaml`. Later `--values` files take
-precedence over earlier ones, so you only need to specify the values you want
-to change.
-
-For example, to further reduce NATS memory limits or enable a service that is
-disabled by default:
-
-```yaml
-# my-overrides.yaml
-nats:
-  container:
-    env:
-      GOMEMLIMIT: 1GiB
-    merge:
-      resources:
-        requests:
-          memory: 512Mi
-        limits:
-          memory: 1Gi
-
-lfx-v2-query-service:
-  enabled: true
-```
-
-```bash
-helm install -n lfx lfx-platform \
-  oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
-  --values https://raw.githubusercontent.com/linuxfoundation/lfx-v2-helm/main/charts/lfx-platform/values-local.yaml \
-  --values my-overrides.yaml
-```
-
-Refer to the [Configuration](#configuration) section and the inline comments
-in `values.yaml` for all available parameters.
-
 ### Installing from source
 
 Clone the repository before running the following commands from the root of the
 working directory.
 
 ```bash
-# Create namespace (recommended).
-kubectl create namespace lfx
-
 # Pull down chart dependencies.
 helm dependency update charts/lfx-platform
 
@@ -114,6 +106,43 @@ helm dependency update charts/lfx-platform
 helm install -n lfx lfx-platform \
     ./charts/lfx-platform
 ```
+
+### Customizing local development values
+
+The default `values.yaml` is configured for local development. To override
+specific values for your own environment without committing them, copy the
+bundled example file:
+
+```bash
+cp charts/lfx-platform/values.local.example.yaml charts/lfx-platform/values.local.yaml
+```
+
+`values.local.yaml` is gitignored, so you can freely modify it. Pass it when
+installing from OCI or from source:
+
+```bash
+# From OCI registry
+helm install -n lfx lfx-platform \
+  oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
+  --values charts/lfx-platform/values.local.yaml
+
+# From source
+helm install -n lfx lfx-platform ./charts/lfx-platform \
+  --values charts/lfx-platform/values.local.yaml
+```
+
+Later `--values` files take precedence over earlier ones, so you can also layer
+additional overrides on top:
+
+```bash
+helm install -n lfx lfx-platform \
+  oci://ghcr.io/linuxfoundation/lfx-v2-helm/chart/lfx-platform \
+  --values charts/lfx-platform/values.local.yaml \
+  --values my-overrides.yaml
+```
+
+Refer to the [Configuration](#configuration) section and the inline comments
+in `values.yaml` for all available parameters.
 
 ## Uninstalling the chart
 
@@ -128,8 +157,8 @@ kubectl delete namespace lfx
 ## Configuration
 
 The following table lists the configurable parameters of the LFX Platform chart
-and their default values. You can override these values in your own
-`values.yaml` file or by using the `--set` flag when installing the chart.
+and their default values. You can override these values in your `values.local.yaml`
+or by using the `--set` flag when installing the chart.
 
 ### Global parameters
 

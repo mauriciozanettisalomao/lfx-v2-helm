@@ -14,7 +14,7 @@
 .env
 *.env
 values.local.yaml
-values-secrets.yaml
+tmp/
 
 # Rendered templates
 **/templates/*.rendered

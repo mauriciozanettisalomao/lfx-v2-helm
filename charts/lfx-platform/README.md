@@ -158,7 +158,7 @@ kubectl delete namespace lfx
 
 You can override any value in your `values.local.yaml` or by using `--set`
 when installing the chart. The canonical reference for all available parameters
-is the inline comments in [`values.yaml`](charts/lfx-platform/values.yaml).
+is the inline comments in [`values.yaml`](values.yaml).
 
 ### Global parameters
 
@@ -185,7 +185,7 @@ linked documentation for the full set of configuration options.
 | OpenSearch     | `opensearch`    | `true`            | [OpenSearch Helm Chart](https://github.com/opensearch-project/helm-charts) |
 | Authelia       | `authelia`      | `true`            | [Authelia documentation](https://github.com/authelia/chartrepo/tree/master/charts/authelia) |
 | Mailpit        | `mailpit`       | `true`            | [Mailpit documentation](https://github.com/jouve/charts/tree/main/charts/mailpit) |
-| External Secrets Operator | `external-secrets` | `false`      | [External Secrets Helm Chart](https://external-secrets.io/latest/introduction/getting-started/) |
+| External Secrets Operator | `external-secrets` | `true`       | [External Secrets Helm Chart](https://external-secrets.io/latest/introduction/getting-started/) |
 | cert-manager   | `cert-manager`  | `false`           | [cert-manager Helm Chart](https://cert-manager.io/docs/installation/helm/) |
 | fga-operator   | `fga-operator`  | `true`            | — |
 

@@ -156,9 +156,9 @@ kubectl delete namespace lfx
 
 ## Configuration
 
-The following table lists the configurable parameters of the LFX Platform chart
-and their default values. You can override these values in your `values.local.yaml`
-or by using the `--set` flag when installing the chart.
+You can override any value in your `values.local.yaml` or by using `--set`
+when installing the chart. The canonical reference for all available parameters
+is the inline comments in [`values.yaml`](charts/lfx-platform/values.yaml).
 
 ### Global parameters
 
@@ -168,74 +168,41 @@ or by using the `--set` flag when installing the chart.
 | `lfx.image.registry`   | Global Docker image registry    | `linuxfoundation` |
 | `lfx.image.pullPolicy` | Global Docker image pull policy | `IfNotPresent`    |
 
-### Subchart configuration
+### Subcharts
 
-#### Traefik
+Each subchart can be enabled or disabled via its `enabled` key. Refer to the
+linked documentation for the full set of configuration options.
 
-| Parameter                                | Description              | Default |
-|------------------------------------------|--------------------------|---------|
-| `traefik.enabled`                        | Enable Traefik           | `true`  |
-| `traefik.ingressRoute.dashboard.enabled` | Enable Traefik dashboard | `true`  |
+#### Infrastructure subcharts
 
-For more Traefik configuration options, see the [Traefik Helm Chart documentation](https://github.com/traefik/traefik-helm-chart).
+| Subchart       | Key             | Enabled by default | Documentation |
+|----------------|-----------------|-------------------|---------------|
+| Traefik        | `traefik`       | `true`            | [Traefik Helm Chart](https://github.com/traefik/traefik-helm-chart) |
+| OpenFGA        | `openfga`       | `true`            | [OpenFGA Helm Chart](https://github.com/openfga/helm-charts) · [Local docs](../../docs/openfga.md) |
+| Heimdall       | `heimdall`      | `true`            | [Heimdall Helm Chart](https://github.com/dadrus/heimdall/tree/main/charts/heimdall) |
+| NATS           | `nats`          | `true`            | [NATS Helm Chart](https://github.com/nats-io/k8s/tree/main/helm/charts/nats) |
+| NACK           | `nack`          | `true`            | [NACK documentation](https://github.com/nats-io/k8s/tree/main/helm/charts/nack) |
+| OpenSearch     | `opensearch`    | `true`            | [OpenSearch Helm Chart](https://github.com/opensearch-project/helm-charts) |
+| Authelia       | `authelia`      | `true`            | [Authelia documentation](https://github.com/authelia/chartrepo/tree/master/charts/authelia) |
+| Mailpit        | `mailpit`       | `true`            | [Mailpit documentation](https://github.com/jouve/charts/tree/main/charts/mailpit) |
+| cert-manager   | `cert-manager`  | `false`           | [cert-manager Helm Chart](https://cert-manager.io/docs/installation/helm/) |
+| fga-operator   | `fga-operator`  | `true`            | — |
 
-#### OpenFGA
+#### LFX service subcharts
 
-| Parameter                          | Description                                      | Default |
-|------------------------------------|--------------------------------------------------|---------|
-| `openfga.enabled`                  | Enable OpenFGA                                   | `true`  |
-| `openfga.postgres.enabled`         | Enable built-in PostgreSQL                       | `true`  |
-| `openfga.datastore.existingSecret` | Secret for external PostgreSQL connection string | `nil`   |
-
-For more OpenFGA configuration options, see the [OpenFGA Helm Chart documentation](https://github.com/openfga/helm-charts).
-
-For information on managing OpenFGA see the [OpenFGA Documentation](../../docs/openfga.md).
-
-#### Heimdall
-
-| Parameter                              | Description                             | Default            |
-|----------------------------------------|-----------------------------------------|--------------------|
-| `heimdall.enabled`                     | Enable Heimdall                         | `true`             |
-| `heimdall.autheliaIntegration.enabled` | Enable Authelia integration             | `true`             |
-| `heimdall.secretsRef`                  | Heimdall secrets reference              | `heimdall-secrets` |
-| `heimdall.certsSecretRef`              | Heimdall certificates secrets reference | `heimdall-certs`   |
-
-For more Heimdall configuration options, see the [Heimdall Helm Chart documentation](https://github.com/dadrus/heimdall/tree/main/charts/heimdall).
-
-#### NATS
-
-| Parameter                | Description             | Default |
-|--------------------------|-------------------------|---------|
-| `nats.enabled`           | Enable NATS             | `true`  |
-| `nats.cluster.enabled`   | Enable NATS clustering  | `true`  |
-| `nats.cluster.replicas`  | Number of NATS replicas | `3`     |
-| `nats.jetstream.enabled` | Enable JetStream        | `true`  |
-
-For more NATS configuration options, see the [NATS Helm Chart documentation](https://github.com/nats-io/k8s/tree/main/helm/charts/nats).
-
-#### Mailpit
-
-| Parameter         | Description    | Default |
-|-------------------|----------------|---------|
-| `mailpit.enabled` | Enable Mailpit | `true`  |
-
-For more mailpit configuration options, see the [Mailpit documentation](https://github.com/jouve/charts/tree/main/charts/mailpit).
-
-#### Authelia
-
-| Parameter          | Description     | Default |
-|--------------------|-----------------|---------|
-| `authelia.enabled` | Enable Authelia | `true`  |
-
-For more authelia configuration options, see the [Authelia documentation](https://github.com/authelia/chartrepo/tree/master/charts/authelia).
-
-#### NACK
-
-| Parameter      | Description | Default |
-|----------------|-------------|---------|
-| `nack.enabled` | Enable Nack | `true`  |
-
-For more NACK configuration options, see the [NACK documentation](https://github.com/nats-io/k8s/tree/main/helm/charts/nack).
+| Subchart                    | Key                           | Enabled by default | Chart |
+|-----------------------------|-------------------------------|-------------------|-------|
+| lfx-v2-auth-service         | `lfx-v2-auth-service`         | `true`            | [lfx-v2-auth-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-auth-service/tree/main/charts/lfx-v2-auth-service) |
+| lfx-v2-fga-sync             | `lfx-v2-fga-sync`             | `true`            | [lfx-v2-fga-sync Helm Chart](https://github.com/linuxfoundation/lfx-v2-fga-sync/tree/main/charts/lfx-v2-fga-sync) |
+| lfx-v2-access-check         | `lfx-v2-access-check`         | `true`            | [lfx-v2-access-check Helm Chart](https://github.com/linuxfoundation/lfx-v2-access-check/tree/main/charts/lfx-v2-access-check) |
+| lfx-v2-indexer-service      | `lfx-v2-indexer-service`      | `true`            | [lfx-v2-indexer-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-indexer-service/tree/main/charts/lfx-v2-indexer-service) |
+| lfx-v2-query-service        | `lfx-v2-query-service`        | `true`            | [lfx-v2-query-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-query-service/tree/main/charts/lfx-v2-query-service) |
+| lfx-v2-project-service      | `lfx-v2-project-service`      | `true`            | [lfx-v2-project-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-project-service/tree/main/charts/lfx-v2-project-service) |
+| lfx-v2-committee-service    | `lfx-v2-committee-service`    | `true`            | [lfx-v2-committee-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-committee-service/tree/main/charts/lfx-v2-committee-service) |
+| lfx-v2-voting-service       | `lfx-v2-voting-service`       | `false`           | [lfx-v2-voting-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-voting-service/tree/main/charts/lfx-v2-voting-service) |
+| lfx-v2-survey-service       | `lfx-v2-survey-service`       | `false`           | [lfx-v2-survey-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-survey-service/tree/main/charts/lfx-v2-survey-service) |
+| lfx-v2-meeting-service      | `lfx-v2-meeting-service`      | `false`           | [lfx-v2-meeting-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-meeting-service/tree/main/charts/lfx-v2-meeting-service) |
+| lfx-v2-mailing-list-service | `lfx-v2-mailing-list-service` | `false`           | [lfx-v2-mailing-list-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-mailing-list-service/tree/main/charts/lfx-v2-mailing-list-service) |
 
 ## Using external PostgreSQL with OpenFGA
 
@@ -249,7 +216,7 @@ kubectl create secret generic openfga-postgresql-client \
   -n lfx
 ```
 
-2. Configure OpenFGA in your values file:
+1. Configure OpenFGA in your values file:
 
 ```yaml
 openfga:

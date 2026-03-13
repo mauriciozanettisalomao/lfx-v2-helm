@@ -45,6 +45,10 @@ dependencies:
     repository: https://3schwartz.github.io/fga-operator/
     version: ~1.0.0
     condition: fga-operator.enabled
+  - name: external-secrets
+    repository: https://charts.external-secrets.io
+    version: ~2.1.0
+    condition: external-secrets.enabled
   - name: cert-manager
     repository: https://charts.jetstack.io
     version: ~1.18.2

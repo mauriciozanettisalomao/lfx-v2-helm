@@ -185,6 +185,7 @@ linked documentation for the full set of configuration options.
 | OpenSearch     | `opensearch`    | `true`            | [OpenSearch Helm Chart](https://github.com/opensearch-project/helm-charts) |
 | Authelia       | `authelia`      | `true`            | [Authelia documentation](https://github.com/authelia/chartrepo/tree/master/charts/authelia) |
 | Mailpit        | `mailpit`       | `true`            | [Mailpit documentation](https://github.com/jouve/charts/tree/main/charts/mailpit) |
+| External Secrets Operator | `external-secrets` | `false`      | [External Secrets Helm Chart](https://external-secrets.io/latest/introduction/getting-started/) |
 | cert-manager   | `cert-manager`  | `false`           | [cert-manager Helm Chart](https://cert-manager.io/docs/installation/helm/) |
 | fga-operator   | `fga-operator`  | `true`            | — |
 
@@ -199,10 +200,28 @@ linked documentation for the full set of configuration options.
 | lfx-v2-query-service        | `lfx-v2-query-service`        | `true`            | [lfx-v2-query-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-query-service/tree/main/charts/lfx-v2-query-service) |
 | lfx-v2-project-service      | `lfx-v2-project-service`      | `true`            | [lfx-v2-project-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-project-service/tree/main/charts/lfx-v2-project-service) |
 | lfx-v2-committee-service    | `lfx-v2-committee-service`    | `true`            | [lfx-v2-committee-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-committee-service/tree/main/charts/lfx-v2-committee-service) |
-| lfx-v2-voting-service       | `lfx-v2-voting-service`       | `false`           | [lfx-v2-voting-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-voting-service/tree/main/charts/lfx-v2-voting-service) |
-| lfx-v2-survey-service       | `lfx-v2-survey-service`       | `false`           | [lfx-v2-survey-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-survey-service/tree/main/charts/lfx-v2-survey-service) |
-| lfx-v2-meeting-service      | `lfx-v2-meeting-service`      | `false`           | [lfx-v2-meeting-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-meeting-service/tree/main/charts/lfx-v2-meeting-service) |
-| lfx-v2-mailing-list-service | `lfx-v2-mailing-list-service` | `false`           | [lfx-v2-mailing-list-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-mailing-list-service/tree/main/charts/lfx-v2-mailing-list-service) |
+| lfx-v2-voting-service       | `lfx-v2-voting-service`       | `true`            | [lfx-v2-voting-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-voting-service/tree/main/charts/lfx-v2-voting-service) |
+| lfx-v2-survey-service       | `lfx-v2-survey-service`       | `true`            | [lfx-v2-survey-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-survey-service/tree/main/charts/lfx-v2-survey-service) |
+| lfx-v2-meeting-service      | `lfx-v2-meeting-service`      | `true`            | [lfx-v2-meeting-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-meeting-service/tree/main/charts/lfx-v2-meeting-service) |
+| lfx-v2-mailing-list-service | `lfx-v2-mailing-list-service` | `true`            | [lfx-v2-mailing-list-service Helm Chart](https://github.com/linuxfoundation/lfx-v2-mailing-list-service/tree/main/charts/lfx-v2-mailing-list-service) |
+
+#### Developing a service locally
+
+When working on a specific service, you can disable its subchart here and
+deploy it directly from the service repository instead. This lets you iterate
+on local code changes without affecting the rest of the platform.
+
+For example, to develop `lfx-v2-query-service` locally:
+
+Disable it in your `values.local.yaml`:
+
+```yaml
+lfx-v2-query-service:
+  enabled: false
+```
+
+Follow the local development instructions in the service repository to
+build and deploy it against the running platform.
 
 ## Using external PostgreSQL with OpenFGA
 

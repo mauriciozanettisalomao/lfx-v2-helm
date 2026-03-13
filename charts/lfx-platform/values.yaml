@@ -566,6 +566,10 @@ nack:
       url: nats://lfx-platform-nats:4222
     additionalArgs: [--control-loop]
 
+external-secrets:
+  enabled: true
+  installCRDs: true
+
 cert-manager:
   enabled: false
   crds:
@@ -627,7 +631,7 @@ lfx-v2-committee-service:
 
 lfx-v2-voting-service:
   replicaCount: 1
-  enabled: false
+  enabled: true
   lfx:
     domain: k8s.orb.local
 
@@ -642,7 +646,7 @@ lfx-v2-voting-service:
 
 lfx-v2-survey-service:
   replicaCount: 1
-  enabled: false
+  enabled: true
   lfx:
     domain: k8s.orb.local
 
@@ -657,7 +661,7 @@ lfx-v2-survey-service:
 
 lfx-v2-meeting-service:
   replicaCount: 1
-  enabled: false
+  enabled: true
   lfx:
     domain: k8s.orb.local
 
@@ -672,7 +676,7 @@ lfx-v2-meeting-service:
 
 lfx-v2-mailing-list-service:
   replicaCount: 1
-  enabled: false
+  enabled: true
   lfx:
     domain: k8s.orb.local
 

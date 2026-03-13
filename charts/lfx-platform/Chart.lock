@@ -26,6 +26,9 @@ dependencies:
 - name: fga-operator
   repository: https://3schwartz.github.io/fga-operator/
   version: 1.0.0
+- name: external-secrets
+  repository: https://charts.external-secrets.io
+  version: 2.1.0
 - name: cert-manager
   repository: https://charts.jetstack.io
   version: v1.18.6
@@ -65,5 +68,5 @@ dependencies:
 - name: lfx-v2-survey-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-survey-service/chart
   version: 0.2.0
-digest: sha256:b0acb7f20518372a5b1bd34403b66f8b1273d76c878d15fb87c6674dfed9a403
-generated: "2026-03-11T17:17:33.151096-07:00"
+digest: sha256:44a148d27c4462a2c92604a8073c27273c39ed81d854da0c6da90e6af24b7dd5
+generated: "2026-03-12T20:59:53.066536-07:00"

@@ -47,6 +47,11 @@ lfx:
     specs:
       - "_projects/openapi3.yaml"
       - "_query/openapi3.yaml"
+      - "_committees/openapi3.yaml"
+      - "_meetings/openapi3.yaml"
+      - "_access-check/openapi3.yaml"
+      - "_voting/openapi3.yaml"
+      - "_survey/openapi3.yaml"
 
   # Tells rulesets to use the oidc_contextualizer, needed for
   # local dev with authelia

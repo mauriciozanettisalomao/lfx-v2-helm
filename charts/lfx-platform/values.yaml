@@ -567,7 +567,7 @@ nack:
     additionalArgs: [--control-loop]
 
 external-secrets:
-  enabled: true
+  enabled: false
   installCRDs: true
 
 cert-manager:

@@ -19,7 +19,7 @@ dependencies:
   version: 0.25.2
 - name: authelia
   repository: https://charts.authelia.com
-  version: 0.10.49
+  version: 0.10.50
 - name: nack
   repository: https://nats-io.github.io/k8s/helm/charts/
   version: 0.29.2
@@ -49,24 +49,24 @@ dependencies:
   version: 0.2.8
 - name: lfx-v2-indexer-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-indexer-service/chart
-  version: 0.4.16
+  version: 0.4.17
 - name: lfx-v2-committee-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-committee-service/chart
-  version: 0.2.21
+  version: 0.2.22
 - name: lfx-v2-meeting-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-meeting-service/chart
   version: 0.7.0
 - name: lfx-v2-mailing-list-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-mailing-list-service/chart
-  version: 0.2.0
+  version: 0.3.0
 - name: lfx-v2-auth-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
-  version: 0.3.5
+  version: 0.4.1
 - name: lfx-v2-voting-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-voting-service/chart
-  version: 0.2.2
+  version: 0.2.3
 - name: lfx-v2-survey-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-survey-service/chart
-  version: 0.2.2
-digest: sha256:f69fce26d519ff2eb1a363deb17d1464509b9ca1b2110771060506c8221c7f36
-generated: "2026-03-16T14:41:15.158926-07:00"
+  version: 0.2.3
+digest: sha256:b0142fe2b2b7d98c54f03d515edf46a835ba17c6a3aebc491a5ee0d98d0b1e2f
+generated: "2026-03-18T13:20:19.36663-03:00"

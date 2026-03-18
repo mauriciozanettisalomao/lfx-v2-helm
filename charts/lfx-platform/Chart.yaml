@@ -75,11 +75,11 @@ dependencies:
     condition: lfx-v2-access-check.enabled
   - name: lfx-v2-indexer-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-indexer-service/chart
-    version: ~0.4.16
+    version: ~0.4.17
     condition: lfx-v2-indexer-service.enabled
   - name: lfx-v2-committee-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-committee-service/chart
-    version: ~0.2.21
+    version: ~0.2.22
     condition: lfx-v2-committee-service.enabled
   - name: lfx-v2-meeting-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-meeting-service/chart
@@ -87,17 +87,17 @@ dependencies:
     condition: lfx-v2-meeting-service.enabled
   - name: lfx-v2-mailing-list-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-mailing-list-service/chart
-    version: ~0.2.0
+    version: ~0.3.0
     condition: lfx-v2-mailing-list-service.enabled
   - name: lfx-v2-auth-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
-    version: ~0.3.5
+    version: ~0.4.1
     condition: lfx-v2-auth-service.enabled
   - name: lfx-v2-voting-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-voting-service/chart
-    version: ~0.2.2
+    version: ~0.2.3
     condition: lfx-v2-voting-service.enabled
   - name: lfx-v2-survey-service
     repository: oci://ghcr.io/linuxfoundation/lfx-v2-survey-service/chart
-    version: ~0.2.2
+    version: ~0.2.3
     condition: lfx-v2-survey-service.enabled

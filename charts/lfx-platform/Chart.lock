@@ -61,12 +61,12 @@ dependencies:
   version: 0.3.0
 - name: lfx-v2-auth-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-auth-service/chart
-  version: 0.4.0
+  version: 0.4.1
 - name: lfx-v2-voting-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-voting-service/chart
   version: 0.2.3
 - name: lfx-v2-survey-service
   repository: oci://ghcr.io/linuxfoundation/lfx-v2-survey-service/chart
   version: 0.2.3
-digest: sha256:920bd36a873769cfc78925c339123a01fb744bf985239f2213bfe48047272764
-generated: "2026-03-18T10:55:55.919661-03:00"
+digest: sha256:b0142fe2b2b7d98c54f03d515edf46a835ba17c6a3aebc491a5ee0d98d0b1e2f
+generated: "2026-03-18T13:20:19.36663-03:00"

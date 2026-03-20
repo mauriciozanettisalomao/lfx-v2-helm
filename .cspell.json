@@ -15,6 +15,7 @@
     "finalizer",
     "gelf",
     "gjson",
+    "GROUPSIO",
     "GOMEMLIMIT",
     "heimdallcfg",
     "jaegertracing",

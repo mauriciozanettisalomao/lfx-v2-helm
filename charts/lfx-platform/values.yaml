@@ -47,6 +47,11 @@ lfx:
     specs:
       - "_projects/openapi3.yaml"
       - "_query/openapi3.yaml"
+      - "_committees/openapi3.yaml"
+      - "_meetings/openapi3.yaml"
+      - "_access-check/openapi3.yaml"
+      - "_voting/openapi3.yaml"
+      - "_survey/openapi3.yaml"
 
   # Tells rulesets to use the oidc_contextualizer, needed for
   # local dev with authelia
@@ -154,15 +159,15 @@ openfga:
       sampleRatio: 1.0
 
   # Additional OpenFGA configuration
-  replicaCount: 3
+  replicaCount: 1
 
   resources:
     limits:
       cpu: 1000m
-      memory: 1024Mi
+      memory: 512Mi
     requests:
       cpu: 500m
-      memory: 512Mi
+      memory: 256Mi
 # Heimdall configuration
 heimdall:
   enabled: true
@@ -172,14 +177,14 @@ heimdall:
 
 
   deployment:
-    replicaCount: 3
+    replicaCount: 1
     resources:
       limits:
         cpu: 100m
-        memory: 256Mi
+        memory: 128Mi
       requests:
         cpu: 100m
-        memory: 256Mi
+        memory: 128Mi
     autoscaling:
       enabled: false
     labels:
@@ -358,16 +363,16 @@ nats:
     env:
       # Different from k8s units, suffix must be B, KiB, MiB, GiB, or TiB
       # Should be ~80% of memory limit
-      GOMEMLIMIT: 6GiB
+      GOMEMLIMIT: 2GiB
     merge:
       # Recommended minimum: at least 2 CPU cores and 8Gi memory for production JetStream clusters
       resources:
         requests:
-          cpu: "1000m"
-          memory: 4Gi
+          cpu: "500m"
+          memory: 1Gi
         limits:
-          cpu: "2000m"
-          memory: 8Gi
+          cpu: "1000m"
+          memory: 2Gi
 
 # OpenSearch configuration
 opensearch:
@@ -380,11 +385,11 @@ opensearch:
       value: "true"
   resources:
     requests:
-      cpu: 1000m
-      memory: 8Gi
+      cpu: 500m
+      memory: 0.5Gi
     limits:
-      cpu: 2000m
-      memory: 16Gi
+      cpu: 1000m
+      memory: 1Gi
 
 # Mailpit configuration
 mailpit:
@@ -566,6 +571,10 @@ nack:
       url: nats://lfx-platform-nats:4222
     additionalArgs: [--control-loop]
 
+external-secrets:
+  enabled: false
+  installCRDs: true
+
 cert-manager:
   enabled: false
   crds:
@@ -577,21 +586,25 @@ trust-manager:
   namespace: cert-manager
 
 lfx-v2-fga-sync:
+  replicaCount: 1
   enabled: true
   lfx:
     domain: k8s.orb.local
 
 lfx-v2-access-check:
+  replicaCount: 1
   enabled: true
   lfx:
     domain: k8s.orb.local
 
 lfx-v2-indexer-service:
+  replicaCount: 1
   enabled: true
   lfx:
     domain: k8s.orb.local
 
 lfx-v2-query-service:
+  replicaCount: 1
   enabled: true
   lfx:
     domain: k8s.orb.local
@@ -610,48 +623,75 @@ lfx-v2-query-service:
         value: ""
 
 lfx-v2-project-service:
+  replicaCount: 1
   enabled: true
   lfx:
     domain: k8s.orb.local
 
 lfx-v2-committee-service:
+  replicaCount: 1
   enabled: true
   lfx:
     domain: k8s.orb.local
 
 lfx-v2-voting-service:
+  replicaCount: 1
   enabled: true
   lfx:
     domain: k8s.orb.local
+
+  # External Secrets Operator is disabled because we can't get secrets from AWS Secrets Manager in local development.
+  # Instead, create the Kubernetes secret manually. See the chart README for instructions.
+  externalSecretsOperator:
+    enabled: false
 
   # Enable reloader to restart pods when ConfigMap or Secrets change
   annotations:
     reloader.stakater.com/auto: "true"
 
 lfx-v2-survey-service:
+  replicaCount: 1
   enabled: true
   lfx:
     domain: k8s.orb.local
+
+  # External Secrets Operator is disabled because we can't get secrets from AWS Secrets Manager in local development.
+  # Instead, create the Kubernetes secret manually. See the chart README for instructions.
+  externalSecretsOperator:
+    enabled: false
 
   # Enable reloader to restart pods when ConfigMap or Secrets change
   annotations:
     reloader.stakater.com/auto: "true"
 
 lfx-v2-meeting-service:
+  replicaCount: 1
   enabled: true
   lfx:
     domain: k8s.orb.local
+
+  # External Secrets Operator is disabled because we can't get secrets from AWS Secrets Manager in local development.
+  # Instead, create the Kubernetes secret manually. See the chart README for instructions.
+  externalSecretsOperator:
+    enabled: false
 
   # Enable reloader to restart pods when ConfigMap or Secrets change
   annotations:
     reloader.stakater.com/auto: "true"
 
 lfx-v2-mailing-list-service:
+  replicaCount: 1
   enabled: true
   lfx:
     domain: k8s.orb.local
 
+  # External Secrets Operator is disabled because we can't get secrets from AWS Secrets Manager in local development.
+  # Instead, create the Kubernetes secret manually. See the chart README for instructions.
+  externalSecretsOperator:
+    enabled: false
+
 lfx-v2-auth-service:
+  replicaCount: 1
   enabled: true
   lfx:
     domain: k8s.orb.local

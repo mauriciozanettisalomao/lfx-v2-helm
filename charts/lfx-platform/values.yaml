@@ -69,7 +69,7 @@ fga-operator:
   # Non-chart value
   store: "lfx-core"
   controllerManager:
-    openFgaUrlEnvVar: 'http://lfx-platform-openfga:8080'
+    openFgaUrlEnvVar: "http://lfx-platform-openfga:8080"
     # This value needs to be set in order for the operator to start, but
     # because no auth is required for the openfga API this value will be
     # ignored by openfga
@@ -175,7 +175,6 @@ heimdall:
   image:
     tag: 0.17.6
 
-
   deployment:
     replicaCount: 1
     resources:
@@ -222,6 +221,11 @@ heimdall:
       - "10.0.0.0/8"
       - "172.16.0.0/12"
       - "192.168.0.0/16"
+    respond:
+      # Keep verbose: false (the Heimdall default) so that error responses
+      # return a bare HTTP status code with no body, rather than leaking
+      # internal pipeline details (e.g., "expression 1 failed") to clients.
+      verbose: false
 
   mechanisms:
     authenticators:
@@ -250,7 +254,7 @@ heimdall:
             # the client_id. Client IDs can collide with usernames (and GJSON
             # doesn't let us do array concatenation to add a literal prefix), so
             # the `sub` claim should NOT be used downstream.
-            id: '[username,client_id].0'
+            id: "[username,client_id].0"
     contextualizers:
       - id: oidc_contextualizer
         type: generic
